@@ -1,0 +1,21 @@
+[class^="number-slide"],
+[class*=" number-slide"] {
+  background: grey;
+  display: flex;
+}
+
+.keen-slider__slide img {
+  width: 100%;
+  padding: 4px;
+  object-fit: cover;
+}
+.thumbnail .keen-slider__slide {
+  margin-top: 10px;
+  height: 100px;
+}
+.thumbnail .keen-slider__slide {
+  cursor: pointer;
+}
+.thumbnail .keen-slider__slide.active {
+  border: 2px dashed black;
+}
