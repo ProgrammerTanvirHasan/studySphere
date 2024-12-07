@@ -9,10 +9,10 @@ const Register = () => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
-    const photo = form.photoURL.value;
+    const select = form.select.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(name, photo);
+    console.log(name, select);
     createUser(email, password)
       .then((result) => {
         const user = result.user;
@@ -51,17 +51,7 @@ const Register = () => {
                 className="input input-bordered text-black"
               />
             </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Photo</span>
-              </label>
-              <input
-                type="text"
-                placeholder="image"
-                name="photoURL"
-                className="input input-bordered text-black"
-              />
-            </div>
+
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -74,6 +64,7 @@ const Register = () => {
                 required
               />
             </div>
+
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Password</span>
@@ -86,6 +77,25 @@ const Register = () => {
                 required
               />
             </div>
+
+            <div className="form-control">
+            <label className="label">
+                <span className="label-text">Select One</span>
+              </label>
+              <select
+                name="select"
+                className="select  w-full max-w-xs"
+                required
+              >
+                <option disabled selected>
+                  Role selection
+                </option>
+                <option value="student">Student</option>
+                <option value=" tutor"> Tutor</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+
             <div className="form-control mt-6">
               <button className="btn bg-gradient-to-r from-slate-400 text-lg to-slate-950 text-orange-300">
                 Register

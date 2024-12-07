@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { GiBookAura } from "react-icons/gi";
 import { NavLink } from "react-router";
 import { AuthContext } from "../../AuthProvider";
+import { RiDashboardFill } from "react-icons/ri";
 
 const Navbar = () => {
   const { user, loggedOut } = useContext(AuthContext);
@@ -41,6 +42,14 @@ const Navbar = () => {
                     alt="User Avatar"
                   />
                 </div>
+                <div className="ml-2">
+                  <NavLink to="/dashboard">
+                    <button>
+                      {" "}
+                      <RiDashboardFill className="text-3xl"></RiDashboardFill>
+                    </button>
+                  </NavLink>
+                </div>
               </div>
             </>
           ) : (
@@ -55,7 +64,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="flex justify-end text-sm ">{email}</div>
+      <div className="flex justify-end text-sm mr-8">{email}</div>
     </div>
   );
 };

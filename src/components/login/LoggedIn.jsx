@@ -1,10 +1,15 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../AuthProvider";
+import { GoogleAuthProvider } from "firebase/auth";
+import { GithubAuthProvider } from "firebase/auth";
 
 const LoggedIn = () => {
-  const { signUser, setUser } = useContext(AuthContext);
+  const { signUser, setUser, googleSignIn, githubSignIn } =
+    useContext(AuthContext);
   const navigate = useNavigate();
+  const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
   const handleLogin = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -20,6 +25,29 @@ const LoggedIn = () => {
 
     navigate("/");
   };
+
+  const handleGoogle = () => {
+    googleSignIn(googleProvider)
+      .then((result) => {
+        setUser(result.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    navigate("/");
+  };
+
+  const handleGithub = () => {
+    githubSignIn(githubProvider)
+      .then((result) => {
+        setUser(result.user);
+      })
+      .catch((error) => {
+        console.log(error.message);
+      });
+    navigate("/");
+  };
+
   return (
     <div>
       <div>
@@ -76,8 +104,12 @@ const LoggedIn = () => {
                     </button>
                   </div>
                   <div className="flex justify-around">
-                    <button className="text-orange-300">GOOGLE LOGIN</button>
-                    <button className="text-orange-300">GITHUB LOGIN</button>
+                    <button onClick={handleGoogle} className="text-orange-300">
+                      GOOGLE LOGIN
+                    </button>
+                    <button onClick={handleGithub} className="text-orange-300">
+                      GITHUB LOGIN
+                    </button>
                   </div>
                 </form>
               </div>

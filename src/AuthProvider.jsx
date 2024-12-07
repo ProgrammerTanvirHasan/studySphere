@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  signInWithPopup,
 } from "firebase/auth";
 import app from "./firebase.confiq";
 
@@ -26,6 +27,16 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
+
+  const googleSignIn = (googleProvider) => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
+  const githubSignIn = (githubProvider) => {
+    setLoading(true);
+    return signInWithPopup(auth, githubProvider);
+  };
+
   const loggedOut = () => {
     setLoading(true);
     return signOut(auth);
@@ -49,6 +60,8 @@ const AuthProvider = ({ children }) => {
     createUser,
     signUser,
     loggedOut,
+    googleSignIn,
+    githubSignIn,
   };
   return <AuthContext.Provider value={info}>{children}</AuthContext.Provider>;
 };
