@@ -6,11 +6,18 @@ import { PiStudentBold } from "react-icons/pi";
 
 const Dashboard = () => {
   return (
-    <div className="grid grid-cols-3 ">
-      <div className="grid-cols-1 flex flex-col bg-green-900 text-white pl-4 min-h-dvh">
+    <div className=" lg:flex gap-4">
+      <div className=" flex flex-col bg-green-900 text-white pl-4  min-h-dvh lg:w-96">
         <div className="text-2xl border flex gap-2 py-2">
           <FaHome className="text-3xl"></FaHome>
-          <NavLink to="/">Home</NavLink>
+          <NavLink
+            to="/"
+            className={({ isActive }) =>
+              isActive ? "underline text-orange-300" : ""
+            }
+          >
+            Home
+          </NavLink>
         </div>
 
         <div className="border ">
@@ -19,13 +26,28 @@ const Dashboard = () => {
             <h2 className="text-orange-300">Admin dashboard</h2>
           </div>
           <div className="flex flex-col py-2 text-sm">
-            <NavLink to="/dashboard/users">
+            <NavLink
+              to="/dashboard/users"
+              className={({ isActive }) =>
+                isActive ? "text-purple-950 font-bold " : ""
+              }
+            >
               <button className="glass mb-2">1.View all users</button>
             </NavLink>
-            <NavLink to="/dashboard/session">
+            <NavLink
+              to="/dashboard/session"
+              className={({ isActive }) =>
+                isActive ? "text-purple-950 font-bold " : ""
+              }
+            >
               <button className="glass mb-2">2.View all study session</button>
             </NavLink>
-            <NavLink to="/dashboard/materials">
+            <NavLink
+              to="/dashboard/materials"
+              className={({ isActive }) =>
+                isActive ? "text-purple-950 font-bold " : ""
+              }
+            >
               <button className="glass mb-2">3.View all materials</button>
             </NavLink>
           </div>
@@ -37,18 +59,38 @@ const Dashboard = () => {
             <h2 className="text-orange-300">Tutor dashboard</h2>
           </div>
           <div className="flex flex-col py-2 text-sm">
-            <NavLink to="/dashboard/createSession">
+            <NavLink
+              to="/dashboard/createSession"
+              className={({ isActive }) =>
+                isActive ? "text-purple-950 font-bold " : ""
+              }
+            >
               <button className="glass mb-2">1.Create study session</button>
             </NavLink>
-            <NavLink to="/dashboard/allSession">
+            <NavLink
+              to="/dashboard/allSession"
+              className={({ isActive }) =>
+                isActive ? "text-purple-950 font-bold " : ""
+              }
+            >
               <button className="glass mb-2">
                 2.View all study sessions created by a tutor
               </button>
             </NavLink>
-            <NavLink to="/dashboard/uploadMaterials">
+            <NavLink
+              to="/dashboard/uploadMaterials"
+              className={({ isActive }) =>
+                isActive ? "text-purple-950 font-bold " : ""
+              }
+            >
               <button className="glass mb-2">3.Upload materials</button>
             </NavLink>
-            <NavLink to="/dashboard/viewMaterials">
+            <NavLink
+              to="/dashboard/viewMaterials"
+              className={({ isActive }) =>
+                isActive ? "text-purple-950 font-bold " : ""
+              }
+            >
               <button className="glass mb-2">4.View all material</button>
             </NavLink>
           </div>
@@ -60,17 +102,37 @@ const Dashboard = () => {
             <h2 className="text-orange-300">Student dashboard</h2>
           </div>
           <div className="flex flex-col py-2 text-sm">
-            <NavLink to="/dashboard/ViewBooked">
+            <NavLink
+              to="/dashboard/ViewBooked"
+              className={({ isActive }) =>
+                isActive ? "text-purple-950 font-bold " : ""
+              }
+            >
               <button className="glass mb-2">1.View booked session</button>
             </NavLink>
-            <NavLink to="/dashboard/createNote">
+            <NavLink
+              to="/dashboard/createNote"
+              className={({ isActive }) =>
+                isActive ? "text-purple-950 font-bold " : ""
+              }
+            >
               <button className="glass mb-2">2.Create note</button>
             </NavLink>
-            <NavLink to="/dashboard/personalNote">
+            <NavLink
+              to="/dashboard/personalNote"
+              className={({ isActive }) =>
+                isActive ? "text-purple-950 font-bold " : ""
+              }
+            >
               <button className="glass mb-2">3.Manage personal notes</button>
             </NavLink>
-            <NavLink to="/dashboard/allStudyMaterials">
-              <button className="glass mb-2">
+            <NavLink
+              to="/dashboard/allStudyMaterials"
+              className={({ isActive }) =>
+                isActive ? "text-purple-950 font-bold " : ""
+              }
+            >
+              <button className="glass mb-2 pr-2">
                 4.View all study materials provided by the tutor
               </button>
             </NavLink>
@@ -78,8 +140,9 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className=" grid-cols-2"></div>
-      <Outlet />
+      <div className="w-full">
+        <Outlet />
+      </div>
     </div>
   );
 };

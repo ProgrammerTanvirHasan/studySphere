@@ -1,9 +1,12 @@
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider";
+import { getAuth, updateProfile } from "firebase/auth";
+import app from "../firebase.confiq";
 
 const Register = () => {
   const { createUser, setUser } = useContext(AuthContext);
+  const auth = getAuth(app);
   const navigate = useNavigate();
   const handleRegister = (e) => {
     e.preventDefault();
@@ -16,13 +19,16 @@ const Register = () => {
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        setUser(user);
+          console.log(user);
+        return updateProfile(auth.currentUser, { displayName: name });
       })
-      .then((error) => {
-        console.log(error.message);
+      .then(() => {
+        setUser(auth.currentUser);
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error("Registration Error:", error.message);
       });
-
-    navigate("/login");
   };
 
   return (
@@ -79,7 +85,7 @@ const Register = () => {
             </div>
 
             <div className="form-control">
-            <label className="label">
+              <label className="label">
                 <span className="label-text">Select One</span>
               </label>
               <select
