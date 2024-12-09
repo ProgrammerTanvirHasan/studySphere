@@ -1,4 +1,8 @@
+import { useContext } from "react";
+import { AuthContext } from "../../../AuthProvider";
+
 const CreateSession = () => {
+  const { user } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -23,8 +27,21 @@ const CreateSession = () => {
       registrationEnd,
       registrationStart,
       classEnd,
+      email: user.email,
+      name: user.displayName,
     };
-    console.log(details);
+
+    fetch("http://localhost:4000/session", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(details),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.error("Error:", error));
+    form.reset();
   };
 
   return (
@@ -92,13 +109,15 @@ const CreateSession = () => {
               <div className="label">
                 <span className="label-text">Status</span>
               </div>
-              <input
-                type="text"
+              <select
                 name="status"
-                placeholder="Type here"
-                defaultValue={"Pending"}
-                className="input input-bordered full max-w-xs"
-              />
+                defaultValue="Pending"
+                className="select select-bordered w-full max-w-xs"
+              >
+                <option value="Pending">Pending</option>
+                <option value="Rejected">Rejected</option>
+                <option value="Approved">Approved</option>
+              </select>
             </label>
 
             <label className="form-control w-full max-w-xs">
@@ -150,7 +169,7 @@ const CreateSession = () => {
                 type="number"
                 min={0}
                 name="duration"
-                placeholder="Type here"
+                placeholder="duration"
                 className="input input-bordered w-full max-w-xs"
               />
             </label>

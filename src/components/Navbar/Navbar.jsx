@@ -16,7 +16,7 @@ const Navbar = () => {
       });
   };
   return (
-    <div className="bg-orange-400 bg-opacity-60 shadow-2xl ">
+    <div className="bg-orange-500 bg-opacity-60 shadow-2xl ">
       <div className="navbar ">
         <div className="flex-none ">
           <GiBookAura className="w-8 h-8"></GiBookAura>
