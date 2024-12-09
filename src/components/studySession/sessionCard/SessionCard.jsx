@@ -1,7 +1,8 @@
 import moment from "moment";
+import { Link } from "react-router";
 
 const SessionCard = ({ session }) => {
-  const { title, textarea, registrationEnd } = session;
+  const { title, textarea, registrationEnd, _id } = session;
   const isRegistrationClosed = moment().isAfter(moment(registrationEnd));
 
   return (
@@ -14,9 +15,11 @@ const SessionCard = ({ session }) => {
             Registration: {isRegistrationClosed ? "Closed" : "Ongoing"}
           </p>
           <div className="card-actions justify-end">
-            <button className="btn bg-orange-400 opacity-80 text-black font-bold">
-              Read more
-            </button>
+            <Link to={`/details/${_id}`}>
+              <button className="btn bg-orange-400 opacity-80 text-black font-bold">
+                Read more
+              </button>
+            </Link>
           </div>
         </div>
       </div>

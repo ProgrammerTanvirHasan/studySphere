@@ -20,6 +20,7 @@ import CreateNote from "./components/studentRoute/CreateNote/CreateNote.jsx";
 import PersonalNote from "./components/studentRoute/PersonalNote/PersonalNote.jsx";
 import AllStudyMaterials from "./components/studentRoute/AllStudyMaterials/AllStudyMaterials.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import SessionDetails from "./components/studySession/sessionDetails/SessionDetails.jsx";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
@@ -31,6 +32,8 @@ createRoot(document.getElementById("root")).render(
             <Route path="/" element={<App />} />
             <Route path="/login" element={<LoggedIn />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/details/:_id" element={<SessionDetails />} />
+
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="users" element={<Users />} />
               <Route path="session" element={<Session />} />
