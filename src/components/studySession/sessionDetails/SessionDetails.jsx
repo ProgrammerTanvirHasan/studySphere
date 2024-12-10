@@ -2,9 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import moment from "moment";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../footer/Footer";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
+import { useContext } from "react";
+import { AuthContext } from "../../../AuthProvider";
+import Swal from "sweetalert2";
 
 const SessionDetails = () => {
+  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const { _id } = useParams();
 
   const { isLoading, error, data } = useQuery({
@@ -16,6 +21,47 @@ const SessionDetails = () => {
   if (error) return "An error has occurred: " + error.message;
 
   const isRegistrationClosed = moment().isAfter(moment(data.registrationEnd));
+  const isPaidSession = data.amount > 0;
+  const handleBook = () => {
+    if (!isPaidSession) {
+      const bookingData = {
+        
+        studentEmail: user.email,
+        studySessionID: data._id,
+        tutorEmail: data.email,
+      };
+
+      fetch("http://localhost:4000/bookedSession", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          Swal.fire({
+            title: "Booking Successful!",
+            text: "Your session has been booked successfully.",
+            icon: "success",
+            confirmButtonText: "OK",
+          });
+        })
+        .catch((error) => console.error(error));
+      navigate("/");
+    }
+    if (isPaidSession) {
+      navigate("/payment", {
+        state: {
+          sessionID: data._id,
+          amount: parseInt(data.amount),
+          tutorEmail: data.email,
+          studentEmail: user.email,
+        },
+      });
+    }
+  };
+
   return (
     <div>
       <Navbar></Navbar>
@@ -41,6 +87,7 @@ const SessionDetails = () => {
               <h2 className="text-xl">Tutor: {data.name}</h2>
               <p>Registration fee: {data.amount} Taka</p>
             </div>
+
             <p className="pt-2 font-bold">{data.textarea}</p>
           </div>
           <div className="text-start mt-12">
@@ -62,7 +109,10 @@ const SessionDetails = () => {
             </>
           ) : (
             <>
-              <button className="btn glass text-white px-12 text-lg">
+              <button
+                onClick={handleBook}
+                className="btn glass text-white px-12 text-lg"
+              >
                 Book Now
               </button>
             </>

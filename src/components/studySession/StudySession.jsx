@@ -16,7 +16,7 @@ const StudySession = () => {
         StudySession
       </h2>
       <div className="grid lg:grid-cols-3 gap-4 py-4">
-        {data.slice(0, 6).map((session) => (
+        {data.map((session) => (
           <SessionCard key={session._id} session={session}></SessionCard>
         ))}
       </div>

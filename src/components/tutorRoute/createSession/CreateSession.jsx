@@ -9,7 +9,7 @@ const CreateSession = () => {
     const title = form.title.value;
     const textarea = form.textarea.value;
     const status = form.status.value;
-    const amount = form.amount.value;
+    const amount = parseInt(form.amount.value);
     const duration = form.duration.value;
     const classStart = form.classStart.value;
 
