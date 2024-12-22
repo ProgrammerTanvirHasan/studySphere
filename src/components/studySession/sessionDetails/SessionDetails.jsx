@@ -3,7 +3,7 @@ import moment from "moment";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../footer/Footer";
 import { useNavigate, useParams } from "react-router";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../AuthProvider";
 import Swal from "sweetalert2";
 
@@ -11,12 +11,22 @@ const SessionDetails = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const { _id } = useParams();
+  // const [reviews, setReviews] = useState("");
 
   const { isLoading, error, data } = useQuery({
     queryKey: ["sessionData", _id],
     queryFn: () =>
       fetch(`http://localhost:4000/session/${_id}`).then((res) => res.json()),
   });
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:4000/reviews/${_id}`)
+  //     .then((res) => res.json())
+  //     .then((data) => setReviews(data))
+  //     .catch((error) => console.error("Error fetching reviews:", error));
+  // }, [_id]);
+
+
   if (isLoading) return "Loading...";
   if (error) return "An error has occurred: " + error.message;
 
@@ -48,7 +58,7 @@ const SessionDetails = () => {
         body: JSON.stringify(bookingData),
       })
         .then((response) => response.json())
-        .then((data) => {
+        .then(() => {
           Swal.fire({
             title: "Booking Successful!",
             text: "Your session has been booked successfully.",
@@ -87,7 +97,7 @@ const SessionDetails = () => {
         <div className="bg-green-900 opacity-80  text-white lg:p-8 rounded-xl">
           <h2 className="text-xl"> The selected session</h2>
           <div className="pt-12">
-            <p className="text-end text-orange-400">Reviews:</p>
+            <p className="text-end text-orange-400">Rating:</p>
             <div className="flex justify-between py-2">
               <h2 className="card card-title">{data.title}</h2>
               <p> Session duration: {data.duration} Minutes</p>
@@ -110,10 +120,7 @@ const SessionDetails = () => {
           <div className="text-start mt-12">
             <h2> Reviews of the session</h2>
             <div className="grid grid-cols-3 gap-4">
-              <p>Todo</p>
-              <p>todo</p>
-              <p>todo</p>
-              <p>todo</p>
+             
             </div>
           </div>
           {isRegistrationClosed ? (

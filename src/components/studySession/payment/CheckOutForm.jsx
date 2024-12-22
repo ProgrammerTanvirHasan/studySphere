@@ -114,6 +114,7 @@ const CheckOutForm = () => {
         status,
         registrationStart,
         classEnd,
+        amount,
       };
 
       fetch("http://localhost:4000/bookedSession", {

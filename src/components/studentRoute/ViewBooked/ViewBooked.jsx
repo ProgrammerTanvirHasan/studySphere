@@ -18,7 +18,7 @@ const ViewBooked = () => {
 
   return (
     <div className="py-4">
-      <h2 className="text-center text-xl bg-orange-400 text-white ">
+      <h2 className="text-center text-xl bg-orange-400 text-white py-2 ">
         All session that you are booked
       </h2>
       <div className="grid lg:grid-cols-2 gap-4 py-4">
