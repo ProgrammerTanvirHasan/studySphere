@@ -8,7 +8,21 @@ const CheckOutForm = () => {
   const [clientSecret, setClientSecret] = useState("");
   const location = useLocation();
   const navigate = useNavigate();
-  const { sessionID, amount, tutorEmail, studentEmail } = location.state || {};
+  const {
+    studySessionID,
+    amount,
+    tutorEmail,
+    studentEmail,
+    registrationEnd,
+    Tutor,
+    classStart,
+    duration,
+    title,
+    textarea,
+    status,
+    registrationStart,
+    classEnd,
+  } = location.state || {};
   const [transactionId, setTransactionId] = useState("");
   const [error, setError] = useState(null);
   const stripe = useStripe();
@@ -88,9 +102,18 @@ const CheckOutForm = () => {
 
       const bookingData = {
         studentEmail,
-        studySessionID: sessionID,
+        studySessionID,
         tutorEmail,
         transactionId: paymentIntent.id,
+        registrationEnd,
+        Tutor,
+        classStart,
+        duration,
+        title,
+        textarea,
+        status,
+        registrationStart,
+        classEnd,
       };
 
       fetch("http://localhost:4000/bookedSession", {

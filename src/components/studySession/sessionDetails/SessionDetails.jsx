@@ -25,10 +25,19 @@ const SessionDetails = () => {
   const handleBook = () => {
     if (!isPaidSession) {
       const bookingData = {
-        
         studentEmail: user.email,
         studySessionID: data._id,
         tutorEmail: data.email,
+        title: data.title,
+        textarea: data.textarea,
+        status: data.status,
+        amount: data.amount,
+        duration: data.duration,
+        classStart: data.classStart,
+        classEnd: data.classEnd,
+        registrationStart: data.registrationStart,
+        registrationEnd: data.registrationEnd,
+        Tutor: data.name,
       };
 
       fetch("http://localhost:4000/bookedSession", {
@@ -53,10 +62,18 @@ const SessionDetails = () => {
     if (isPaidSession) {
       navigate("/payment", {
         state: {
-          sessionID: data._id,
           amount: parseInt(data.amount),
           tutorEmail: data.email,
           studentEmail: user.email,
+          studySessionID: data._id,
+          registrationEnd: data.registrationEnd,
+          Tutor: data.name,
+          registrationStart: data.registrationStart,
+          classStart: data.classStart,
+          duration: data.duration,
+          title: data.title,
+          textarea: data.textarea,
+          status: data.status,
         },
       });
     }

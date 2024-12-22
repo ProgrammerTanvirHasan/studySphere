@@ -10,12 +10,12 @@ const CreateSession = () => {
     const textarea = form.textarea.value;
     const status = form.status.value;
     const amount = parseInt(form.amount.value);
-    const duration = form.duration.value;
-    const classStart = form.classStart.value;
+    const duration = parseInt(form.duration.value);
+    const classStart = new Date(form.classStart.value);
 
-    const classEnd = form.classEnd.value;
-    const registrationEnd = form.registrationEnd.value;
-    const registrationStart = form.registrationStart.value;
+    const classEnd = new Date(form.classEnd.value);
+    const registrationEnd = new Date(form.registrationEnd.value);
+    const registrationStart = new Date(form.registrationStart.value);
 
     const details = {
       title,

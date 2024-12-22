@@ -22,6 +22,7 @@ import AllStudyMaterials from "./components/studentRoute/AllStudyMaterials/AllSt
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SessionDetails from "./components/studySession/sessionDetails/SessionDetails.jsx";
 import Payment from "./components/studySession/payment/Payment.jsx";
+import BookDetails from "./components/studentRoute/bookDetails/BookDetails.jsx";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
@@ -35,6 +36,7 @@ createRoot(document.getElementById("root")).render(
             <Route path="/register" element={<Register />} />
             <Route path="/details/:_id" element={<SessionDetails />} />
             <Route path="/payment" element={<Payment />} />
+            <Route path="/bookedDetails/:title" element={<BookDetails />} />
 
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="users" element={<Users />} />
@@ -45,7 +47,7 @@ createRoot(document.getElementById("root")).render(
               <Route path="viewMaterials" element={<ViewMaterials />} />
               <Route path="materials" element={<Materials />} />
 
-              <Route path="ViewBooked" element={< ViewBooked />} />
+              <Route path="ViewBooked" element={<ViewBooked />} />
               <Route path="createNote" element={<CreateNote />} />
               <Route path="personalNote" element={<PersonalNote />} />
               <Route path="allStudyMaterials" element={<AllStudyMaterials />} />
