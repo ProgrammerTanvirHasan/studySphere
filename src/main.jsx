@@ -17,12 +17,14 @@ import UploadMaterials from "./components/tutorRoute/UploadMaterials/UploadMater
 import ViewMaterials from "./components/tutorRoute/ViewMaterials/ViewMaterials.jsx";
 import ViewBooked from "./components/studentRoute/ViewBooked/ViewBooked.jsx";
 import CreateNote from "./components/studentRoute/CreateNote/CreateNote.jsx";
-import PersonalNote from "./components/studentRoute/PersonalNote/PersonalNote.jsx";
+
 import AllStudyMaterials from "./components/studentRoute/AllStudyMaterials/AllStudyMaterials.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SessionDetails from "./components/studySession/sessionDetails/SessionDetails.jsx";
 import Payment from "./components/studySession/payment/Payment.jsx";
 import BookDetails from "./components/studentRoute/bookDetails/BookDetails.jsx";
+import PersonalNote from "./components/studentRoute/personalNote/PersonalNote.jsx";
+import Update from "./components/studentRoute/personalNote/update/Update.jsx";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
@@ -37,6 +39,7 @@ createRoot(document.getElementById("root")).render(
             <Route path="/details/:_id" element={<SessionDetails />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/bookedDetails/:title" element={<BookDetails />} />
+            <Route path="/update/:_id" element={<Update />} />
 
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="users" element={<Users />} />

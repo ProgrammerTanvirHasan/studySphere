@@ -2,18 +2,55 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider";
 import Marquee from "react-fast-marquee";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 const PersonalNote = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
-  const { isPending, error, data } = useQuery({
+
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["storeData", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/stored/${email}`).then((res) => res.json()),
+      fetch(`http://localhost:4000/stored/email/${email}`).then((res) =>
+        res.json()
+      ),
   });
 
-  if (isPending) return "Loading...";
+  if (isLoading) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
+
+  const handleDelete = (_id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        fetch(`http://localhost:4000/stored/${_id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+            refetch();
+          })
+          .catch((error) => {
+            console.error("Error deleting note:", error);
+            Swal.fire("Error", "Failed to delete the note.", "error");
+          });
+      }
+    });
+  };
 
   return (
     <div className="bg-indigo-950 max-w-full min-h-screen">
@@ -46,9 +83,22 @@ const PersonalNote = () => {
       ) : (
         <div className="px-4 ">
           {data.map((note) => (
-            <div key={note._id}>
+            <div className="border-b-2 rounded-xl" key={note._id}>
               <h2 className="text-2xl text-white">Title :{note.title}</h2>{" "}
-              <p className="text-white text-sm mb-8">{note.note}</p>
+              <p className="text-white text-sm mb-2">{note.note}</p>
+              <div className="flex gap-4 mb-8">
+                <Link to={`/update/${note._id}`}>
+                  <button className="btn bg-green-700 text-white">
+                    Update
+                  </button>
+                </Link>
+                <button
+                  onClick={() => handleDelete(note._id)}
+                  className="btn bg-red-800 text-white"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
         </div>
