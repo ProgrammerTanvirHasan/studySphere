@@ -1,53 +1,77 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 import moment from "moment";
 import Navbar from "../../Navbar/Navbar";
 import Footer from "../../footer/Footer";
 import { useNavigate, useParams } from "react-router";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider";
 import Swal from "sweetalert2";
+import { Rating } from "@smastrom/react-rating";
+
+import "@smastrom/react-rating/style.css";
 
 const SessionDetails = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const { _id } = useParams();
-  // const [reviews, setReviews] = useState("");
 
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["sessionData", _id],
-    queryFn: () =>
-      fetch(`http://localhost:4000/session/${_id}`).then((res) => res.json()),
+  const [sessionQuery, reviewsQuery] = useQueries({
+    queries: [
+      {
+        queryKey: ["sessionData", _id],
+        queryFn: () =>
+          fetch(`http://localhost:4000/session/${_id}`).then((res) =>
+            res.json()
+          ),
+      },
+      {
+        queryKey: ["reviewsData", _id],
+        queryFn: () =>
+          fetch(`http://localhost:4000/reviews/${_id}`).then((res) =>
+            res.json()
+          ),
+      },
+    ],
   });
 
-  // useEffect(() => {
-  //   fetch(`http://localhost:4000/reviews/${_id}`)
-  //     .then((res) => res.json())
-  //     .then((data) => setReviews(data))
-  //     .catch((error) => console.error("Error fetching reviews:", error));
-  // }, [_id]);
+  const {
+    data: sessionData,
+    isLoading: sessionLoading,
+    error: sessionError,
+  } = sessionQuery;
+  const {
+    data: reviews,
+    isLoading: reviewsLoading,
+    error: reviewsError,
+  } = reviewsQuery;
 
+  if (sessionLoading || reviewsLoading) return "Loading...";
+  if (sessionError || reviewsError) {
+    return `An error occurred: ${
+      sessionError?.message || reviewsError?.message
+    }`;
+  }
 
-  if (isLoading) return "Loading...";
-  if (error) return "An error has occurred: " + error.message;
-
-  const isRegistrationClosed = moment().isAfter(moment(data.registrationEnd));
-  const isPaidSession = data.amount > 0;
+  const isRegistrationClosed = moment().isAfter(
+    moment(sessionData.registrationEnd)
+  );
+  const isPaidSession = sessionData.amount > 0;
   const handleBook = () => {
     if (!isPaidSession) {
       const bookingData = {
         studentEmail: user.email,
-        studySessionID: data._id,
-        tutorEmail: data.email,
-        title: data.title,
-        textarea: data.textarea,
-        status: data.status,
-        amount: data.amount,
-        duration: data.duration,
-        classStart: data.classStart,
-        classEnd: data.classEnd,
-        registrationStart: data.registrationStart,
-        registrationEnd: data.registrationEnd,
-        Tutor: data.name,
+        studySessionID: sessionData._id,
+        tutorEmail: sessionData.email,
+        title: sessionData.title,
+        textarea: sessionData.textarea,
+        status: sessionData.status,
+        amount: sessionData.amount,
+        duration: sessionData.duration,
+        classStart: sessionData.classStart,
+        classEnd: sessionData.classEnd,
+        registrationStart: sessionData.registrationStart,
+        registrationEnd: sessionData.registrationEnd,
+        Tutor: sessionData.name,
       };
 
       fetch("http://localhost:4000/bookedSession", {
@@ -72,18 +96,18 @@ const SessionDetails = () => {
     if (isPaidSession) {
       navigate("/payment", {
         state: {
-          amount: parseInt(data.amount),
-          tutorEmail: data.email,
+          amount: parseInt(sessionData.amount),
+          tutorEmail: sessionData.email,
           studentEmail: user.email,
-          studySessionID: data._id,
-          registrationEnd: data.registrationEnd,
-          Tutor: data.name,
-          registrationStart: data.registrationStart,
-          classStart: data.classStart,
-          duration: data.duration,
-          title: data.title,
-          textarea: data.textarea,
-          status: data.status,
+          studySessionID: sessionData._id,
+          registrationEnd: sessionData.registrationEnd,
+          Tutor: sessionData.name,
+          registrationStart: sessionData.registrationStart,
+          classStart: sessionData.classStart,
+          duration: sessionData.duration,
+          title: sessionData.title,
+          textarea: sessionData.textarea,
+          status: sessionData.status,
         },
       });
     }
@@ -94,34 +118,47 @@ const SessionDetails = () => {
       <Navbar></Navbar>
 
       <div className="flex justify-center text-center item-center py-2 ">
-        <div className="bg-green-900 opacity-80  text-white lg:p-8 rounded-xl">
+        <div className="bg-green-900 opacity-80  text-white lg:p-8 rounded-xl ">
           <h2 className="text-xl"> The selected session</h2>
           <div className="pt-12">
-            <p className="text-end text-orange-400">Rating:</p>
             <div className="flex justify-between py-2">
-              <h2 className="card card-title">{data.title}</h2>
-              <p> Session duration: {data.duration} Minutes</p>
+              <h2 className="card card-title">{sessionData.title}</h2>
+              <p> Session duration: {sessionData.duration} Minutes</p>
             </div>
             <div className="flex justify-between">
-              <p>Registration Start From: {data.registrationStart}</p>
-              <p>Registration Close: {data.registrationEnd}</p>
+              <p>Registration Start From: {sessionData.registrationStart}</p>
+              <p>Registration Close: {sessionData.registrationEnd}</p>
             </div>
             <div className="flex justify-between">
-              <p>Class start from: {data.classStart}</p>
-              <p>Class end: {data.classEnd}</p>
+              <p>Class start from: {sessionData.classStart}</p>
+              <p>Class end: {sessionData.classEnd}</p>
             </div>
             <div className="flex justify-between">
-              <h2 className="text-xl">Tutor: {data.name}</h2>
-              <p>Registration fee: {data.amount} Taka</p>
+              <h2 className="text-xl">Tutor: {sessionData.name}</h2>
+              <p>Registration fee: {sessionData.amount} Taka</p>
             </div>
 
-            <p className="pt-2 font-bold">{data.textarea}</p>
+            <p className="pt-2  w-3/4">{sessionData.textarea}</p>
           </div>
-          <div className="text-start mt-12">
-            <h2> Reviews of the session</h2>
-            <div className="grid grid-cols-3 gap-4">
-             
-            </div>
+          <div className="text-start  mt-12">
+            <h2 className="card card-title border-b-2 w-96">
+              Students Review of the session
+            </h2>
+            {reviews.length === 0 ? (
+              <p className="text-red-300">No Review Here</p>
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 my-2 px-2">
+                {reviews.map((review, index) => (
+                  <div key={index} className="bg-black px-2">
+                    <p className="text-center">
+                      <Rating style={{ maxWidth: 180 }} value={review.rating} />
+                    </p>
+                    <p className="mb-2">{review.review}</p>
+                    <p className="text-green-400">{review.student}</p>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
           {isRegistrationClosed ? (
             <>

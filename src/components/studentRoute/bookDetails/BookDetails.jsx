@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
 import { Link, useParams } from "react-router";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../AuthProvider";
 
 const BookDetails = () => {
   const { title } = useParams();
+  const { user } = useContext(AuthContext);
 
   const { isPending, error, data } = useQuery({
     queryKey: ["bookedSession", title],
@@ -23,7 +26,8 @@ const BookDetails = () => {
     const review = form.review.value;
     const rating = parseInt(form.rating.value);
     const reviewID = data.studySessionID;
-    const reviews = { review, rating, reviewID };
+    const student = user?.displayName;
+    const reviews = { review, rating, reviewID, student };
 
     fetch(`http://localhost:4000/reviews`, {
       method: "POST",
