@@ -69,7 +69,7 @@ const AdminSession = ({ session, refetch }) => {
   };
 
   return (
-    <div className="card bg-neutral text-neutral-content ">
+    <div className="card bg-slate-300 ">
       <div className="card-body items-center text-center">
         <h2 className="card-title">{title}</h2>
         <p>{textarea}</p>
@@ -82,7 +82,12 @@ const AdminSession = ({ session, refetch }) => {
         <div className="card-actions justify-end">
           <button
             onClick={() => handleApproved(_id)}
-            className={`btn ${status === "Pending" ? "bg-yellow-500 text-black" : "bg-green-600 text-white"}`}
+            className={`btn ${
+              status === "Pending"
+                ? "bg-yellow-500 text-black"
+                : "bg-green-600 text-white  "
+            }`}
+            disabled={status === "Approved"}
           >
             {status}
           </button>

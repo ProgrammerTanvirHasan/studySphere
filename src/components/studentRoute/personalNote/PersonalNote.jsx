@@ -4,6 +4,7 @@ import { AuthContext } from "../../../AuthProvider";
 import Marquee from "react-fast-marquee";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+
 const PersonalNote = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
@@ -58,43 +59,46 @@ const PersonalNote = () => {
         Personal Note That You Stored
       </h2>
       {data.length === 0 ? (
-        <>
-          <div className="w-[780px] h-[780px]  mt-4 overflow-hidden flex items-center justify-center">
+        <div className="w-full h-screen mt-4 flex items-center justify-center">
+          <Marquee
+            direction="down"
+            speed={50}
+            gradient={false}
+            className="w-full h-full flex justify-center items-center"
+            pauseOnHover
+          >
             <Marquee
-              direction="down"
-              speed={100}
+              direction="alternate"
+              speed={30}
               gradient={false}
-              className="w-full h-full"
               pauseOnHover
             >
-              <Marquee
-                direction="alternate"
-                speed={50}
-                gradient={false}
-                pauseOnHover
-              >
-                <p className="text-center  font-bold text-6xl text-red-600">
-                  No Note Yet
-                </p>
-              </Marquee>
+              <p className="text-3xl sm:text-4xl md:text-6xl font-bold text-red-600">
+                No Note Yet
+              </p>
             </Marquee>
-          </div>
-        </>
+          </Marquee>
+        </div>
       ) : (
-        <div className="px-4 ">
+        <div className="px-4">
           {data.map((note) => (
-            <div className="border-b-2 rounded-xl" key={note._id}>
-              <h2 className="text-2xl text-white">Title :{note.title}</h2>{" "}
+            <div
+              className="border-b-2 rounded-xl p-4 mb-4 bg-indigo-800"
+              key={note._id}
+            >
+              <h2 className="text-lg sm:text-xl md:text-2xl text-white">
+                Title: {note.title}
+              </h2>
               <p className="text-white text-sm mb-2">{note.note}</p>
-              <div className="flex gap-4 mb-8">
+              <div className="flex flex-col sm:flex-row gap-4 mb-4">
                 <Link to={`/update/${note._id}`}>
-                  <button className="btn bg-green-700 text-white">
+                  <button className="btn bg-green-700 text-white w-full sm:w-auto">
                     Update
                   </button>
                 </Link>
                 <button
                   onClick={() => handleDelete(note._id)}
-                  className="btn bg-red-800 text-white"
+                  className="btn bg-red-800 text-white w-full sm:w-auto"
                 >
                   Delete
                 </button>

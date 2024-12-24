@@ -12,19 +12,32 @@ const Register = () => {
     e.preventDefault();
     const form = e.target;
     const name = form.name.value;
-    const select = form.select.value;
+    const role = form.role.value;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(name, select);
+
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-          console.log(user);
+        console.log(user);
         return updateProfile(auth.currentUser, { displayName: name });
       })
       .then(() => {
-        setUser(auth.currentUser);
-        navigate("/login");
+        fetch("http://localhost:4000/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email, role }),
+        })
+          .then((res) => res.json())
+          .then(() => {
+            setUser(auth.currentUser);
+            navigate("/login");
+          })
+          .catch((error) =>
+            console.error("Error saving user to database:", error)
+          );
       })
       .catch((error) => {
         console.error("Registration Error:", error.message);
@@ -88,11 +101,7 @@ const Register = () => {
               <label className="label">
                 <span className="label-text">Select One</span>
               </label>
-              <select
-                name="select"
-                className="select  w-full max-w-xs"
-                required
-              >
+              <select name="role" className="select  w-full max-w-xs" required>
                 <option disabled selected>
                   Role selection
                 </option>
