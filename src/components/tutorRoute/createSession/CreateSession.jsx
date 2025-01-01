@@ -107,17 +107,14 @@ const CreateSession = () => {
           <div className="lg:flex lg:ml-24 gap-4">
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Status</span>
+                <span className="label-text"> Status</span>
               </div>
-              <select
+              <input
+                type="text"
                 name="status"
-                defaultValue="Pending"
-                className="select select-bordered w-full max-w-xs"
-              >
-                <option value="Pending">Pending</option>
-                <option value="Rejected">Rejected</option>
-                <option value="Approved">Approved</option>
-              </select>
+                defaultValue={"Pending"}
+                className="input input-bordered full max-w-xs"
+              />
             </label>
 
             <label className="form-control w-full max-w-xs">

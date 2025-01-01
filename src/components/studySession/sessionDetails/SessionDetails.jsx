@@ -20,7 +20,7 @@ const SessionDetails = () => {
       {
         queryKey: ["sessionData", _id],
         queryFn: () =>
-          fetch(`http://localhost:4000/session/${_id}`).then((res) =>
+          fetch(`http://localhost:4000/session/Approved/${_id}`).then((res) =>
             res.json()
           ),
       },
