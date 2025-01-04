@@ -42,11 +42,11 @@ const Navbar = () => {
                     alt="User Avatar"
                   />
                 </div>
-                <div className="ml-2">
+                <div className="ml-4">
                   <NavLink to="/dashboard">
                     <button>
                       {" "}
-                      <RiDashboardFill className="text-3xl"></RiDashboardFill>
+                      <RiDashboardFill className="text-5xl"></RiDashboardFill>
                     </button>
                   </NavLink>
                 </div>
@@ -64,7 +64,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className="flex justify-end text-sm mr-8">{email}</div>
+      <div className="flex justify-end text-sm mr-12">{email}</div>
     </div>
   );
 };

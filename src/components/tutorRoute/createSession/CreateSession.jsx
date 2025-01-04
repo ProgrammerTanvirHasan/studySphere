@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider";
+import Swal from "sweetalert2";
 
 const CreateSession = () => {
   const { user } = useContext(AuthContext);
@@ -39,7 +40,13 @@ const CreateSession = () => {
       body: JSON.stringify(details),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then(() => {
+        Swal.fire({
+          title: "Session Created Successfully",
+          icon: "success",
+          draggable: true,
+        });
+      })
       .catch((error) => console.error("Error:", error));
     form.reset();
   };
@@ -137,11 +144,10 @@ const CreateSession = () => {
               </div>
 
               <input
-                type="number"
+                type="text"
                 name="amount"
                 defaultValue={0}
                 className="input input-bordered w-full max-w-xs"
-                min="0"
               />
             </label>
 
