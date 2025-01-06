@@ -68,7 +68,7 @@ const Sessions = ({ session, refetch }) => {
 
   return (
     <div>
-      <div className="card w-full lg:w-96 h-96 bg-neutral-700">
+      <div className="card w-full lg:w-96 h-96 bg-neutral-700 lg:ml-8">
         <div className="text-end">
           <button
             onClick={() => handleDelete(_id)}
@@ -83,7 +83,7 @@ const Sessions = ({ session, refetch }) => {
           <p className="text-orange-400 text-lg">{amount} Taka</p>
           <div className="card card-actions">
             <btn className={buttonClass} onClick={() => handleReject(_id)}>
-              {status === "Rejected" ? "Send Approval" : status}
+              {status === "Rejected" ? "Send Approval !" : status}
             </btn>
           </div>
         </div>

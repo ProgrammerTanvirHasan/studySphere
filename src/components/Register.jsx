@@ -19,7 +19,7 @@ const Register = () => {
     createUser(email, password)
       .then((result) => {
         const user = result.user;
-        console.log(user);
+
         return updateProfile(auth.currentUser, { displayName: name });
       })
       .then(() => {

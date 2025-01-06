@@ -8,10 +8,9 @@ const CreateNote = () => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value;
-    const email = form.email.value;
+    const email = user?.email;
     const note = form.note.value;
     const notes = { title, email, note };
-    console.log(notes);
 
     fetch("http://localhost:4000/stored", {
       method: "POST",
@@ -46,18 +45,7 @@ const CreateNote = () => {
             <input type="text" name="title" className="grow" />
           </label>
 
-          <label className="input input-bordered flex items-center gap-2 lg:w-3/5 mx-auto my-2">
-            Email
-            <input
-              type="email"
-              name="email"
-              defaultValue={user?.email}
-              className="grow"
-              required
-            />
-          </label>
-
-          <div className="lg:w-3/5 mx-auto">
+          <div className="lg:w-3/5 mx-auto mt-4">
             <textarea
               placeholder="Note"
               name="note"

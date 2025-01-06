@@ -14,8 +14,9 @@ const SessionDetails = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
   const { _id } = useParams();
+  const email = user?.email;
 
-  const [sessionQuery, reviewsQuery] = useQueries({
+  const [sessionQuery, reviewsQuery, registerQuery] = useQueries({
     queries: [
       {
         queryKey: ["sessionData", _id],
@@ -31,6 +32,13 @@ const SessionDetails = () => {
             res.json()
           ),
       },
+      {
+        queryKey: ["registerData", email],
+        queryFn: () =>
+          fetch(`http://localhost:4000/register/${email}`).then((res) =>
+            res.json()
+          ),
+      },
     ],
   });
 
@@ -39,14 +47,21 @@ const SessionDetails = () => {
     isLoading: sessionLoading,
     error: sessionError,
   } = sessionQuery;
+
   const {
     data: reviews,
     isLoading: reviewsLoading,
     error: reviewsError,
   } = reviewsQuery;
 
-  if (sessionLoading || reviewsLoading) return "Loading...";
-  if (sessionError || reviewsError) {
+  const {
+    data: register,
+    isLoading: registerLoading,
+    error: registerError,
+  } = registerQuery;
+
+  if (sessionLoading || reviewsLoading || registerLoading) return "Loading...";
+  if (sessionError || reviewsError || registerError) {
     return `An error occurred: ${
       sessionError?.message || reviewsError?.message
     }`;
@@ -129,6 +144,7 @@ const SessionDetails = () => {
               <p>Registration Start From: {sessionData.registrationStart}</p>
               <p>Registration Close: {sessionData.registrationEnd}</p>
             </div>
+            {register.role}
             <div className="flex justify-between">
               <p>Class start from: {sessionData.classStart}</p>
               <p>Class end: {sessionData.classEnd}</p>
@@ -160,13 +176,16 @@ const SessionDetails = () => {
               </div>
             )}
           </div>
-          {isRegistrationClosed ? (
+
+          {isRegistrationClosed ||
+          register.role === "admin" ||
+          register.role === "tutor" ? (
             <>
-              {" "}
-              <button disabled className=" p-4 bg-red-800">
-                {" "}
-                Registration closed{" "}
-              </button>{" "}
+              <button disabled className="p-4 bg-red-800">
+                {isRegistrationClosed
+                  ? "Registration closed"
+                  : "You can not book any item"}
+              </button>
             </>
           ) : (
             <>
