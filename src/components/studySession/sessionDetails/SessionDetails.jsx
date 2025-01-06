@@ -144,7 +144,6 @@ const SessionDetails = () => {
               <p>Registration Start From: {sessionData.registrationStart}</p>
               <p>Registration Close: {sessionData.registrationEnd}</p>
             </div>
-            {register.role}
             <div className="flex justify-between">
               <p>Class start from: {sessionData.classStart}</p>
               <p>Class end: {sessionData.classEnd}</p>
