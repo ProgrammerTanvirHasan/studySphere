@@ -1,7 +1,7 @@
 import Swal from "sweetalert2";
 
 const Sessions = ({ session, refetch }) => {
-  const { title, textarea, status, amount, _id } = session;
+  const { title, textarea, status, amount, _id, feedback, reason } = session;
 
   const handleReject = (_id) => {
     if (status !== "Rejected") {
@@ -68,7 +68,7 @@ const Sessions = ({ session, refetch }) => {
 
   return (
     <div>
-      <div className="card w-full lg:w-96 h-96 bg-neutral-700 lg:ml-8">
+      <div className="card w-full lg:w-96 min-h-[500px]  bg-neutral-700 lg:ml-8 shadow-2xl mb-8">
         <div className="text-end">
           <button
             onClick={() => handleDelete(_id)}
@@ -77,7 +77,7 @@ const Sessions = ({ session, refetch }) => {
             X
           </button>
         </div>
-        <div className="card-body">
+        <div className="card-body ">
           <h2 className="card-title text-white">{title}</h2>
           <p className="text-green-500">{textarea}</p>
           <p className="text-orange-400 text-lg">{amount} Taka</p>
@@ -87,6 +87,20 @@ const Sessions = ({ session, refetch }) => {
             </btn>
           </div>
         </div>
+        {status === "Rejected" && (
+          <>
+            <div className="text-red-900 p-2 bg-neutral-400 mb-8">
+              <p className="text-xl">
+                Rejected reason :
+                <span className="text-green-950">{reason}</span>
+              </p>
+              <p>
+                <span className="text-xl">Admin feedback</span> :
+                <span className="text-green-950"> {feedback}</span>
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
