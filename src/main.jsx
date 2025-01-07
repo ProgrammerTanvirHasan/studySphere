@@ -25,6 +25,8 @@ import Payment from "./components/studySession/payment/Payment.jsx";
 import BookDetails from "./components/studentRoute/bookDetails/BookDetails.jsx";
 import PersonalNote from "./components/studentRoute/personalNote/PersonalNote.jsx";
 import Update from "./components/studentRoute/personalNote/update/Update.jsx";
+import Announcement from "./components/dashboard/Announcement/Announcement.jsx";
+import Notice from "./components/Navbar/notice/Notice.jsx";
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
@@ -40,6 +42,8 @@ createRoot(document.getElementById("root")).render(
             <Route path="/payment" element={<Payment />} />
             <Route path="/bookedDetails/:title" element={<BookDetails />} />
             <Route path="/update/:_id" element={<Update />} />
+            <Route path="/announcement" element={<Announcement />} />
+            <Route path="/notice" element={<Notice />} />
 
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="users" element={<Users />} />

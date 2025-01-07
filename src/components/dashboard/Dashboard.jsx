@@ -23,7 +23,12 @@ const Dashboard = () => {
         <div className="border ">
           <div className="flex gap-2 py-2">
             <RiAdminLine className="text-2xl"></RiAdminLine>
+
             <h2 className="text-orange-300">Admin dashboard</h2>
+
+            <NavLink to="/announcement">
+              <button className="glass  p-2">Announcement</button>
+            </NavLink>
           </div>
           <div className="flex flex-col py-2 text-sm">
             <NavLink

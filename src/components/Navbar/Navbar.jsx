@@ -1,9 +1,9 @@
 import { useContext } from "react";
 import { GiBookAura } from "react-icons/gi";
-import { NavLink } from "react-router";
+import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../AuthProvider";
 import { RiDashboardFill } from "react-icons/ri";
-
+import { TfiMenuAlt } from "react-icons/tfi";
 const Navbar = () => {
   const { user, loggedOut } = useContext(AuthContext);
   const email = user?.email;
@@ -17,7 +17,16 @@ const Navbar = () => {
   };
   return (
     <div className="bg-orange-500 bg-opacity-60 shadow-2xl ">
-      <div className="navbar ">
+      <div className="flex justify-between">
+        <Link to="/notice">
+          <button className="text-3xl ">
+            <TfiMenuAlt></TfiMenuAlt>
+          </button>
+        </Link>
+        <div className="flex justify-end text-sm mr-12">{email}</div>
+      </div>
+
+      <div className="navbar">
         <div className="flex-none ">
           <GiBookAura className="w-8 h-8"></GiBookAura>
         </div>
@@ -42,10 +51,10 @@ const Navbar = () => {
                     alt="User Avatar"
                   />
                 </div>
+
                 <div className="ml-4">
                   <NavLink to="/dashboard">
                     <button>
-                      {" "}
                       <RiDashboardFill className="text-5xl"></RiDashboardFill>
                     </button>
                   </NavLink>
@@ -63,8 +72,6 @@ const Navbar = () => {
           )}
         </div>
       </div>
-
-      <div className="flex justify-end text-sm mr-12">{email}</div>
     </div>
   );
 };
