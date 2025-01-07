@@ -14,8 +14,8 @@ const StudySession = () => {
   });
   if (isLoading) return "Loading...";
   if (error) return "An error has occurred: " + error.message;
+  
   const { totalCount, sessions } = data;
-
   const numberOfPage = Math.ceil(totalCount / itemPerPage);
   const pages = [...Array(numberOfPage).keys()];
 
