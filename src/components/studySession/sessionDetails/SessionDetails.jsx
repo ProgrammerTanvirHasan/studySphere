@@ -89,14 +89,25 @@ const SessionDetails = () => {
         Tutor: sessionData.name,
       };
 
-      fetch("http://localhost:4000/bookedSession", {
+      fetch(`http://localhost:4000/bookedSession`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(bookingData),
       })
-        .then((response) => response.json())
+        .then(async (response) => {
+          if (!response.ok) {
+            const error = await response.json();
+            Swal.fire({
+              title: "Error!",
+              text: error.message || "Something went wrong.",
+              icon: "error",
+              confirmButtonText: "OK",
+            });
+            return response.json();
+          }
+        })
         .then(() => {
           Swal.fire({
             title: "Booking Successful!",
@@ -105,10 +116,45 @@ const SessionDetails = () => {
             confirmButtonText: "OK",
           });
         })
-        .catch((error) => console.error(error));
+        .catch((error) => console.log(error.message));
+
       navigate("/");
     }
     if (isPaidSession) {
+      const bookingData = {
+        studentEmail: user.email,
+        studySessionID: sessionData._id,
+        tutorEmail: sessionData.email,
+        title: sessionData.title,
+        textarea: sessionData.textarea,
+        status: sessionData.status,
+        amount: sessionData.amount,
+        duration: sessionData.duration,
+        classStart: sessionData.classStart,
+        classEnd: sessionData.classEnd,
+        registrationStart: sessionData.registrationStart,
+        registrationEnd: sessionData.registrationEnd,
+        Tutor: sessionData.name,
+      };
+      fetch(`http://localhost:4000/bookedSession`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(bookingData),
+      }).then(async (response) => {
+        if (!response.ok) {
+          const error = await response.json();
+          Swal.fire({
+            title: "Error!",
+            text: error.message || "Something went wrong.",
+            icon: "error",
+            confirmButtonText: "OK",
+          });
+          return response.json();
+        }
+      });
+
       navigate("/payment", {
         state: {
           amount: parseInt(sessionData.amount),

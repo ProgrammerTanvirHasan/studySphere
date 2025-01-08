@@ -125,6 +125,7 @@ const CheckOutForm = () => {
         body: JSON.stringify(bookingData),
       })
         .then((response) => response.json())
+
         .then(() => {
           Swal.fire({
             title: "Booking Successful!",
