@@ -1,12 +1,13 @@
 import { Link } from "react-router";
 
 const BookedEmail = ({ booked }) => {
-  const { tutorEmail, studentEmail, transactionId, title, _id } = booked;
+  const { textarea, transactionId, title } = booked;
   return (
     <div>
       <div className="card bg-base-800 w-full lg:w-96  shadow-2xl border border-orange-400 h-72">
         <div className="card-body">
-          <h2 className="card-title">Tutor: {tutorEmail}</h2>
+          <h2 className="card-title"> {title}</h2>
+          <p>{textarea}</p>
 
           {transactionId ? (
             <>

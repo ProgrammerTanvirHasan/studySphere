@@ -19,15 +19,16 @@ const BookDetails = () => {
   if (isPending) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
+  const { data: sessions, emails } = data || { data: [], emails: [] };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const review = form.review.value;
     const rating = parseInt(form.rating.value);
-    const reviewID = data.studySessionID;
-    const student = user?.displayName;
-    const reviews = { review, rating, reviewID, student };
+    const reviewID = sessions.studySessionID;
+    const email = user?.email;
+    const reviews = { review, rating, reviewID, email };
 
     fetch(`http://localhost:4000/reviews`, {
       method: "POST",
@@ -55,23 +56,23 @@ const BookDetails = () => {
         Booked Details
       </h2>
       <div className="card bg-base-800  shadow-2xl border border-orange-400 w-2/3 mx-auto mt-4 p-4 ">
-        <h2 className="text-xl py-2">{data.title}</h2>
-        <p className="font-semibold">Tutor :{data.Tutor}</p>
-        <p>{data.tutorEmail}</p>
+        <h2 className="text-xl py-2">{sessions.title}</h2>
+        <p className="font-semibold">Tutor :{sessions.Tutor}</p>
+        <p>{sessions.tutorEmail}</p>
         <div className="py-2">
-          <p>Fee :{data.amount} taka</p>
+          <p>Fee :{sessions.amount} taka</p>
           <p>
-            {data.duration} <span className="text-lg">min</span>{" "}
+            {sessions.duration} <span className="text-lg">min</span>{" "}
           </p>
         </div>
-        <p className="font-bold text-green-700 mb-2">{data.status}</p>
-        <p className="mb-2">{data.textarea}</p>
-        <p>RegEndDate :{data.registrationEnd}</p>
-        <p>ClassStartDate :{data.classStart}</p>
-        {data.transactionId ? (
+        <p className="font-bold text-green-700 mb-2">{sessions.status}</p>
+        <p className="mb-2">{sessions.textarea}</p>
+        <p>RegEndDate :{sessions.registrationEnd}</p>
+        <p>ClassStartDate :{sessions.classStart}</p>
+        {sessions.transactionId ? (
           <>
             {" "}
-            <p>TransitionID : {data.transactionId}</p>{" "}
+            <p>TransitionID : {sessions.transactionId}</p>{" "}
           </>
         ) : (
           <>
@@ -113,6 +114,18 @@ const BookDetails = () => {
           >
             Submit Review
           </button>
+        </div>
+        <div className="emails-list mt-6">
+          <h3 className="text-lg font-bold text-center">
+            Student Who booked this session:
+          </h3>
+          <ul className="list-disc pl-6">
+            {emails.map((email, index) => (
+              <li key={index} className="text-sm text-gray-700">
+                {email}
+              </li>
+            ))}
+          </ul>
         </div>
       </form>
 
