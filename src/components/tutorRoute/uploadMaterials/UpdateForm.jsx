@@ -9,6 +9,23 @@ const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_ke
 const UpdateForm = () => {
   const { register, handleSubmit, reset } = useForm();
 
+  const { _id } = useParams();
+  const {
+    isPending,
+    error,
+    data: sessionData,
+  } = useQuery({
+    queryKey: ["Approved", _id],
+    queryFn: () =>
+      fetch(`http://localhost:4000/session/Approved/${_id}`).then((res) =>
+        res.json()
+      ),
+  });
+
+  if (isPending) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
   const onSubmit = async (data) => {
     const formData = new FormData();
     formData.append("image", data.image[0]);
@@ -24,6 +41,8 @@ const UpdateForm = () => {
 
       const updatedData = {
         title: data.title,
+        studySessionId: sessionData._id,
+        tutorEmail: sessionData.email,
         driveLink: data.driveLink,
         imageUrl: imageURL,
       };
@@ -55,19 +74,6 @@ const UpdateForm = () => {
     }
   };
 
-  const { _id } = useParams();
-  const { isPending, error, data } = useQuery({
-    queryKey: ["Approved", _id],
-    queryFn: () =>
-      fetch(`http://localhost:4000/session/Approved/${_id}`).then((res) =>
-        res.json()
-      ),
-  });
-
-  if (isPending) return "Loading...";
-
-  if (error) return "An error has occurred: " + error.message;
-
   return (
     <div>
       <h2 className="bg-orange-400 py-2 text-white text-center text-xl">
@@ -81,7 +87,7 @@ const UpdateForm = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <input
               placeholder="Type here"
-              defaultValue={data.title}
+              defaultValue={sessionData.title}
               className=" py-3 border rounded-xl w-96 bg-black glass pl-4"
               {...register("title", { required: true })}
             />

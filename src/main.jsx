@@ -28,6 +28,7 @@ import Update from "./components/studentRoute/personalNote/update/Update.jsx";
 import Announcement from "./components/dashboard/Announcement/Announcement.jsx";
 import Notice from "./components/Navbar/notice/Notice.jsx";
 import UpdateForm from "./components/tutorRoute/uploadMaterials/UpdateForm.jsx";
+import MaterialsUpdateForm from "./components/tutorRoute/viewMaterials/MaterialsUpdateForm.jsx";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +48,10 @@ createRoot(document.getElementById("root")).render(
             <Route path="/announcement" element={<Announcement />} />
             <Route path="/notice" element={<Notice />} />
             <Route path="/upload/:_id" element={<UpdateForm />} />
+            <Route
+              path="/handleUpdate/:_id"
+              element={<MaterialsUpdateForm />}
+            />
 
             <Route path="/dashboard" element={<Dashboard />}>
               <Route path="users" element={<Users />} />
