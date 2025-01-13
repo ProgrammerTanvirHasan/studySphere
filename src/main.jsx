@@ -18,7 +18,6 @@ import ViewMaterials from "./components/tutorRoute/ViewMaterials/ViewMaterials.j
 import ViewBooked from "./components/studentRoute/ViewBooked/ViewBooked.jsx";
 import CreateNote from "./components/studentRoute/CreateNote/CreateNote.jsx";
 
-import AllStudyMaterials from "./components/studentRoute/AllStudyMaterials/AllStudyMaterials.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SessionDetails from "./components/studySession/sessionDetails/SessionDetails.jsx";
 import Payment from "./components/studySession/payment/Payment.jsx";
@@ -29,6 +28,8 @@ import Announcement from "./components/dashboard/Announcement/Announcement.jsx";
 import Notice from "./components/Navbar/notice/Notice.jsx";
 import UpdateForm from "./components/tutorRoute/uploadMaterials/UpdateForm.jsx";
 import MaterialsUpdateForm from "./components/tutorRoute/viewMaterials/MaterialsUpdateForm.jsx";
+import ShowMaterials from "./components/studentRoute/allStudyMaterials/showMaterials/ShowMaterials.jsx";
+import AllStudyMaterials from "./components/studentRoute/allStudyMaterials/AllStudyMaterials.jsx";
 
 const queryClient = new QueryClient();
 
@@ -48,6 +49,11 @@ createRoot(document.getElementById("root")).render(
             <Route path="/announcement" element={<Announcement />} />
             <Route path="/notice" element={<Notice />} />
             <Route path="/upload/:_id" element={<UpdateForm />} />
+            <Route
+              path="/showMaterials/:studySessionID"
+              element={<ShowMaterials />}
+            />
+
             <Route
               path="/handleUpdate/:_id"
               element={<MaterialsUpdateForm />}

@@ -1,7 +1,36 @@
+import { useQuery } from "@tanstack/react-query";
+import { useContext } from "react";
+import { AuthContext } from "../../../AuthProvider";
+import BookedMaterials from "./BookedMaterials";
+
 const AllStudyMaterials = () => {
+  const { user } = useContext(AuthContext);
+  const email = user?.email;
+  const { isPending, error, data } = useQuery({
+    queryKey: ["bookedSession", email],
+    queryFn: () =>
+      fetch(`http://localhost:4000/bookedSession/${email}`).then((res) =>
+        res.json()
+      ),
+  });
+
+  if (isPending) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
   return (
     <div>
-      <h2>all study</h2>
+      <h2 className="text-xl bg-neutral-700 py-2  text-white text-center">
+        Your session
+      </h2>
+      <div >
+        {data.map((materials) => (
+          <BookedMaterials
+            key={materials._id}
+            materials={materials}
+          ></BookedMaterials>
+        ))}
+      </div>
     </div>
   );
 };
