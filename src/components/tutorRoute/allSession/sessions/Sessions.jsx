@@ -68,7 +68,7 @@ const Sessions = ({ session, refetch }) => {
 
   return (
     <div>
-      <div className="card w-full lg:w-96 min-h-[500px]  bg-neutral-700 lg:ml-8 shadow-2xl mb-8">
+      <div className="card w-full lg:w-96 min-h-[400px]  bg-neutral-700 lg:ml-8 shadow-2xl mb-8">
         <div className="text-end">
           <button
             onClick={() => handleDelete(_id)}

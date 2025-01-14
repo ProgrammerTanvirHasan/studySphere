@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Material from "./Material";
 
 const Materials = () => {
-  const { isPending, error, data } = useQuery({
+  const { isPending, error, data, refetch } = useQuery({
     queryKey: ["material"],
     queryFn: () =>
       fetch("http://localhost:4000/material").then((res) => res.json()),
@@ -18,7 +18,7 @@ const Materials = () => {
       </h2>
       <div className="grid lg:grid-cols-2 ml-8">
         {data.map((items) => (
-          <Material key={items._id} items={items}></Material>
+          <Material key={items._id} items={items} refetch={refetch}></Material>
         ))}
       </div>
     </div>

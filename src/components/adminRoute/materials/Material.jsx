@@ -2,7 +2,7 @@ import { FaGoogleDrive } from "react-icons/fa";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
 
-const Material = ({ items }) => {
+const Material = ({ items, refetch }) => {
   const { title, studySessionId, tutorEmail, driveLink, imageUrl, _id } = items;
 
   const handleDelete = (_id) => {
@@ -25,6 +25,7 @@ const Material = ({ items }) => {
               text: "Your file has been deleted.",
               icon: "success",
             });
+            refetch();
           } else {
             Swal.fire({
               title: "Error!",

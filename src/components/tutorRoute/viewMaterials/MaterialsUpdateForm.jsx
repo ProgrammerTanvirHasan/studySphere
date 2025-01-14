@@ -27,7 +27,6 @@ const MaterialsUpdateForm = () => {
     try {
       let imageURL = materials.imageUrl;
 
-     
       if (data.image && data.image[0]) {
         const formData = new FormData();
         formData.append("image", data.image[0]);
@@ -40,20 +39,18 @@ const MaterialsUpdateForm = () => {
         const result = await response.json();
 
         if (result.success) {
-          imageURL = result.data.display_url; 
+          imageURL = result.data.display_url;
         } else {
           throw new Error("Image upload failed.");
         }
       }
 
- 
       const updatedData = {
         title: data.title,
         driveLink: data.driveLink,
         imageUrl: imageURL,
       };
 
-    
       const updateResponse = await fetch(
         `http://localhost:4000/material/${_id}`,
         {
