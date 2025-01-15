@@ -39,7 +39,7 @@ const Material = ({ items, refetch }) => {
   };
 
   return (
-    <div className="pt-8 w-96  shadow-2xl rounded-md">
+    <div className="pt-8 w-96  shadow-2xl rounded-md border-b-4 border-orange-300">
       <img className="w-96 h-64" src={imageUrl} alt={title} />
       <div className="flex justify-between">
         <p className="text-orange-400">{studySessionId}</p>

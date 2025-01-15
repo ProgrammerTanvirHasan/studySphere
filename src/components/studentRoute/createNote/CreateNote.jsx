@@ -34,8 +34,8 @@ const CreateNote = () => {
   };
 
   return (
-    <div className="bg-green-300 px-2 lg:w-2/3 h-2/3">
-      <h2 className="bg-orange-400 py-2 text-white text-center text-xl">
+    <div className="bg-green-900 px-2  h-3/4">
+      <h2 className="bg-orange-400 py-2 text-white text-center text-xl mt-4">
         Create Your Personal Note
       </h2>
       <form onSubmit={handleNote}>

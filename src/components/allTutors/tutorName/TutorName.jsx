@@ -1,9 +1,9 @@
 const TutorName = ({ tutor }) => {
   const { email, name } = tutor;
   return (
-    <div className="bg-orange-300 opacity-80 text-slate-950 py-8 pl-4 rounded-xl" >
-   <h2 className="font-bold">Tutor:  {name}</h2>
-   <h2 >Email:  {email}</h2>
+    <div className="shadow-2xl py-8 pl-4 border border-orange-400">
+      <h2 className="text-xl font-semibold">{name}</h2>
+      <h2> {email}</h2>
     </div>
   );
 };

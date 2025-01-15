@@ -37,14 +37,17 @@ const User = ({ users, refetch }) => {
   };
 
   return (
-    <div className="bg-slate-700 text-white py-4 px-2 rounded-md">
+    <div className="bg-emerald-900 border-b-2 border-orange-300 text-white py-4 px-2 rounded-md">
       <h2 className="text-xl">{name}</h2>
       <p>{email}</p>
       <div className="flex justify-between">
         <p className="btn bg-orange-400 mt-2">{role}</p>
-        
-        <div disabled={role === "admin"} onClick={() => handleRole(_id)} className="mt-2 btn bg-green-400 glass">
-            
+
+        <div
+          disabled={role === "admin"}
+          onClick={() => handleRole(_id)}
+          className="mt-2 btn bg-green-400 glass"
+        >
           Make Admin
         </div>
       </div>

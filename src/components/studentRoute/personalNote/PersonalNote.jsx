@@ -54,36 +54,26 @@ const PersonalNote = () => {
   };
 
   return (
-    <div className="bg-indigo-950 max-w-full min-h-screen">
-      <h2 className="bg-orange-400 py-2 text-center text-white text-xl">
+    <div className=" max-w-full min-h-screen">
+      <h2 className="bg-orange-400 py-2 text-center text-white text-xl mb-8">
         Personal Note That You Stored
       </h2>
       {data.length === 0 ? (
-        <div className="w-full h-screen mt-4 flex items-center justify-center">
-          <Marquee
-            direction="down"
-            speed={50}
-            gradient={false}
-            className="w-full h-full flex justify-center items-center"
-            pauseOnHover
-          >
-            <Marquee
-              direction="alternate"
-              speed={30}
-              gradient={false}
-              pauseOnHover
-            >
-              <p className="text-3xl sm:text-4xl md:text-6xl font-bold text-red-600">
-                No Note Yet
-              </p>
-            </Marquee>
-          </Marquee>
-        </div>
+        Swal.fire({
+          title: "No data found",
+          text: "You have ho any created note! ",
+          icon: "question",
+          confirmButtonText: "Go to Home",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            window.location.href = "/";
+          }
+        })
       ) : (
         <div className="px-4">
           {data.map((note) => (
             <div
-              className="border-b-2 rounded-xl p-4 mb-4 bg-indigo-800"
+              className=" border-b-4 border-orange-300  p-6 mb-4 bg-slate-700 "
               key={note._id}
             >
               <h2 className="text-lg sm:text-xl md:text-2xl text-white">

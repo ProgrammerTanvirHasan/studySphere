@@ -1,13 +1,18 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../AuthProvider";
 import { getAuth, updateProfile } from "firebase/auth";
 import app from "../firebase.confiq";
+import Swal from "sweetalert2";
+import { FaRegEyeSlash } from "react-icons/fa";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 const Register = () => {
   const { createUser, setUser } = useContext(AuthContext);
   const auth = getAuth(app);
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleRegister = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -41,6 +46,11 @@ const Register = () => {
       })
       .catch((error) => {
         console.error("Registration Error:", error.message);
+        Swal.fire({
+          title: "Already added this user",
+          text: "Please login now",
+          icon: "question",
+        });
       });
   };
 
@@ -88,13 +98,27 @@ const Register = () => {
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
-              <input
-                type="password"
-                placeholder="password"
-                name="password"
-                className="input input-bordered text-black"
-                required
-              />
+
+              <div className="flex">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  placeholder="password"
+                  name="password"
+                  className="input input-bordered text-black relative min-w-full"
+                  required
+                />
+
+                <p
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="mt-4 text-xl text-black relative -ml-8"
+                >
+                  {showPassword ? (
+                    <FaRegEyeSlash></FaRegEyeSlash>
+                  ) : (
+                    <MdOutlineRemoveRedEye></MdOutlineRemoveRedEye>
+                  )}
+                </p>
+              </div>
             </div>
 
             <div className="form-control">
@@ -102,11 +126,8 @@ const Register = () => {
                 <span className="label-text">Select One</span>
               </label>
               <select name="role" className="select  w-full max-w-xs" required>
-                <option disabled selected>
-                  Role selection
-                </option>
                 <option value="student">Student</option>
-                <option value=" tutor"> Tutor</option>
+                <option value="tutor">Tutor</option>
                 <option value="admin">Admin</option>
               </select>
             </div>

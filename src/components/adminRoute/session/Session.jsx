@@ -16,7 +16,7 @@ const Session = () => {
 
   return (
     <div>
-      <h2 className="bg-blue-950 text-white py-2 text-center">
+      <h2 className="bg-blue-950 text-white py-2 text-center text-xl">
         All study session created by tutor
       </h2>
       <div className=" py-4 ">

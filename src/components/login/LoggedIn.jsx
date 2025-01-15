@@ -1,7 +1,10 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider";
 import { GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import Swal from "sweetalert2";
+import { FaRegEyeSlash } from "react-icons/fa";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 const LoggedIn = () => {
   const { signUser, setUser, googleSignIn, githubSignIn } =
@@ -9,6 +12,7 @@ const LoggedIn = () => {
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -24,6 +28,11 @@ const LoggedIn = () => {
       })
       .catch((error) => {
         console.error("Login Error:", error.message);
+        Swal.fire({
+          title: "Error !",
+          text: "Something went wrong !.please try again",
+          icon: "question",
+        });
       });
   };
 
@@ -54,7 +63,7 @@ const LoggedIn = () => {
     <div>
       <div>
         <img
-          className="flex absolute min-h-screen lg:max-w-[1200px] mx-auto p-4"
+          className="flex absolute min-h-screen lg:max-w-[1200px] p-2 border-4 rounded-xl border-orange-400"
           src="https://i.ibb.co/B3Np0WX/cyber-security-concept-626203-897.jpg"
           alt=""
         />
@@ -91,13 +100,26 @@ const LoggedIn = () => {
                     <label className="label">
                       <span className="label-text">Password</span>
                     </label>
-                    <input
-                      type="password"
-                      placeholder="password"
-                      name="password"
-                      className="input input-bordered text-black"
-                      required
-                    />
+
+                    <div className="flex">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="password"
+                        name="password"
+                        className="input input-bordered text-black min-w-full"
+                        required
+                      />
+                      <p
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="mt-4 text-xl text-black relative -ml-8"
+                      >
+                        {showPassword ? (
+                          <FaRegEyeSlash></FaRegEyeSlash>
+                        ) : (
+                          <MdOutlineRemoveRedEye></MdOutlineRemoveRedEye>
+                        )}
+                      </p>
+                    </div>
                   </div>
                   <div className="form-control mt-6">
                     <button className="btn bg-gradient-to-r from-slate-400 text-lg to-slate-950 text-orange-300">

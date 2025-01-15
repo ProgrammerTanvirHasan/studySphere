@@ -68,7 +68,7 @@ const Sessions = ({ session, refetch }) => {
 
   return (
     <div>
-      <div className="card w-full lg:w-96 min-h-[400px]  bg-neutral-700 lg:ml-8 shadow-2xl mb-8">
+      <div className="bg-cyan-950 lg:ml-8 mb-4 border-b-4 border-orange-400 min-h-96">
         <div className="text-end">
           <button
             onClick={() => handleDelete(_id)}
@@ -77,26 +77,28 @@ const Sessions = ({ session, refetch }) => {
             X
           </button>
         </div>
-        <div className="card-body ">
+        <div className="px-4">
           <h2 className="card-title text-white">{title}</h2>
           <p className="text-green-500">{textarea}</p>
-          <p className="text-orange-400 text-lg">{amount} Taka</p>
-          <div className="card card-actions">
+          <p className="text-orange-400 text-lg mt-4">{amount} Taka</p>
+          <div className="card card-actions mt-6">
             <btn className={buttonClass} onClick={() => handleReject(_id)}>
               {status === "Rejected" ? "Send Approval !" : status}
             </btn>
           </div>
         </div>
+
         {status === "Rejected" && (
           <>
-            <div className="text-red-900 p-2 bg-neutral-400 mb-8">
-              <p className="text-xl">
-                Rejected reason :
-                <span className="text-green-950">{reason}</span>
+            <div className="  p-2 mb-8 ">
+              <p className="text-xl mt-16">
+                <p className=" text-orange-400 border-b-2 border-orange-400 w-40 ">
+                  Admin feedback
+                </p>
+                <span className="text-white">{reason} !</span>
               </p>
               <p>
-                <span className="text-xl">Admin feedback</span> :
-                <span className="text-green-950"> {feedback}</span>
+                <span className="text-white"> {feedback}</span>
               </p>
             </div>
           </>

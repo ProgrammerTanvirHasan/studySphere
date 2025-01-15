@@ -126,15 +126,15 @@ const AdminSession = ({ session, refetch, index }) => {
   };
 
   return (
-    <div className="card bg-slate-300 border-b-4 ">
+    <div className="border-b-4 border-orange-300 bg-emerald-700  mb-8 text-white min-h-32 ">
       <div className="p-2 grid grid-cols-3">
         <div className="flex gap-4">
           <p className="font-bold text-lg">{index + 1}</p>
-          <h2 className="font-bold">{title}</h2>
+          <h2 className="text-xl">{title}</h2>
         </div>
 
-        <div className="ml-8 ">
-          <p className="text-xl">{textarea}</p>
+        <div className="ml-4 ">
+          <p>{textarea}</p>
         </div>
 
         <div className="card-actions justify-end">
