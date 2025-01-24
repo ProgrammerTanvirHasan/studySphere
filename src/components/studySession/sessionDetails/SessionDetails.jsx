@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider";
 import Swal from "sweetalert2";
 import { Rating } from "@smastrom/react-rating";
-
+import { MdAccessTime } from "react-icons/md";
 import "@smastrom/react-rating/style.css";
 
 const SessionDetails = () => {
@@ -175,75 +175,85 @@ const SessionDetails = () => {
   };
 
   return (
-    <div>
+    <div className="bg-[#998282]">
       <Navbar></Navbar>
 
-      <div className="flex justify-center text-center item-center py-2 ">
-        <div className="bg-green-900 opacity-80  text-white lg:p-8 rounded-xl ">
-          <h2 className="text-xl"> The selected session</h2>
-          <div className="pt-12">
-            <div className="flex justify-between py-2">
-              <h2 className="card card-title">{sessionData.title}</h2>
-              <p> Session duration: {sessionData.duration} Minutes</p>
-            </div>
-            <div className="flex justify-between">
-              <p>Registration Start From: {sessionData.registrationStart}</p>
-              <p>Registration Close: {sessionData.registrationEnd}</p>
-            </div>
-            <div className="flex justify-between">
-              <p>Class start from: {sessionData.classStart}</p>
-              <p>Class end: {sessionData.classEnd}</p>
-            </div>
-            <div className="flex justify-between">
-              <h2 className="text-xl">Tutor: {sessionData.name}</h2>
-              <p>Registration fee: {sessionData.amount} Taka</p>
+      <div>
+        <img
+          className="min-w-full h-[400px] lg:h-[560px] pt-6"
+          src="https://i.ibb.co.com/frqDgdy/high-angle-academic-cap-glasses-with-globe-23-2148756568.jpg"
+          alt=""
+        />
+        <h2 className="text-2xl border-b-4 border-green-700 font-bold absolute -mt-16 ml-[5%]">
+          The selected session
+        </h2>
+      </div>
+
+      <div>
+        <div className="p-4 text-white">
+          <div>
+            <div className="text-orange-200 shadow-xl ">
+              <h2 className="text-2xl ">{sessionData.title}</h2>
+              <h2 className="text-xl">Tutor : {sessionData.name}</h2>
+              <p className="font-semibold pb-8">{sessionData.textarea}</p>
             </div>
 
-            <p className="pt-2  w-3/4">{sessionData.textarea}</p>
+            <div>
+              <p className="flex gap-2">
+                Session_duration : {sessionData.duration} Minutes{" "}
+                <MdAccessTime className="text-lg mt-1"></MdAccessTime>{" "}
+              </p>
+              <p>Registration_Start_From : {sessionData.registrationStart}</p>
+              <p>Registration_Close : {sessionData.registrationEnd}</p>
+              <p>Class_start_from : {sessionData.classStart}</p>
+              <p>Class_end : {sessionData.classEnd}</p>
+              <p>Registration_fee : {sessionData.amount} Taka</p>
+            </div>
           </div>
-          <div className="text-start  mt-12">
-            <h2 className="card card-title border-b-2 w-96">
-              Students Review of the session
-            </h2>
-            {reviews.length === 0 ? (
-              <p className="text-red-300">No Review Here</p>
-            ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 my-2 px-2">
-                {reviews.map((review, index) => (
-                  <div key={index} className="bg-black px-2">
-                    <p className="text-center">
-                      <Rating style={{ maxWidth: 180 }} value={review.rating} />
-                    </p>
-                    <p className="mb-2">{review.review}</p>
-                    <p className="text-green-400">{review.student}</p>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+        </div>
 
-          {isRegistrationClosed ||
-          register.role === "admin" ||
-          register.role === "tutor" ? (
-            <>
-              <button disabled className="p-4 bg-red-800">
-                {isRegistrationClosed
-                  ? "Registration closed"
-                  : "You can not book any item"}
-              </button>
-            </>
+        <div className="text-start mt-12 bg-[#854748] rounded-md">
+          <h2 className="card card-title border-b-2 P-4 min-w-ful text-white">
+            Students Review of the session
+          </h2>
+          {reviews.length === 0 ? (
+            <p className="text-red-300 p-8 text-xl">No Review Here!</p>
           ) : (
-            <>
-              <button
-                onClick={handleBook}
-                className="btn glass text-white px-12 text-lg"
-              >
-                Book Now
-              </button>
-            </>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 my-2 px-2 text-white pb-6">
+              {reviews.map((review, index) => (
+                <div key={index} className="bg-slate-950 p-4">
+                  <p className="text-center">
+                    <Rating style={{ maxWidth: 180 }} value={review.rating} />
+                  </p>
+                  <p className="mb-2">{review.review}</p>
+                  <p className="text-green-400">{review.student}</p>
+                </div>
+              ))}
+            </div>
           )}
         </div>
+
+        {isRegistrationClosed ||
+        register.role === "admin" ||
+        register.role === "tutor" ? (
+          <button
+            disabled
+            className="p-4 bg-red-950 glass text-white mt-4 min-w-full"
+          >
+            {isRegistrationClosed
+              ? "Registration closed!"
+              : "You cannot book any item!"}
+          </button>
+        ) : (
+          <button
+            onClick={handleBook}
+            className="hover:bg-green-900 text-lg bg-slate-950 w-full py-2 text-white glass btn hover:text-black"
+          >
+            Book Now
+          </button>
+        )}
       </div>
+
       <Footer></Footer>
     </div>
   );
