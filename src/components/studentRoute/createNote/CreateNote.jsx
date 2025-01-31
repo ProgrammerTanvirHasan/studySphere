@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 
 const CreateNote = () => {
   const { user } = useContext(AuthContext);
+
   const handleNote = (e) => {
     e.preventDefault();
     const form = e.target;

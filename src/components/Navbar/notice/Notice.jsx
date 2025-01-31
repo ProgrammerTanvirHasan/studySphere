@@ -5,7 +5,9 @@ const Notice = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["announcement"],
     queryFn: () =>
-      fetch("http://localhost:4000/announcement").then((res) => res.json()),
+      fetch("http://localhost:4000/announcement", {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isLoading) return "Loading...";

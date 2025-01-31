@@ -20,6 +20,7 @@ const Register = () => {
     const role = form.role.value;
     const email = form.email.value;
     const password = form.password.value;
+    const users = { name, email, role };
 
     createUser(email, password)
       .then((result) => {
@@ -33,7 +34,7 @@ const Register = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ name, email, role }),
+          body: JSON.stringify(users),
         })
           .then((res) => res.json())
           .then(() => {
@@ -128,7 +129,6 @@ const Register = () => {
               <select name="role" className="select  w-full max-w-xs" required>
                 <option value="student">Student</option>
                 <option value="tutor">Tutor</option>
-                <option value="admin">Admin</option>
               </select>
             </div>
 

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider";
 import { GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 import Swal from "sweetalert2";
@@ -9,6 +9,8 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 const LoggedIn = () => {
   const { signUser, setUser, googleSignIn, githubSignIn } =
     useContext(AuthContext);
+  const location = useLocation();
+
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
@@ -23,8 +25,8 @@ const LoggedIn = () => {
     signUser(email, password)
       .then((result) => {
         setUser(result.user);
-        console.log(result.user);
-        navigate("/");
+       
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         console.error("Login Error:", error.message);
@@ -40,8 +42,9 @@ const LoggedIn = () => {
     googleSignIn(googleProvider)
       .then((result) => {
         setUser(result.user);
-        navigate("/");
-        console.log(result.user);
+        navigate(location?.state ? location?.state : "/");
+
+       
       })
       .catch((error) => {
         console.error("Google Sign-In Error:", error.message);
@@ -52,7 +55,7 @@ const LoggedIn = () => {
     githubSignIn(githubProvider)
       .then((result) => {
         setUser(result.user);
-        navigate("/");
+        navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         console.error("GitHub Sign-In Error:", error.message);

@@ -4,15 +4,25 @@ import { Link, NavLink } from "react-router";
 import { AuthContext } from "../../AuthProvider";
 import { RiDashboardFill } from "react-icons/ri";
 import { TfiMenuAlt } from "react-icons/tfi";
+import Swal from "sweetalert2";
+
 const Navbar = () => {
   const { user, loggedOut } = useContext(AuthContext);
   const email = user?.email;
 
   const handleLogout = () => {
     loggedOut()
-      .then(() => {})
-      .then((error) => {
-        console.log(error.message);
+      .then(() => {
+       
+        Swal.fire({
+          title: "LoggedOut",
+          text: "User logged out successfully",
+          icon: "success",
+        });
+      })
+
+      .catch((error) => {
+        console.log("Error during logout:", error.message);
       });
   };
   return (
@@ -28,10 +38,16 @@ const Navbar = () => {
 
       <div className="navbar">
         <div className="flex-none ">
-          <GiBookAura className="w-8 h-8"></GiBookAura>
+          <Link to="/">
+            <button>
+              <GiBookAura className="w-8 h-8"></GiBookAura>
+            </button>
+          </Link>
         </div>
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl">StudySphere</a>
+          <Link to="/">
+            <a className="btn btn-ghost text-xl">StudySphere</a>
+          </Link>
         </div>
 
         <div>

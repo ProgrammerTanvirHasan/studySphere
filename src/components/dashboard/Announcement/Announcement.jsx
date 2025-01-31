@@ -1,7 +1,25 @@
+import { useContext } from "react";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../../AuthProvider";
+import { useQuery } from "@tanstack/react-query";
 
 const Announcement = () => {
+  const { user } = useContext(AuthContext);
+  const email = user?.email;
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["register",email],
+    queryFn: () =>
+      fetch(`http://localhost:4000/register/${email}`).then((res) =>
+        res.json()
+      ),
+  });
+
+  if (isPending) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
   const handleAnnouncement = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -9,7 +27,6 @@ const Announcement = () => {
     const note = form.note.value;
     const publishDate = new Date().toISOString();
     const announcement = { subject, note, publishDate };
-    console.log(announcement);
 
     fetch("http://localhost:4000/announcement", {
       method: "POST",
@@ -35,7 +52,7 @@ const Announcement = () => {
     <div className="py-4">
       <div className="bg-green-300 px-2 ">
         <h2 className="bg-orange-400 py-2 text-white text-center text-xl">
-          make an announcement
+          Make an announcement
         </h2>
         <form onSubmit={handleAnnouncement}>
           <div className="mt-4">
@@ -53,9 +70,22 @@ const Announcement = () => {
             </div>
 
             <div className="text-center pb-4">
-              <button className="btn bg-black text-white mt-4 w-full lg:w-3/5 text-lg ">
-                Publish
-              </button>
+              {data.role === "admin" ? (
+                <>
+                  <button className="btn bg-black  hover:bg-green-900 text-white mt-4 w-full lg:w-3/5 text-lg ">
+                    Publish
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    disabled
+                    className=" btn mt-4 w-full lg:w-3/5 text-lg "
+                  >
+                    Only admin !
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </form>

@@ -1,9 +1,25 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider";
 import Swal from "sweetalert2";
+import { useQuery } from "@tanstack/react-query";
 
 const CreateSession = () => {
   const { user } = useContext(AuthContext);
+
+  const email = user?.email;
+
+  const { isPending, error, data } = useQuery({
+    queryKey: ["register", email],
+    queryFn: () =>
+      fetch(`http://localhost:4000/register/${email}`).then((res) =>
+        res.json()
+      ),
+  });
+
+  if (isPending) return "Loading...";
+
+  if (error) return "An error has occurred: " + error.message;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -179,9 +195,22 @@ const CreateSession = () => {
           </div>
         </div>
         <div className="text-center mt-4">
-          <button className="btn w-60 bg-green-500 text-black text-xl">
-            Submit
-          </button>
+          {data.role === "tutor" ? (
+            <>
+              <button className="btn w-60 bg-green-500 text-black text-xl">
+                Submit
+              </button>
+            </>
+          ) : (
+            <>
+              <button
+                disabled
+                className="btn w-60 bg-green-500 text-black text-xl"
+              >
+                Submit
+              </button>
+            </>
+          )}
         </div>
       </form>
     </div>

@@ -8,9 +8,11 @@ const UploadMaterials = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
   const { isPending, error, data } = useQuery({
-    queryKey: ["session", "Approved"],
+    queryKey: ["session", "Approved", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/session/${email}`).then((res) => res.json()),
+      fetch(`http://localhost:4000/session/${email}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isPending) return "Loading...";

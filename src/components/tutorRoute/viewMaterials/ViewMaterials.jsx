@@ -10,9 +10,9 @@ const ViewMaterials = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["material", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/material/${email}`).then((res) =>
-        res.json()
-      ),
+      fetch(`http://localhost:4000/material/${email}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isPending) return "Loading...";

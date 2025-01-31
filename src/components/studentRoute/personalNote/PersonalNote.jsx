@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider";
-import Marquee from "react-fast-marquee";
+
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -12,9 +12,9 @@ const PersonalNote = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["storeData", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/stored/email/${email}`).then((res) =>
-        res.json()
-      ),
+      fetch(`http://localhost:4000/stored/email/${email}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isLoading) return "Loading...";
@@ -36,8 +36,7 @@ const PersonalNote = () => {
           method: "DELETE",
         })
           .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
+          .then(() => {
             Swal.fire({
               title: "Deleted!",
               text: "Your file has been deleted.",
