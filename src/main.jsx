@@ -14,7 +14,7 @@ import Materials from "./components/adminRoute/materials/Materials.jsx";
 import CreateSession from "./components/tutorRoute/createSession/CreateSession.jsx";
 import AllSession from "./components/tutorRoute/allSession/AllSession.jsx";
 import UploadMaterials from "./components/tutorRoute/uploadMaterials/UploadMaterials.jsx";
-import ViewMaterials from "./components/tutorRoute/ViewMaterials/ViewMaterials.jsx";
+import ViewMaterials from "./components/tutorRoute/viewMaterials/ViewMaterials.jsx";
 import ViewBooked from "./components/studentRoute/ViewBooked/ViewBooked.jsx";
 import CreateNote from "./components/studentRoute/CreateNote/CreateNote.jsx";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -50,7 +50,7 @@ createRoot(document.getElementById("root")).render(
               <Route path="/dashboard" element={<Dashboard />}>
                 <Route path="users" element={<Users />} />
 
-                <Route path="session" element={<Session />} />
+                <Route path="session" element={<Session/>} />
                 <Route path="createSession" element={<CreateSession />} />
                 <Route path="allSession" element={<AllSession />} />
                 <Route path="uploadMaterials" element={<UploadMaterials />} />
