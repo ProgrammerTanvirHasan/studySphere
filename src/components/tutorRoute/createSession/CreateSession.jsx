@@ -11,9 +11,9 @@ const CreateSession = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["register", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/register/${email}`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `https://stydy-sphere-server-vrnk.vercel.app/register/${email}`
+      ).then((res) => res.json()),
   });
 
   if (isPending) return "Loading...";
@@ -48,7 +48,7 @@ const CreateSession = () => {
       name: user.displayName,
     };
 
-    fetch("http://localhost:4000/session", {
+    fetch("https://stydy-sphere-server-vrnk.vercel.app/session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

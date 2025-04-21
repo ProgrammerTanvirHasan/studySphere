@@ -10,9 +10,12 @@ const ViewBooked = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["sessionData", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/bookedSession/${email}`, {
-        credentials: "include",
-      }).then((res) => res.json()),
+      fetch(
+        `https://stydy-sphere-server-vrnk.vercel.app/bookedSession/${email}`,
+        {
+          credentials: "include",
+        }
+      ).then((res) => res.json()),
   });
   if (isLoading) return "Loading...";
   if (error) return "An error has occurred: " + error.message;

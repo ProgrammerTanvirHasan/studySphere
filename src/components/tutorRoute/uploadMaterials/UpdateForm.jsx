@@ -17,9 +17,9 @@ const UpdateForm = () => {
   } = useQuery({
     queryKey: ["Approved", _id],
     queryFn: () =>
-      fetch(`http://localhost:4000/session/Approved/${_id}`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `https://stydy-sphere-server-vrnk.vercel.app/session/Approved/${_id}`
+      ).then((res) => res.json()),
   });
 
   if (isPending) return "Loading...";
@@ -47,7 +47,7 @@ const UpdateForm = () => {
         imageUrl: imageURL,
       };
 
-      fetch("http://localhost:4000/material", {
+      fetch("https://stydy-sphere-server-vrnk.vercel.app/material", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

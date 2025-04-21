@@ -9,7 +9,7 @@ const StudySession = () => {
     queryKey: ["sessionData", currentPage, itemPerPage],
     queryFn: () =>
       fetch(
-        `http://localhost:4000/session/Approved?page=${currentPage}&limit=${itemPerPage}`
+        `https://stydy-sphere-server-vrnk.vercel.app/session/Approved?page=${currentPage}&limit=${itemPerPage}`
       ).then((res) => res.json()),
   });
   if (isLoading) return "Loading...";

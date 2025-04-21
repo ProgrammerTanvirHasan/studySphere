@@ -21,23 +21,23 @@ const SessionDetails = () => {
       {
         queryKey: ["sessionData", _id],
         queryFn: () =>
-          fetch(`http://localhost:4000/session/Approved/${_id}`).then((res) =>
-            res.json()
-          ),
+          fetch(
+            `https://stydy-sphere-server-vrnk.vercel.app/session/Approved/${_id}`
+          ).then((res) => res.json()),
       },
       {
         queryKey: ["reviewsData", _id],
         queryFn: () =>
-          fetch(`http://localhost:4000/reviews/${_id}`).then((res) =>
-            res.json()
-          ),
+          fetch(
+            `https://stydy-sphere-server-vrnk.vercel.app/reviews/${_id}`
+          ).then((res) => res.json()),
       },
       {
         queryKey: ["registerData", email],
         queryFn: () =>
-          fetch(`http://localhost:4000/register/${email}`).then((res) =>
-            res.json()
-          ),
+          fetch(
+            `https://stydy-sphere-server-vrnk.vercel.app/register/${email}`
+          ).then((res) => res.json()),
       },
     ],
   });
@@ -89,7 +89,7 @@ const SessionDetails = () => {
         Tutor: sessionData.name,
       };
 
-      fetch(`http://localhost:4000/bookedSession`, {
+      fetch(`https://stydy-sphere-server-vrnk.vercel.app/bookedSession`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -136,7 +136,7 @@ const SessionDetails = () => {
         registrationEnd: sessionData.registrationEnd,
         Tutor: sessionData.name,
       };
-      fetch(`http://localhost:4000/bookedSession`, {
+      fetch(`https://stydy-sphere-server-vrnk.vercel.app/bookedSession`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

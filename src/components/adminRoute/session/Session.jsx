@@ -5,9 +5,12 @@ const Session = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["PendingApproved"],
     queryFn: () =>
-      fetch("http://localhost:4000/session/PendingApproved", {
-        credentials: "include",
-      }).then((res) => res.json()),
+      fetch(
+        "https://stydy-sphere-server-vrnk.vercel.app/session/PendingApproved",
+        {
+          credentials: "include",
+        }
+      ).then((res) => res.json()),
   });
 
   if (isPending) return "Loading...";
