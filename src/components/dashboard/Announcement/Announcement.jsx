@@ -9,11 +9,11 @@ const Announcement = () => {
   const email = user?.email;
 
   const { isPending, error, data } = useQuery({
-    queryKey: ["register",email],
+    queryKey: ["register", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/register/${email}`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `https://stydy-sphere-server-f46b.vercel.app/register/${email}`
+      ).then((res) => res.json()),
   });
 
   if (isPending) return "Loading...";
@@ -28,7 +28,7 @@ const Announcement = () => {
     const publishDate = new Date().toISOString();
     const announcement = { subject, note, publishDate };
 
-    fetch("http://localhost:4000/announcement", {
+    fetch("https://stydy-sphere-server-f46b.vercel.app/announcement", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

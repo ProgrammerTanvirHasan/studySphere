@@ -5,7 +5,7 @@ const Users = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["register"],
     queryFn: () =>
-      fetch(`http://localhost:4000/register`, {
+      fetch(`https://stydy-sphere-server-f46b.vercel.app/register`, {
         credentials: "include",
       })
         .then((res) => res.json())
@@ -14,7 +14,7 @@ const Users = () => {
           return [];
         }),
   });
-  
+
   if (isPending) return "Loading...";
 
   if (error) return "An error has occurred: " + error.message;
@@ -35,10 +35,8 @@ const Users = () => {
         </>
       ) : (
         <>
-       
           <p className="text-2xl text-red-600 ! ">
-            You have no access !
-            <span className="text-sm ">( only admin )</span>
+            You have no access !<span className="text-sm ">( only admin )</span>
           </p>
         </>
       )}

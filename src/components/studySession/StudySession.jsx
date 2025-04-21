@@ -9,12 +9,12 @@ const StudySession = () => {
     queryKey: ["sessionData", currentPage, itemPerPage],
     queryFn: () =>
       fetch(
-        `http://localhost:4000/session/Approved?page=${currentPage}&limit=${itemPerPage}`
+        `https://stydy-sphere-server-f46b.vercel.app/session/Approved?page=${currentPage}&limit=${itemPerPage}`
       ).then((res) => res.json()),
   });
   if (isLoading) return "Loading...";
   if (error) return "An error has occurred: " + error.message;
-  
+
   const { totalCount, sessions } = data;
   const numberOfPage = Math.ceil(totalCount / itemPerPage);
   const pages = [...Array(numberOfPage).keys()];

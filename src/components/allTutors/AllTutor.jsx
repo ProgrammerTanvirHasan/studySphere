@@ -5,9 +5,9 @@ const AllTutor = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["register"],
     queryFn: () =>
-      fetch("http://localhost:4000/register/register").then((res) =>
-        res.json()
-      ),
+      fetch(
+        "https://stydy-sphere-server-f46b.vercel.app/register/register"
+      ).then((res) => res.json()),
   });
   if (isLoading) return "Loading...";
   if (error) return "An error has occurred: " + error.message;

@@ -124,6 +124,8 @@ const LoggedIn = () => {
                       </p>
                     </div>
                   </div>
+
+                  
                   <div className="form-control mt-6">
                     <button className="btn bg-gradient-to-r from-slate-400 text-lg to-slate-950 text-orange-300">
                       Login
@@ -145,6 +147,7 @@ const LoggedIn = () => {
                       GITHUB LOGIN
                     </button>
                   </div>
+                  
                 </form>
               </div>
             </div>

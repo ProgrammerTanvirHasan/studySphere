@@ -5,7 +5,7 @@ const Notice = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["announcement"],
     queryFn: () =>
-      fetch("http://localhost:4000/announcement", {
+      fetch("https://stydy-sphere-server-f46b.vercel.app/announcement", {
         credentials: "include",
       }).then((res) => res.json()),
   });

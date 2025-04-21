@@ -10,7 +10,7 @@ const ViewMaterials = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["material", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/material/${email}`, {
+      fetch(`https://stydy-sphere-server-f46b.vercel.app/material/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });

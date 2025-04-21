@@ -48,7 +48,7 @@ const AuthProvider = ({ children }) => {
       if (user) {
         axios
           .post(
-            `http://localhost:4000/jwt`,
+            `https://stydy-sphere-server-f46b.vercel.app/jwt`,
             { email: user.email },
             {
               withCredentials: true,
@@ -57,7 +57,7 @@ const AuthProvider = ({ children }) => {
           .then(() => {});
       } else {
         axios
-          .post(`http://localhost:4000/logOut`, null, {
+          .post(`https://stydy-sphere-server-f46b.vercel.app/logOut`, null, {
             withCredentials: true,
           })
           .then(() => {});
