@@ -13,11 +13,10 @@ import Users from "./components/adminRoute/users/Users.jsx";
 import Materials from "./components/adminRoute/materials/Materials.jsx";
 import CreateSession from "./components/tutorRoute/createSession/CreateSession.jsx";
 import AllSession from "./components/tutorRoute/allSession/AllSession.jsx";
-import UploadMaterials from "./components/tutorRoute/UploadMaterials/UploadMaterials.jsx";
+import UploadMaterials from "./components/tutorRoute/uploadMaterials/UploadMaterials.jsx";
 import ViewMaterials from "./components/tutorRoute/ViewMaterials/ViewMaterials.jsx";
 import ViewBooked from "./components/studentRoute/ViewBooked/ViewBooked.jsx";
 import CreateNote from "./components/studentRoute/CreateNote/CreateNote.jsx";
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import SessionDetails from "./components/studySession/sessionDetails/SessionDetails.jsx";
 import Payment from "./components/studySession/payment/Payment.jsx";
@@ -31,7 +30,6 @@ import MaterialsUpdateForm from "./components/tutorRoute/viewMaterials/Materials
 import ShowMaterials from "./components/studentRoute/allStudyMaterials/showMaterials/ShowMaterials.jsx";
 import AllStudyMaterials from "./components/studentRoute/allStudyMaterials/AllStudyMaterials.jsx";
 import PrivateRoute from "./components/private/PrivateRoute.jsx";
-
 
 const queryClient = new QueryClient();
 
