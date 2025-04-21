@@ -12,12 +12,9 @@ const PersonalNote = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["storeData", email],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server-f46b.vercel.app/stored/email/${email}`,
-        {
-          credentials: "include",
-        }
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4000/stored/email/${email}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isLoading) return "Loading...";
@@ -35,7 +32,7 @@ const PersonalNote = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://stydy-sphere-server-f46b.vercel.app/stored/${_id}`, {
+        fetch(`http://localhost:4000/stored/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())

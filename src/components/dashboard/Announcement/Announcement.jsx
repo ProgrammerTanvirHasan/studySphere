@@ -11,9 +11,9 @@ const Announcement = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["register", email],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server-f46b.vercel.app/register/${email}`
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4000/register/${email}`).then((res) =>
+        res.json()
+      ),
   });
 
   if (isPending) return "Loading...";
@@ -28,7 +28,7 @@ const Announcement = () => {
     const publishDate = new Date().toISOString();
     const announcement = { subject, note, publishDate };
 
-    fetch("https://stydy-sphere-server-f46b.vercel.app/announcement", {
+    fetch("http://localhost:4000/announcement", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

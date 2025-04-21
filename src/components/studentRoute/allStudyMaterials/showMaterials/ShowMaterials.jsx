@@ -8,9 +8,9 @@ const ShowMaterials = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["material", studySessionID],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server-f46b.vercel.app/material/material/${studySessionID}`
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4000/material/material/${studySessionID}`).then(
+        (res) => res.json()
+      ),
   });
 
   if (isPending) return "Loading...";

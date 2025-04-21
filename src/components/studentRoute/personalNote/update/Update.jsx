@@ -8,9 +8,7 @@ const Update = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["stored", _id],
     queryFn: () =>
-      fetch(`https://stydy-sphere-server-f46b.vercel.app/stored/${_id}`).then(
-        (res) => res.json()
-      ),
+      fetch(`http://localhost:4000/stored/${_id}`).then((res) => res.json()),
   });
 
   if (isLoading) return <p>Loading...</p>;
@@ -24,7 +22,7 @@ const Update = () => {
     const note = form.note.value;
     const notes = { title, note };
 
-    fetch(`https://stydy-sphere-server-f46b.vercel.app/stored/${_id}`, {
+    fetch(`http://localhost:4000/stored/${_id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",

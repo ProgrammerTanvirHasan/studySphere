@@ -10,7 +10,7 @@ const UploadMaterials = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["session", "Approved", email],
     queryFn: () =>
-      fetch(`https://stydy-sphere-server-f46b.vercel.app/session/${email}`, {
+      fetch(`http://localhost:4000/session/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });

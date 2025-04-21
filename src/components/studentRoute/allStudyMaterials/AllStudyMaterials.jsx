@@ -10,12 +10,9 @@ const AllStudyMaterials = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["bookedSession", email],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server-f46b.vercel.app/bookedSession/${email}`,
-        {
-          credentials: "include",
-        }
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4000/bookedSession/${email}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isPending) return "Loading...";

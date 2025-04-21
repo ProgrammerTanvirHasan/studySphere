@@ -13,7 +13,7 @@ const CreateNote = () => {
     const note = form.note.value;
     const notes = { title, email, note };
 
-    fetch("https://stydy-sphere-server-f46b.vercel.app/stored", {
+    fetch("http://localhost:4000/stored", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
