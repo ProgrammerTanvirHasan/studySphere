@@ -52,7 +52,7 @@ const BookDetails = () => {
 
   return (
     <>
-      <h2 className="text-center text-xl bg-orange-400 text-white py-2 ">
+      <h2 className="text-cyan-700 py-2 text-center text-3xl">
         Booked Details
       </h2>
       <div className="card bg-base-800  shadow-2xl border border-orange-400 w-2/3 mx-auto mt-4 p-4 ">
@@ -128,14 +128,6 @@ const BookDetails = () => {
           </ul>
         </div>
       </form>
-
-      <Link to={"/"}>
-        <div className=" mt-8 text-center">
-          <button className="bg-green-700 px-8 py-2 glass text-white">
-            Back to home
-          </button>
-        </div>
-      </Link>
     </>
   );
 };

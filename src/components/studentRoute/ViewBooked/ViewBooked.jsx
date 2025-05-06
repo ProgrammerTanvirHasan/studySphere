@@ -22,8 +22,8 @@ const ViewBooked = () => {
 
   return (
     <div className="py-4">
-      <h2 className="text-center text-xl bg-orange-400 text-white py-2 ">
-        All session that you are booked
+      <h2 className="text-cyan-700 py-2 text-center text-3xl">
+        Your booked session
       </h2>
       {data.length == 0 ? (
         Swal.fire({

@@ -20,7 +20,7 @@ const ShowMaterials = () => {
 
   return (
     <div>
-      <h2 className="text-center py-2 text-white bg-cyan-900 text-xl">
+      <h2 className="text-cyan-700 py-2 text-center text-3xl">
         Show Materials
       </h2>
       <div className="flex justify-center">
@@ -48,13 +48,7 @@ const ShowMaterials = () => {
           </div>
           <h2 className="card-title ">{data.title}</h2>
           <p>{data.tutorEmail}</p>
-          <div className="py-2">
-            <Link to={"/"}>
-              <button className="border-b-2 border-red-600 font-bold text-red-600">
-                Go back to home !
-              </button>
-            </Link>
-          </div>
+         
         </div>
       </div>
     </div>

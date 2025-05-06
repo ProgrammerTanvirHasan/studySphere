@@ -76,62 +76,57 @@ const UpdateForm = () => {
 
   return (
     <div>
-      <h2 className="bg-orange-400 py-2 text-white text-center text-xl">
-        Add material to your session
+      <h2 className="text-teal-500 font-bold py-4 text-center text-3xl">
+        Add Material to Your Session
       </h2>
-      <div className="lg:w-3/5 bg-teal-900 mt-4 mx-auto p-8">
-        <div className=" text-white ">
-          <div className="label">
-            <span className="label-text text-white text-lg">Title</span>
-          </div>
-          <form onSubmit={handleSubmit(onSubmit)}>
+
+      <div className="min-h-[60vh] bg-gradient-to-br from-[#2c2a4a]/70 to-[#1f1d3a]/80 mx-auto p-8 rounded-2xl shadow-2xl max-w-2xl">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-6 text-white"
+        >
+          <div>
+            <label className="block text-base font-semibold mb-2">Title</label>
             <input
-              placeholder="Type here"
+              placeholder="Enter session title"
               defaultValue={sessionData.title}
-              className=" py-3 border rounded-xl w-96 bg-black glass pl-4"
+              className="w-full px-4 py-3 bg-[#1a1a2e] border border-teal-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder-gray-400"
               {...register("title", { required: true })}
             />
-
-            <label className="form-control w-full ">
-              <div className="label">
-                <span className="label-text text-white text-lg">
-                  Google drive link
-                </span>
-              </div>
-              <input
-                {...register("driveLink", { required: true })}
-                type="text"
-                placeholder="Type here"
-                className="input input-bordered w-96 bg-black glass"
-              />
-            </label>
-
-            <label>
-              <div className="py-4">
-                <span className="text-lg border-b-4 ">Upload your photo</span>
-              </div>
-              <input
-                {...register("image", { required: true })}
-                type="file"
-                name="image"
-                accept="image/*"
-              />
-            </label>
-
-            <div className="mt-4">
-              <button className="p-2 glass rounded-md ">
-                Upload materials
-              </button>
-            </div>
-          </form>
-          <div className=" mt-12">
-            <Link to="/">
-              <p className="text-center border  border-orange-300 ">
-                Go back to home
-              </p>
-            </Link>
           </div>
-        </div>
+
+          <div>
+            <label className="block text-base font-semibold mb-2">
+              Google Drive Link
+            </label>
+            <input
+              type="text"
+              placeholder="Paste link here"
+              className="w-full px-4 py-3 bg-[#1a1a2e] border border-teal-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder-gray-400"
+              {...register("driveLink", { required: true })}
+            />
+          </div>
+
+          <div>
+            <label className="block text-base font-semibold mb-2">
+              Upload a Preview Image
+            </label>
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              className="file-input file-input-bordered w-full max-w-xs bg-gray-900 text-white border border-teal-600"
+              {...register("image", { required: true })}
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="w-full bg-teal-600 hover:bg-teal-700 active:bg-teal-800 transition duration-200 text-white font-semibold py-3 rounded-xl shadow-lg"
+          >
+            Upload Materials
+          </button>
+        </form>
       </div>
     </div>
   );

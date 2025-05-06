@@ -1,9 +1,11 @@
 const TutorName = ({ tutor }) => {
   const { email, name } = tutor;
   return (
-    <div className="shadow-2xl py-8 pl-4 border border-orange-400">
-      <h2 className="text-xl font-semibold">{name}</h2>
-      <h2> {email}</h2>
+    <div className="bg-white shadow-md border border-orange-300 rounded-xl p-6 hover:shadow-lg hover:border-orange-500 transition duration-300">
+      <h2 className="text-lg font-bold text-orange-600 mb-2">👨‍🏫 {name}</h2>
+      <p className="text-sm text-gray-600">
+        📧 <span className="font-medium">{email}</span>
+      </p>
     </div>
   );
 };

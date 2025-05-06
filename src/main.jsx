@@ -30,6 +30,8 @@ import MaterialsUpdateForm from "./components/tutorRoute/viewMaterials/Materials
 import ShowMaterials from "./components/studentRoute/allStudyMaterials/showMaterials/ShowMaterials.jsx";
 import AllStudyMaterials from "./components/studentRoute/allStudyMaterials/AllStudyMaterials.jsx";
 import PrivateRoute from "./components/private/PrivateRoute.jsx";
+import MainLayout from "./components/MainLayOut.jsx";
+import DefaultDashboard from "./components/dashboard/DefaultDashboard.jsx";
 
 const queryClient = new QueryClient();
 
@@ -37,35 +39,12 @@ createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
     <AuthProvider>
       <BrowserRouter>
-        <div className="max-w-[1200px] mx-auto">
-          <Routes>
+        <Routes>
+          <Route path="/login" element={<LoggedIn />} />
+          <Route path="/register" element={<Register />} />
+
+          <Route element={<MainLayout />}>
             <Route path="/" element={<App />} />
-            <Route path="/login" element={<LoggedIn />} />
-            <Route path="/register" element={<Register />} />
-
-            {/* Private route only */}
-            <Route element={<PrivateRoute></PrivateRoute>}>
-              <Route path="/details/:_id" element={<SessionDetails />} />
-
-              <Route path="/dashboard" element={<Dashboard />}>
-                <Route path="users" element={<Users />} />
-
-                <Route path="session" element={<Session />} />
-                <Route path="createSession" element={<CreateSession />} />
-                <Route path="allSession" element={<AllSession />} />
-                <Route path="uploadMaterials" element={<UploadMaterials />} />
-                <Route path="viewMaterials" element={<ViewMaterials />} />
-                <Route path="materials" element={<Materials />} />
-
-                <Route path="ViewBooked" element={<ViewBooked />} />
-                <Route path="createNote" element={<CreateNote />} />
-                <Route path="personalNote" element={<PersonalNote />} />
-                <Route
-                  path="allStudyMaterials"
-                  element={<AllStudyMaterials />}
-                />
-              </Route>
-            </Route>
 
             <Route path="/payment" element={<Payment />} />
             <Route path="/bookedDetails/:title" element={<BookDetails />} />
@@ -77,13 +56,33 @@ createRoot(document.getElementById("root")).render(
               path="/showMaterials/:studySessionID"
               element={<ShowMaterials />}
             />
-
             <Route
               path="/handleUpdate/:_id"
               element={<MaterialsUpdateForm />}
             />
-          </Routes>
-        </div>
+
+            <Route element={<PrivateRoute />}>
+              <Route path="/details/:_id" element={<SessionDetails />} />
+              <Route path="/dashboard" element={<Dashboard />}>
+                <Route index element={<DefaultDashboard />} />
+                <Route path="users" element={<Users />} />
+                <Route path="session" element={<Session />} />
+                <Route path="createSession" element={<CreateSession />} />
+                <Route path="allSession" element={<AllSession />} />
+                <Route path="uploadMaterials" element={<UploadMaterials />} />
+                <Route path="viewMaterials" element={<ViewMaterials />} />
+                <Route path="materials" element={<Materials />} />
+                <Route path="ViewBooked" element={<ViewBooked />} />
+                <Route path="createNote" element={<CreateNote />} />
+                <Route path="personalNote" element={<PersonalNote />} />
+                <Route
+                  path="allStudyMaterials"
+                  element={<AllStudyMaterials />}
+                />
+              </Route>
+            </Route>
+          </Route>
+        </Routes>
       </BrowserRouter>
     </AuthProvider>
   </QueryClientProvider>

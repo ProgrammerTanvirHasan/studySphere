@@ -21,7 +21,7 @@ const UploadMaterials = () => {
 
   return (
     <div>
-      <h2 className="text-center text-white text-xl bg-neutral-600 p-2 mb-8">
+      <h2 className="text-cyan-700 py-2 text-center text-3xl">
         All Approved materials
       </h2>
       {data.length === 0 ? (

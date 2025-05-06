@@ -24,9 +24,7 @@ const AllStudyMaterials = () => {
 
   return (
     <div>
-      <h2 className="text-xl bg-neutral-700 py-2  text-white text-center">
-        Your session
-      </h2>
+      <h2 className="text-cyan-700 py-2 text-center text-3xl">Your session</h2>
       {data.length === 0 ? (
         Swal.fire({
           title: "No data found",

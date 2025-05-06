@@ -5,6 +5,7 @@ import { useState } from "react";
 const StudySession = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const itemPerPage = 3;
+
   const { isLoading, error, data } = useQuery({
     queryKey: ["sessionData", currentPage, itemPerPage],
     queryFn: () =>
@@ -12,38 +13,66 @@ const StudySession = () => {
         `https://stydy-sphere-server-vrnk.vercel.app/session/Approved?page=${currentPage}&limit=${itemPerPage}`
       ).then((res) => res.json()),
   });
-  if (isLoading) return "Loading...";
-  if (error) return "An error has occurred: " + error.message;
 
-  const { totalCount, sessions } = data;
+  const totalCount = data?.totalCount || 0;
+  const sessions = data?.sessions || [];
+
   const numberOfPage = Math.ceil(totalCount / itemPerPage);
   const pages = [...Array(numberOfPage).keys()];
 
   return (
-    <div className="py-4">
-      <h2 className="text-center text-xl bg-orange-400 opacity-80 text-white py-2">
-        StudySession
-      </h2>
-      <div className="grid lg:grid-cols-3 gap-4 py-4">
-        {sessions.map((session) => (
-          <SessionCard key={session._id} session={session}></SessionCard>
-        ))}
+    <div className="py-6">
+      <div className="text-center mb-8">
+        <h2 className="text-3xl font-bold text-orange-600 mb-2">
+          📚 Study Sessions
+        </h2>
+        <p className="text-gray-600 max-w-xl mx-auto">
+          Explore upcoming study sessions led by top mentors and fellow
+          learners. Stay consistent, stay motivated, and never study alone
+          again.
+        </p>
       </div>
-      <div className="text-center">
-        <div>
-          {pages.map((page) => (
-            <button
-              onClick={() => setCurrentPage(page)}
-              className={`btn ${
-                page === currentPage ? "bg-orange-900" : "bg-orange-400"
-              } text-white`}
-              key={page}
-            >
-              {page + 1}
-            </button>
-          ))}
+
+      {isLoading ? (
+        <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
+          <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
+          <p className="text-lg font-medium animate-pulse">
+            Loading Study Sessions...
+          </p>
         </div>
-      </div>
+      ) : (
+        <>
+          {sessions.length > 0 ? (
+            <>
+              <div className="grid lg:grid-cols-3 gap-6 px-4">
+                {sessions.map((session) => (
+                  <SessionCard key={session._id} session={session} />
+                ))}
+              </div>
+
+              <div className="text-center mt-8">
+                {pages.map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`px-4 py-2 rounded-md mx-1 text-white font-semibold transition-all duration-300 ${
+                      page === currentPage
+                        ? "bg-orange-800 scale-105"
+                        : "bg-orange-500 hover:bg-orange-600"
+                    }`}
+                  >
+                    {page + 1}
+                  </button>
+                ))}
+              </div>
+            </>
+          ) : (
+            <p className="text-center text-gray-500 text-lg">
+              No sessions found.
+            </p>
+          )}
+        </>
+      )}
     </div>
   );
 };

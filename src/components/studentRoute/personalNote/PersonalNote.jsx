@@ -57,7 +57,7 @@ const PersonalNote = () => {
 
   return (
     <div className=" max-w-full min-h-screen">
-      <h2 className="bg-orange-400 py-2 text-center text-white text-xl mb-8">
+      <h2 className="text-cyan-700 py-2 text-center text-3xl">
         Personal Note That You Stored
       </h2>
       {data.length === 0 ? (

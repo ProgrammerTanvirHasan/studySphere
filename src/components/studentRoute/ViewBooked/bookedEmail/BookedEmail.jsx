@@ -24,8 +24,8 @@ const BookedEmail = ({ booked }) => {
 
           <div className="card-actions justify-end">
             <Link to={`/bookedDetails/${title}`}>
-              <button className="btn bg-orange-400 opacity-80 text-black font-bold">
-                view detail
+              <button className="btn bg-orange-400 opacity-80 text-white ">
+                View detail
               </button>
             </Link>
           </div>

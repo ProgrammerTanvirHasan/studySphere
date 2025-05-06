@@ -20,8 +20,8 @@ const ViewMaterials = () => {
   if (error) return "An error has occurred: " + error.message;
   return (
     <div>
-      <h2 className="text-center p-2 bg-cyan-950 text-white mb-4 text-xl">
-        All materials here and you can update or delete
+      <h2 className="text-cyan-700 py-2 text-center text-3xl">
+        You can update or delete this materials
       </h2>
       {data.length === 0 ? (
         Swal.fire({

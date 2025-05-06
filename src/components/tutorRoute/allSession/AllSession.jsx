@@ -22,7 +22,7 @@ const AllSession = () => {
   if (error) return "An error has occurred: " + error.message;
   return (
     <div>
-      <h2 className="text-center bg-blue-950 text-white py-2 mb-8">
+      <h2 className="text-cyan-700 py-2 text-center text-3xl">
         All session that you created
       </h2>
       {data.length > 0 ? (

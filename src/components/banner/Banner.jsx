@@ -51,105 +51,55 @@ const Banner = () => {
 
   return (
     <>
-      <div ref={sliderRef} className="keen-slider h-[600px] ">
+      <div ref={sliderRef} className="keen-slider h-[75vh] ">
         <div className="keen-slider__slide number-slide1">
-          <img
-            src={
-              "https://i.ibb.co.com/DV2zXpW/boy-girl-go-school-by-hand-background-facade-new-building-232631-60.jpg"
-            }
-            alt=""
-          />
+          <img src={"https://i.ibb.co.com/LD3L8NDj/image.png"} alt="" />
         </div>
+
         <div className="keen-slider__slide number-slide2">
-          <img
-            src={
-              "https://i.ibb.co.com/vQt1NQM/it-education-with-children-school-530697-84829.jpg"
-            }
-            alt=""
-          />
+          <img src={"https://i.ibb.co.com/vCjCf0Qf/image.png"} alt="" />
         </div>
+
         <div className="keen-slider__slide number-slide3">
-          <img
-            src={
-              "https://i.ibb.co.com/C6hPJww/young-people-studying-using-laptop-23-2147844843.jpg"
-            }
-            alt=""
-          />
+          <img src={"https://i.ibb.co.com/jvh0NF9M/image.png"} alt="" />
         </div>
+
         <div className="keen-slider__slide number-slide4">
-          <img
-            src={
-              "https://i.ibb.co.com/Xb9YQnB/young-teacher-helping-her-students-class-23-2148633379.jpg"
-            }
-            alt=""
-          />
+          <img src={"https://i.ibb.co.com/Y7LKtJCC/image.png"} alt="" />
         </div>
+
         <div className="keen-slider__slide number-slide5">
-          <img
-            src={
-              "https://i.ibb.co.com/QkXz2hR/students-knowing-right-answer-329181-14271.jpg"
-            }
-            alt=""
-          />
+          <img src={"https://i.ibb.co.com/NngrjFCj/image.png"} alt="" />
         </div>
+
         <div className="keen-slider__slide number-slide6">
-          <img
-            src={
-              "https://i.ibb.co.com/KKx0FYP/women-study-together-smiling-23-2147844850.jpg"
-            }
-            alt=""
-          />
+          <img src={"https://i.ibb.co.com/Rp10wpC6/image.png"} alt="" />
         </div>
       </div>
 
       <div ref={thumbnailRef} className="keen-slider thumbnail">
         <div className="keen-slider__slide number-slide1">
-          <img
-            src={
-              "https://i.ibb.co.com/DV2zXpW/boy-girl-go-school-by-hand-background-facade-new-building-232631-60.jpg"
-            }
-            alt=""
-          />
+          <img src={"https://i.ibb.co.com/LD3L8NDj/image.png"} alt="" />
         </div>
+
         <div className="keen-slider__slide number-slide2">
-          <img
-            src={
-              "https://i.ibb.co.com/vQt1NQM/it-education-with-children-school-530697-84829.jpg"
-            }
-            alt=""
-          />
+          <img src={"https://i.ibb.co.com/vCjCf0Qf/image.png"} alt="" />
         </div>
+
         <div className="keen-slider__slide number-slide3">
-          <img
-            src={
-              "https://i.ibb.co.com/C6hPJww/young-people-studying-using-laptop-23-2147844843.jpg"
-            }
-            alt=""
-          />
+          <img src={"https://i.ibb.co.com/jvh0NF9M/image.png"} alt="" />
         </div>
+
         <div className="keen-slider__slide number-slide4">
-          <img
-            src={
-              "https://i.ibb.co.com/Xb9YQnB/young-teacher-helping-her-students-class-23-2148633379.jpg"
-            }
-            alt=""
-          />
+          <img src={"https://i.ibb.co.com/Y7LKtJCC/image.png"} alt="" />
         </div>
+
         <div className="keen-slider__slide number-slide5">
-          <img
-            src={
-              "https://i.ibb.co.com/QkXz2hR/students-knowing-right-answer-329181-14271.jpg"
-            }
-            alt=""
-          />
+          <img src={"https://i.ibb.co.com/NngrjFCj/image.png"} alt="" />
         </div>
+
         <div className="keen-slider__slide number-slide6">
-          <img
-            src={
-              "https://i.ibb.co.com/KKx0FYP/women-study-together-smiling-23-2147844850.jpg"
-            }
-            alt=""
-          />
+          <img src={"https://i.ibb.co.com/Rp10wpC6/image.png"} alt="" />
         </div>
       </div>
     </>

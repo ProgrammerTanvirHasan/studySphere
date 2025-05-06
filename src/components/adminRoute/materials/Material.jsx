@@ -39,30 +39,36 @@ const Material = ({ items, refetch }) => {
   };
 
   return (
-    <div className="pt-8 w-96  shadow-2xl rounded-md border-b-4 border-orange-300">
-      <img className="w-96 h-64" src={imageUrl} alt={title} />
-      <div className="flex justify-between">
-        <p className="text-orange-400">{studySessionId}</p>
-        <div className="flex ">
-          <p className="text-2xl">
-            <FaGoogleDrive></FaGoogleDrive>
-          </p>
-          <Link to={driveLink}>
-            <button className="text-sm  border-b-4 border-black">
-              Google Drive
-            </button>
-          </Link>
+    <div className="w-96 bg-white rounded-xl shadow-2xl border border-gray-200 overflow-hidden transition transform hover:scale-[1.01]">
+      <img className="w-full h-64 object-cover" src={imageUrl} alt={title} />
+
+      <div className="p-4 space-y-2">
+        <div className="flex justify-between items-center text-sm text-gray-600 mb-2">
+          <span className="text-orange-500 font-semibold">
+            {studySessionId}
+          </span>
+          <div className="flex items-center gap-2">
+            <FaGoogleDrive className="text-2xl text-blue-500" />
+            <Link to={driveLink}>
+              <button className="text-blue-600 underline hover:text-blue-800 text-sm font-medium">
+                Google Drive
+              </button>
+            </Link>
+          </div>
         </div>
-      </div>
-      <h2 className="card-title ">{title}</h2>
-      <p>{tutorEmail}</p>
-      <div className="pt-6 pb-2">
-        <button
-          onClick={() => handleDelete(_id)}
-          className="bg-red-700 text-white px-2 rounded-sm"
-        >
-          Remove Content
-        </button>
+
+        <h2 className="text-lg font-bold text-gray-800">{title}</h2>
+
+        <p className="text-sm text-gray-600">{tutorEmail}</p>
+
+        <div className="pt-4">
+          <button
+            onClick={() => handleDelete(_id)}
+            className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow transition"
+          >
+            Remove Content
+          </button>
+        </div>
       </div>
     </div>
   );

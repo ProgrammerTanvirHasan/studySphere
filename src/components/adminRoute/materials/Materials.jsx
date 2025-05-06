@@ -15,12 +15,12 @@ const Materials = () => {
   if (error) return "An error has occurred: " + error.message;
   return (
     <div>
-      <h2 className="py-2 text-center text-xl bg-neutral-800 text-white">
+      <h2 className="text-cyan-700 py-2 text-center text-3xl">
         All materials created by tutor
       </h2>
       {data.length > 0 ? (
         <>
-          <div className="grid lg:grid-cols-2 ml-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 ml-8">
             {data.map((items) => (
               <Material
                 key={items._id}

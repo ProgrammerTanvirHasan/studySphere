@@ -7,12 +7,12 @@ const Sessions = ({ session, refetch }) => {
     if (status !== "Rejected") {
       Swal.fire({
         title: "Action not allowed!",
-        text: "All ready added,You can only send Approval",
+        text: "Already added. You can only send approval.",
         icon: "warning",
-        draggable: true,
       });
       return;
     }
+
     fetch(`https://stydy-sphere-server-vrnk.vercel.app/session/${_id}`, {
       method: "PATCH",
       headers: {
@@ -20,28 +20,22 @@ const Sessions = ({ session, refetch }) => {
       },
       body: JSON.stringify({ status: "Pending" }),
     })
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then(() => {
-        Swal.fire({
-          title: "Sending approval successfully",
-          icon: "success",
-          draggable: true,
-        });
+        Swal.fire("Sent!", "Approval request has been sent.", "success");
         refetch();
       })
-      .catch((error) => {
-        console.log(error.message);
-      });
+      .catch((error) => console.error(error.message));
   };
 
   const handleDelete = (_id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "This action is irreversible!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#16a34a",
+      cancelButtonColor: "#ef4444",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -49,59 +43,50 @@ const Sessions = ({ session, refetch }) => {
           method: "DELETE",
         });
 
-        Swal.fire({
-          title: "Deleted!",
-          text: "Your file has been deleted.",
-          icon: "success",
-        });
+        Swal.fire("Deleted!", "Session has been removed.", "success");
+        refetch();
       }
-      refetch();
     });
   };
 
-  const buttonClass =
-    status === "Rejected"
-      ? "btn bg-red-900 text-white"
-      : status === "Pending"
-      ? "btn bg-orange-900 text-black"
-      : "btn bg-green-900 text-white";
+  const getStatusColor = () => {
+    if (status === "Rejected") return "bg-red-600";
+    if (status === "Pending") return "bg-yellow-500";
+    return "bg-green-600";
+  };
 
   return (
-    <div>
-      <div className="bg-cyan-950 lg:ml-8 mb-4 border-b-4 border-orange-400 min-h-96">
-        <div className="text-end">
+    <div className="p-4">
+      <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-200 relative max-w-3xl mx-auto">
+        <button
+          onClick={() => handleDelete(_id)}
+          className="absolute top-4 right-4 text-red-500 hover:text-red-700 text-lg font-bold"
+          title="Delete Session"
+        >
+          ✕
+        </button>
+
+        <h2 className="text-2xl font-semibold text-gray-800 mb-2">{title}</h2>
+        <p className="text-gray-600 mb-3">{textarea}</p>
+
+        <div className="flex justify-between items-center mt-4">
+          <p className="text-lg font-medium text-green-700">
+            Fee: <span className="font-bold">{amount} ৳</span>
+          </p>
           <button
-            onClick={() => handleDelete(_id)}
-            className="btn bg-red-700 text-white"
+            onClick={() => handleReject(_id)}
+            className={`px-4 py-2 rounded-lg text-white font-semibold ${getStatusColor()}`}
           >
-            X
+            {status === "Rejected" ? "Send Approval" : status}
           </button>
-        </div>
-        <div className="px-4">
-          <h2 className="card-title text-white">{title}</h2>
-          <p className="text-green-500">{textarea}</p>
-          <p className="text-orange-400 text-lg mt-4">{amount} Taka</p>
-          <div className="card card-actions mt-6">
-            <btn className={buttonClass} onClick={() => handleReject(_id)}>
-              {status === "Rejected" ? "Send Approval !" : status}
-            </btn>
-          </div>
         </div>
 
         {status === "Rejected" && (
-          <>
-            <div className="  p-2 mb-8 ">
-              <p className="text-xl mt-16">
-                <p className=" text-orange-400 border-b-2 border-orange-400 w-40 ">
-                  Admin feedback
-                </p>
-                <span className="text-white">{reason} !</span>
-              </p>
-              <p>
-                <span className="text-white"> {feedback}</span>
-              </p>
-            </div>
-          </>
+          <div className="mt-6 bg-red-50 p-4 rounded-lg border border-red-300">
+            <p className="text-red-600 font-semibold mb-2">Admin Feedback:</p>
+            <p className="text-sm text-gray-800 mb-1">{reason}</p>
+            <p className="text-sm text-gray-700 italic">{feedback}</p>
+          </div>
         )}
       </div>
     </div>

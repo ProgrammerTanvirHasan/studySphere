@@ -47,7 +47,7 @@ const Update = () => {
   return (
     <div>
       <div className="bg-emerald-900 opacity-90 px-2 min-h-screen ">
-        <h2 className="bg-orange-400 py-2 text-white text-center text-xl">
+        <h2 className="text-cyan-700 py-2 text-center text-3xl">
           Update Your Personal Note
         </h2>
         <form onSubmit={handleUpdate}>

@@ -129,32 +129,31 @@ const AdminSession = ({ session, refetch, index }) => {
   };
 
   return (
-    <div className="border-b-4 border-orange-300 bg-emerald-700  mb-8 text-white min-h-32 ">
-      <div className="p-2 grid grid-cols-3">
-        <div className="flex gap-4">
-          <p className="font-bold text-lg">{index + 1}</p>
-          <h2 className="text-xl">{title}</h2>
+    <div className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-all hover:shadow-xl mb-6">
+      <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-start md:items-center">
+        <div className="flex items-center gap-4">
+          <h2 className="text-2xl font-semibold text-gray-800">{title}</h2>
         </div>
 
-        <div className="ml-4 ">
-          <p>{textarea}</p>
+        <div>
+          <p className="text-gray-700 text-base">{textarea}</p>
         </div>
 
-        <div className="card-actions justify-end">
+        <div className="flex justify-end gap-3">
           <button
             onClick={() => handleApproved(_id)}
-            className={`p-2 rounded-lg ${
+            className={`px-4 py-2 rounded-lg font-medium transition duration-200 shadow ${
               status === "Pending"
-                ? "bg-yellow-500 text-black"
-                : "bg-green-600 text-white"
+                ? "bg-yellow-400 text-black hover:bg-yellow-500"
+                : "bg-green-600 text-white hover:bg-green-700"
             }`}
             disabled={status === "Approved"}
           >
-            Approve
+            {status === "Approved" ? "Approved" : "Approve"}
           </button>
           <button
             onClick={() => handleDelete(_id)}
-            className="p-2 rounded-lg bg-red-700 text-white"
+            className="px-4 py-2 rounded-lg bg-rose-600 text-white hover:bg-rose-700 transition duration-200 shadow"
           >
             Reject
           </button>

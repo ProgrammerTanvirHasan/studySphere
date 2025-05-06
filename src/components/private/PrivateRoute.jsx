@@ -8,12 +8,10 @@ const PrivateRoute = () => {
 
   if (loading) {
     return (
-      <>
-        <span className="loading loading-spinner loading-xs"></span>
-        <span className="loading loading-spinner loading-sm"></span>
-        <span className="loading loading-spinner loading-md"></span>
-        <span className="loading loading-spinner loading-lg"></span>
-      </>
+      <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
+        <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
+        <p className="text-lg font-medium animate-pulse">Loading...</p>
+      </div>
     );
   }
   if (user?.email) {

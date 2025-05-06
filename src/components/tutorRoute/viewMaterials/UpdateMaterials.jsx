@@ -30,18 +30,18 @@ const UpdateMaterials = ({ materials, refetch }) => {
   };
 
   return (
-    <div>
-      <img className="h-72 w-full lg:w-96" src={imageUrl} alt={title} />
+    <div className="bg-white shadow-lg p-4 hover:scale-105 transition">
+      <img className="h-72 w-full lg:w-96 " src={imageUrl} alt={title} />
       <h2 className="card-title">{title}</h2>
       <div className="mt-2 ">
         <Link to={`/handleUpdate/${_id}`}>
-          <button className="px-4 rounded-xl bg-green-950 text-white mr-2">
+          <button className="px-4 rounded-xl bg-cyan-700 text-white mr-2">
             Update
           </button>
         </Link>
         <button
           onClick={() => handleDelete(_id)}
-          className="px-4 rounded-xl bg-red-950 text-white"
+          className="px-4 rounded-xl bg-red-700 text-white"
         >
           Delete
         </button>

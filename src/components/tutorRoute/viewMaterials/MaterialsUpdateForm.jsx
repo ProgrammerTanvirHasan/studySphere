@@ -88,7 +88,7 @@ const MaterialsUpdateForm = () => {
 
   return (
     <div>
-      <h2 className="bg-orange-400 py-2 text-white text-center text-xl">
+      <h2 className="text-cyan-700 py-2 text-center text-3xl">
         Update Your Materials
       </h2>
       <div className="lg:w-3/5 bg-teal-700 mt-4 mx-auto p-8">
@@ -123,19 +123,11 @@ const MaterialsUpdateForm = () => {
             </div>
 
             <div className="mt-4">
-              <button className="p-2 glass rounded-md px-6 bg-orange-400 text-white">
+              <button className="p-2 w-full text-xl rounded-md px-6 bg-orange-400 text-white">
                 Update
               </button>
             </div>
           </form>
-
-          <div className="mt-12">
-            <Link to="/">
-              <p className="text-center border border-orange-300 text-white py-2 rounded">
-                Go back to home
-              </p>
-            </Link>
-          </div>
         </div>
       </div>
     </div>

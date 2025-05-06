@@ -17,6 +17,7 @@
     "axios": "^1.7.9",
     "firebase": "^11.0.2",
     "formik": "^2.4.6",
+    "framer-motion": "^12.10.0",
     "keen-slider": "^6.8.6",
     "moment": "^2.30.1",
     "react": "^18.3.1",

@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 
 const CreateSession = () => {
   const { user } = useContext(AuthContext);
-
   const email = user?.email;
 
   const { isPending, error, data } = useQuery({
@@ -17,7 +16,6 @@ const CreateSession = () => {
   });
 
   if (isPending) return "Loading...";
-
   if (error) return "An error has occurred: " + error.message;
 
   const handleSubmit = (e) => {
@@ -29,7 +27,6 @@ const CreateSession = () => {
     const amount = parseInt(form.amount.value);
     const duration = parseInt(form.duration.value);
     const classStart = new Date(form.classStart.value);
-
     const classEnd = new Date(form.classEnd.value);
     const registrationEnd = new Date(form.registrationEnd.value);
     const registrationStart = new Date(form.registrationStart.value);
@@ -68,148 +65,77 @@ const CreateSession = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-center text-2xl bg-orange-400 text-white mt-4">
+    <div className="px-4">
+      <h2 className="text-cyan-700 py-4 text-center text-3xl">
         Create your session here
       </h2>
-      <form onSubmit={handleSubmit} className="bg-green-300 pb-4">
-        <div className="mt-8 ">
-          <div className="lg:flex lg:ml-24 gap-4">
-            <label className="form-control w-full max-w-xs">
+      <form onSubmit={handleSubmit} className="pb-6">
+        {[
+          { label: "Session Title", name: "title", type: "text" },
+          {
+            label: "Registration Start Date",
+            name: "registrationStart",
+            type: "date",
+          },
+          {
+            label: "Registration End Date",
+            name: "registrationEnd",
+            type: "date",
+          },
+          { label: "Class Start Date", name: "classStart", type: "date" },
+          { label: "Class End Date", name: "classEnd", type: "date" },
+          {
+            label: "Status",
+            name: "status",
+            type: "text",
+            defaultValue: "Pending",
+          },
+          {
+            label: "Registration Fee",
+            name: "amount",
+            type: "text",
+            defaultValue: 0,
+          },
+          { label: "Class Duration", name: "duration", type: "number", min: 0 },
+        ].map(({ label, ...props }) => (
+          <div className="my-4 w-full" key={props.name}>
+            <label className="form-control w-full">
               <div className="label">
-                <span className="label-text"> Session Title</span>
+                <span className="label-text">{label}</span>
               </div>
               <input
-                type="text"
-                name="title"
-                placeholder="title"
-                className="input input-bordered full max-w-xs"
-              />
-            </label>
-
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text"> Registration start date</span>
-              </div>
-              <input
-                type="date"
-                name="registrationStart"
-                placeholder="Type here"
-                className="input input-bordered w-full max-w-xs"
+                {...props}
+                className="w-full p-2 border-b-2 border-gray-300 bg-transparent text-gray-700 focus:outline-none focus:border-red-500"
               />
             </label>
           </div>
-        </div>
+        ))}
 
-        <div className="lg:flex lg:ml-24 gap-4">
-          <label className="form-control w-full max-w-xs">
+        <div className="my-4 w-full">
+          <label className="form-control w-full">
             <div className="label">
               <span className="label-text">Session Description</span>
             </div>
             <textarea
-              placeholder="About"
               name="textarea"
-              className="textarea textarea-bordered textarea-md w-full max-w-xs "
+              placeholder="About"
+              className="w-full p-2 border-b-2 border-gray-300 bg-transparent text-gray-700 focus:outline-none focus:border-red-500"
             ></textarea>
           </label>
-
-          <label className="form-control w-full max-w-xs">
-            <div className="label">
-              <span className="label-text"> Registration end date</span>
-            </div>
-            <input
-              type="date"
-              name="registrationEnd"
-              placeholder="Type here"
-              className="input input-bordered w-full max-w-xs"
-            />
-          </label>
         </div>
 
-        <div>
-          <div className="lg:flex lg:ml-24 gap-4">
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text"> Status</span>
-              </div>
-              <input
-                type="text"
-                name="status"
-                defaultValue={"Pending"}
-                className="input input-bordered full max-w-xs"
-              />
-            </label>
-
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text">Class start date</span>
-              </div>
-              <input
-                type="date"
-                name="classStart"
-                placeholder="Type here"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-          </div>
-
-          <div className="lg:flex lg:ml-24 gap-4">
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text"> Registration fee</span>
-              </div>
-
-              <input
-                type="text"
-                name="amount"
-                defaultValue={0}
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text">Class end date</span>
-              </div>
-              <input
-                type="date"
-                name="classEnd"
-                placeholder="Type here"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-          </div>
-          <div className="lg:ml-24">
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text">Class Duration</span>
-              </div>
-              <input
-                type="number"
-                min={0}
-                name="duration"
-                placeholder="duration"
-                className="input input-bordered w-full max-w-xs"
-              />
-            </label>
-          </div>
-        </div>
-        <div className="text-center mt-4">
+        <div className="text-center mt-6">
           {data.role === "tutor" ? (
-            <>
-              <button className="btn w-60 bg-green-500 text-black text-xl">
-                Submit
-              </button>
-            </>
+            <button className="btn w-full sm:w-60 bg-green-500 text-black text-xl">
+              Submit
+            </button>
           ) : (
-            <>
-              <button
-                disabled
-                className="btn w-60 bg-green-500 text-black text-xl"
-              >
-                Submit
-              </button>
-            </>
+            <button
+              disabled
+              className="btn w-full sm:w-60 bg-green-500 text-black text-xl"
+            >
+              Submit
+            </button>
           )}
         </div>
       </form>

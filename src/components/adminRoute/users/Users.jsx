@@ -21,7 +21,7 @@ const Users = () => {
 
   return (
     <div>
-      <h2 className="bg-orange-400 text-white text-center py-2">
+      <h2 className="text-3xl text-cyan-700 text-center py-2">
         All users here
       </h2>
 

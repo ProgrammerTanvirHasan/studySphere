@@ -19,7 +19,7 @@ const Session = () => {
 
   return (
     <div>
-      <h2 className="bg-blue-950 text-white py-2 text-center text-xl">
+      <h2 className="text-cyan-700 py-2 text-center text-3xl">
         All study session created by tutor
       </h2>
       {data.length > 0 ? (
