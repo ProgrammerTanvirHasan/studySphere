@@ -8,7 +8,7 @@ const ShowMaterials = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["material", studySessionID],
     queryFn: () =>
-      fetch(`http://localhost:4000/material/material/${studySessionID}`).then(
+      fetch(`http://localhost:27017/material/material/${studySessionID}`).then(
         (res) => res.json()
       ),
   });

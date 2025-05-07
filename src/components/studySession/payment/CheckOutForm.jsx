@@ -30,7 +30,7 @@ const CheckOutForm = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`http://localhost:4000/create-payment-intent`, {
+    fetch(`http://localhost:27017/create-payment-intent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount }),
@@ -117,7 +117,7 @@ const CheckOutForm = () => {
         amount,
       };
 
-      fetch("http://localhost:4000/bookedSession", {
+      fetch("http://localhost:27017/bookedSession", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -148,7 +148,7 @@ const CheckOutForm = () => {
   };
 
   return (
-    <form className="mt-4" onSubmit={handleSubmit}>
+    <form className="mt-4 container mx-auto" onSubmit={handleSubmit}>
       <CardElement
         options={{
           style: {

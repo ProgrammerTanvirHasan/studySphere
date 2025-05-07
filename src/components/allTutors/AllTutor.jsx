@@ -1,4 +1,5 @@
 import React from "react";
+import Marquee from "react-fast-marquee";
 import { Link } from "react-router-dom";
 
 const tutors = [
@@ -60,29 +61,31 @@ const AllTutor = () => {
           succeed in your academic journey.
         </p>
       </div>
-      <div className="p-6 grid grid-cols-2 lg:grid-cols-5 gap-2">
-        {tutors.map((tutor) => (
-          <Link
-            to={`/tutors/${tutor.id}`}
-            key={tutor.id}
-            className="bg-white rounded-xl shadow-md p-4 hover:shadow-xl hover:scale-105 transition"
-          >
-            <img
-              src={tutor.image}
-              alt={`${tutor.name}'s profile`}
-              className="w-48 h-48 mx-auto"
-            />
-            <div className="text-center mt-4">
-              <h2 className="text-xl font-semibold">{tutor.name}</h2>
-              <p className="text-gray-500">{tutor.subject}</p>
-              <p className="text-sm text-gray-400">
-                Experience: {tutor.experience}
-              </p>
-              <p className="text-yellow-500">⭐ {tutor.rating}</p>
-            </div>
-          </Link>
-        ))}
-      </div>
+      <Marquee speed={80} gradient={false}>
+        <div className="p-6 grid grid-cols-2 lg:grid-cols-5 gap-2">
+          {tutors.map((tutor) => (
+            <Link
+              to={`/tutors/${tutor.id}`}
+              key={tutor.id}
+              className="bg-white rounded-xl shadow-md p-4 hover:shadow-xl hover:scale-105 transition"
+            >
+              <img
+                src={tutor.image}
+                alt={`${tutor.name}'s profile`}
+                className="w-48 h-48 mx-auto"
+              />
+              <div className="text-center mt-4">
+                <h2 className="text-xl font-semibold">{tutor.name}</h2>
+                <p className="text-gray-500">{tutor.subject}</p>
+                <p className="text-sm text-gray-400">
+                  Experience: {tutor.experience}
+                </p>
+                <p className="text-yellow-500">⭐ {tutor.rating}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </Marquee>
     </div>
   );
 };

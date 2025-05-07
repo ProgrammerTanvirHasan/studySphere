@@ -33,10 +33,6 @@ const AuthProvider = ({ children }) => {
     setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
-  const githubSignIn = (githubProvider) => {
-    setLoading(true);
-    return signInWithPopup(auth, githubProvider);
-  };
 
   const loggedOut = () => {
     setLoading(true);
@@ -48,7 +44,7 @@ const AuthProvider = ({ children }) => {
       if (user) {
         axios
           .post(
-            `http://localhost:4000/jwt`,
+            `http://localhost:27017/jwt`,
             { email: user.email },
             {
               withCredentials: true,
@@ -57,7 +53,7 @@ const AuthProvider = ({ children }) => {
           .then(() => {});
       } else {
         axios
-          .post(`http://localhost:4000/logOut`, null, {
+          .post(`http://localhost:27017/logOut`, null, {
             withCredentials: true,
           })
           .then(() => {});
@@ -79,7 +75,6 @@ const AuthProvider = ({ children }) => {
     signUser,
     loggedOut,
     googleSignIn,
-    githubSignIn,
   };
   return <AuthContext.Provider value={info}>{children}</AuthContext.Provider>;
 };

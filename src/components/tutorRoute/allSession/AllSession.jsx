@@ -9,7 +9,7 @@ const AllSession = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["session", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/session/email/${email}`, {
+      fetch(`http://localhost:27017/session/email/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
@@ -39,9 +39,32 @@ const AllSession = () => {
           </div>
         </>
       ) : (
-        <>
-          <p>No data found !</p>
-        </>
+        <div className="flex flex-col items-center justify-center mt-12">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-16 w-16 text-red-500 mb-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 3a9 9 0 100 18 9 9 0 000-18z"
+            />
+          </svg>
+          <h3 className="text-2xl text-red-600 font-semibold mb-2">
+            Access Denied
+          </h3>
+          <p className="text-gray-600 text-center">
+            You do not have any access session to view .
+            <br />
+            <span className="text-sm">
+              (Only authorized can show their this section)
+            </span>
+          </p>
+        </div>
       )}
     </div>
   );

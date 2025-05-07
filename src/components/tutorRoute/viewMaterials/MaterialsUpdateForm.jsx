@@ -18,7 +18,7 @@ const MaterialsUpdateForm = () => {
   } = useQuery({
     queryKey: ["update", _id],
     queryFn: () =>
-      fetch(`http://localhost:4000/material/update/${_id}`).then((res) =>
+      fetch(`http://localhost:27017/material/update/${_id}`).then((res) =>
         res.json()
       ),
   });
@@ -52,7 +52,7 @@ const MaterialsUpdateForm = () => {
       };
 
       const updateResponse = await fetch(
-        `http://localhost:4000/material/${_id}`,
+        `http://localhost:27017/material/${_id}`,
         {
           method: "PATCH",
           headers: {

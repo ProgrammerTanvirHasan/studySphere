@@ -15,7 +15,7 @@ const AllStudyMaterials = () => {
   } = useQuery({
     queryKey: ["bookedSession", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/bookedSession/${email}`, {
+      fetch(`http://localhost:27017/bookedSession/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });

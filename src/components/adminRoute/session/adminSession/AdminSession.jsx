@@ -5,7 +5,7 @@ const AdminSession = ({ session, refetch, index }) => {
 
   const updateSession = async (data) => {
     try {
-      const res = await fetch(`http://localhost:4000/session/${_id}`, {
+      const res = await fetch(`http://localhost:27017/session/${_id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

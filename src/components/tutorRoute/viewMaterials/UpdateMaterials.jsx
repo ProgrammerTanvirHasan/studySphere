@@ -15,7 +15,7 @@ const UpdateMaterials = ({ materials, refetch }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:4000/material/${_id}`, {
+        fetch(`http://localhost:27017/material/${_id}`, {
           method: "DELETE",
         }).then(() => {
           Swal.fire({

@@ -2,22 +2,52 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider";
 import Materials from "./Materials";
-import Swal from "sweetalert2";
 
 const UploadMaterials = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
+
   const { isPending, error, data } = useQuery({
     queryKey: ["session", "Approved", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/session/${email}`, {
+      fetch(`http://localhost:27017/session/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
 
   if (isPending) return "Loading...";
-
   if (error) return "An error has occurred: " + error.message;
+
+  if (data.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center mt-12">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-16 w-16 text-red-500 mb-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 3a9 9 0 100 18 9 9 0 000-18z"
+          />
+        </svg>
+        <h3 className="text-2xl text-red-600 font-semibold mb-2">
+          Access Denied
+        </h3>
+        <p className="text-gray-600 text-center">
+          You do not have any access to show this.
+          <br />
+          <span className="text-sm">
+            (Only authorized can show this section)
+          </span>
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -28,26 +58,11 @@ const UploadMaterials = () => {
         Here you'll find all the materials that have been approved. You can
         review and manage them as needed.
       </p>
-      {data.length === 0 ? (
-        Swal.fire({
-          title: "No data found",
-          text: "You have ho any approved session ! ",
-          icon: "question",
-          confirmButtonText: "Go to Home",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = "/";
-          }
-        })
-      ) : (
-        <>
-          <div className="grid lg:grid-cols-2 gap-4">
-            {data.map((material) => (
-              <Materials key={material._id} material={material}></Materials>
-            ))}
-          </div>
-        </>
-      )}
+      <div className="grid lg:grid-cols-2 gap-4">
+        {data.map((material) => (
+          <Materials key={material._id} material={material} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -21,21 +21,21 @@ const SessionDetails = () => {
       {
         queryKey: ["sessionData", _id],
         queryFn: () =>
-          fetch(`http://localhost:4000/session/Approved/${_id}`).then((res) =>
+          fetch(`http://localhost:27017/session/Approved/${_id}`).then((res) =>
             res.json()
           ),
       },
       {
         queryKey: ["reviewsData", _id],
         queryFn: () =>
-          fetch(`http://localhost:4000/reviews/${_id}`).then((res) =>
+          fetch(`http://localhost:27017/reviews/${_id}`).then((res) =>
             res.json()
           ),
       },
       {
         queryKey: ["registerData", email],
         queryFn: () =>
-          fetch(`http://localhost:4000/register/${email}`).then((res) =>
+          fetch(`http://localhost:27017/register/${email}`).then((res) =>
             res.json()
           ),
       },
@@ -100,7 +100,7 @@ const SessionDetails = () => {
       Tutor: sessionData.name,
     };
 
-    fetch(`http://localhost:4000/bookedSession`, {
+    fetch(`http://localhost:27017/bookedSession`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

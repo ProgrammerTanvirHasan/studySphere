@@ -22,7 +22,7 @@ const CreateNote = () => {
 
     const notes = { title, email, note };
 
-    fetch("http://localhost:4000/stored", {
+    fetch("http://localhost:27017/stored", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -58,10 +58,15 @@ const CreateNote = () => {
         Keep track of your thoughts, reminders, or study highlights.
       </p>
 
-      <form onSubmit={handleNote} className="bg-white rounded-xl shadow-md p-6 space-y-6">
-    
+      <form
+        onSubmit={handleNote}
+        className="bg-white rounded-xl shadow-md p-6 space-y-6"
+      >
         <div>
-          <label htmlFor="title" className="block text-lg font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="title"
+            className="block text-lg font-medium text-gray-700 mb-2"
+          >
             Note Title
           </label>
           <input
@@ -74,9 +79,11 @@ const CreateNote = () => {
           />
         </div>
 
-        
         <div>
-          <label htmlFor="note" className="block text-lg font-medium text-gray-700 mb-2">
+          <label
+            htmlFor="note"
+            className="block text-lg font-medium text-gray-700 mb-2"
+          >
             Your Note
           </label>
           <textarea
@@ -88,7 +95,6 @@ const CreateNote = () => {
           ></textarea>
         </div>
 
-    
         <div className="text-center">
           <button
             type="submit"

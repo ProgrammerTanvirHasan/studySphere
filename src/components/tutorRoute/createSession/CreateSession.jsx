@@ -10,7 +10,7 @@ const CreateSession = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["register", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/register/${email}`).then((res) =>
+      fetch(`http://localhost:27017/register/${email}`).then((res) =>
         res.json()
       ),
   });
@@ -45,7 +45,7 @@ const CreateSession = () => {
       name: user.displayName,
     };
 
-    fetch("http://localhost:4000/session", {
+    fetch("http://localhost:27017/session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

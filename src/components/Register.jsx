@@ -27,7 +27,7 @@ const Register = () => {
         return updateProfile(auth.currentUser, { displayName: name });
       })
       .then(() => {
-        fetch("http://localhost:4000/register", {
+        fetch("http://localhost:27017/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(users),
@@ -52,8 +52,8 @@ const Register = () => {
   };
 
   return (
-    <div className="">
-      <div className="bg-white p-8 rounded-2xl shadow-xl container mx-auto w-full">
+    <div className="flex justify-center">
+      <div className=" bg-base-300 p-8 rounded-2xl shadow-xl  w-[75vh] h-[100vh]">
         <h2 className="text-3xl font-bold mb-2 text-center text-slate-800">
           Create Your Account
         </h2>

@@ -11,7 +11,7 @@ const BookDetails = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["bookedSession", title],
     queryFn: () =>
-      fetch(`http://localhost:4000/bookedSession/title/${title}`).then((res) =>
+      fetch(`http://localhost:27017/bookedSession/title/${title}`).then((res) =>
         res.json()
       ),
   });
@@ -31,7 +31,7 @@ const BookDetails = () => {
     const email = user?.email;
     const reviews = { review, rating, reviewID, email };
 
-    fetch(`http://localhost:4000/reviews`, {
+    fetch(`http://localhost:27017/reviews`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reviews),

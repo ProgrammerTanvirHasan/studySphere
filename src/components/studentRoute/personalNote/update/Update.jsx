@@ -8,7 +8,7 @@ const Update = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["stored", _id],
     queryFn: () =>
-      fetch(`http://localhost:4000/stored/${_id}`).then((res) => res.json()),
+      fetch(`http://localhost:27017/stored/${_id}`).then((res) => res.json()),
   });
 
   if (isLoading) return <p className="text-center py-8">Loading...</p>;
@@ -23,7 +23,7 @@ const Update = () => {
     const note = form.note.value;
     const updatedNote = { title, note };
 
-    fetch(`http://localhost:4000/stored/${_id}`, {
+    fetch(`http://localhost:27017/stored/${_id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",

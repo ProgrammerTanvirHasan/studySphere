@@ -17,7 +17,7 @@ const UpdateForm = () => {
   } = useQuery({
     queryKey: ["Approved", _id],
     queryFn: () =>
-      fetch(`http://localhost:4000/session/Approved/${_id}`).then((res) =>
+      fetch(`http://localhost:27017/session/Approved/${_id}`).then((res) =>
         res.json()
       ),
   });
@@ -51,7 +51,7 @@ const UpdateForm = () => {
         imageUrl: imageURL,
       };
 
-      fetch("http://localhost:4000/material", {
+      fetch("http://localhost:27017/material", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

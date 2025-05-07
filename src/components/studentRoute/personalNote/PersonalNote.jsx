@@ -16,7 +16,7 @@ const PersonalNote = () => {
   } = useQuery({
     queryKey: ["storeData", email],
     queryFn: () =>
-      fetch(`http://localhost:4000/stored/email/${email}`, {
+      fetch(`http://localhost:27017/stored/email/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
@@ -41,7 +41,7 @@ const PersonalNote = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:4000/stored/${_id}`, {
+        fetch(`http://localhost:27017/stored/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -61,7 +61,7 @@ const PersonalNote = () => {
       title: "No Notes Found",
       text: "You haven't created any notes yet!",
       icon: "info",
-      confirmButtonText: "Create Now",
+      confirmButtonText: "Ok",
     }).then((result) => {
       if (result.isConfirmed) {
         window.location.href = "/";

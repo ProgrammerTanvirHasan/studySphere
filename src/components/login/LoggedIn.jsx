@@ -1,18 +1,17 @@
 import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider";
-import { GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
 import Swal from "sweetalert2";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 
 const LoggedIn = () => {
-  const { signUser, setUser, googleSignIn, githubSignIn } =
-    useContext(AuthContext);
+  const { signUser, setUser, googleSignIn } = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
-  const githubProvider = new GithubAuthProvider();
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = (e) => {
@@ -47,20 +46,9 @@ const LoggedIn = () => {
       });
   };
 
-  const handleGithub = () => {
-    githubSignIn(githubProvider)
-      .then((result) => {
-        setUser(result.user);
-        navigate(location?.state ? location?.state : "/");
-      })
-      .catch((error) => {
-        console.error("GitHub Sign-In Error:", error.message);
-      });
-  };
-
   return (
-    <div className="">
-      <div className="bg-white p-8 rounded-2xl shadow-xl container mx-auto w-full">
+    <div className="flex justify-center">
+      <div className=" bg-base-300 p-8 rounded-2xl shadow-xl w-[75vh] h-[100vh]">
         <h2 className="text-3xl font-bold mb-2 text-center text-slate-800">
           Welcome Back
         </h2>
@@ -114,16 +102,9 @@ const LoggedIn = () => {
             <button
               type="button"
               onClick={handleGoogle}
-              className="w-[48%] bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg transition"
+              className="w-full bg-green-600 hover:bg-red-700 text-white py-2 rounded-lg transition"
             >
               Google
-            </button>
-            <button
-              type="button"
-              onClick={handleGithub}
-              className="w-[48%] bg-gray-800 hover:bg-gray-900 text-white py-2 rounded-lg transition"
-            >
-              GitHub
             </button>
           </div>
 
