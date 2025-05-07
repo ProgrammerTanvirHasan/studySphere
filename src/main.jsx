@@ -32,6 +32,9 @@ import AllStudyMaterials from "./components/studentRoute/allStudyMaterials/AllSt
 import PrivateRoute from "./components/private/PrivateRoute.jsx";
 import MainLayout from "./components/MainLayOut.jsx";
 import DefaultDashboard from "./components/dashboard/DefaultDashboard.jsx";
+import NavSession from "./components/navSession/NavSession.jsx";
+import NavTutor from "./components/navTutor/NavTutor.jsx";
+import LearningMaterials from "./components/learningMaterials/LearningMaterials.jsx";
 
 const queryClient = new QueryClient();
 
@@ -47,6 +50,10 @@ createRoot(document.getElementById("root")).render(
             <Route path="/" element={<App />} />
 
             <Route path="/payment" element={<Payment />} />
+            <Route path="/navSession" element={<NavSession />} />
+            <Route path="/navTutor" element={<NavTutor />} />
+            <Route path="/learningMaterials" element={<LearningMaterials />} />
+
             <Route path="/bookedDetails/:title" element={<BookDetails />} />
             <Route path="/update/:_id" element={<Update />} />
             <Route path="/announcement" element={<Announcement />} />

@@ -25,9 +25,9 @@ const Navbar = () => {
 
   const links = [
     { title: "Home", path: "/" },
-    { title: "All Session", path: "/viewSession" },
-    { title: "All Tutor", path: "/Tutor" },
-    { title: "Contact", path: "/contact" },
+    { title: "All Session", path: "/navSession" },
+    { title: "All Tutor", path: "/navTutor" },
+    { title: "Learning Materials", path: "/learningMaterials" },
     { title: "Dashboard", path: "/dashboard" },
   ];
 
