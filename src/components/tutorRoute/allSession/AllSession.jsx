@@ -9,12 +9,9 @@ const AllSession = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["session", email],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server-vrnk.vercel.app/session/email/${email}`,
-        {
-          credentials: "include",
-        }
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4000/session/email/${email}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isPending) return "Loading...";
@@ -25,6 +22,10 @@ const AllSession = () => {
       <h2 className="text-cyan-700 py-2 text-center text-3xl">
         All session that you created
       </h2>
+      <p className="text-center text-gray-600 mb-6">
+        Below are the sessions that you have created. You can view, update, or
+        delete them. Make sure to keep track of your active sessions.
+      </p>
       {data.length > 0 ? (
         <>
           <div className="grid lg:grid-cols-2 gap-4 ">

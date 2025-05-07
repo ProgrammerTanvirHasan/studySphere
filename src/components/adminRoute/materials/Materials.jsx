@@ -5,7 +5,7 @@ const Materials = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["material"],
     queryFn: () =>
-      fetch("https://stydy-sphere-server-vrnk.vercel.app/material", {
+      fetch("http://localhost:4000/material", {
         credentials: "include",
       }).then((res) => res.json()),
   });
@@ -15,9 +15,11 @@ const Materials = () => {
   if (error) return "An error has occurred: " + error.message;
   return (
     <div>
-      <h2 className="text-cyan-700 py-2 text-center text-3xl">
-        All materials created by tutor
-      </h2>
+      <h2 className="text-cyan-700 py-2 text-center text-3xl">All materials</h2>
+      <p className="text-center text-gray-600 mb-4">
+        View and manage all the materials uploaded by tutors. Admins have access
+        to approve and oversee these materials.
+      </p>
       {data.length > 0 ? (
         <>
           <div className=" grid lg:grid-cols-2 gap-4 p-4">

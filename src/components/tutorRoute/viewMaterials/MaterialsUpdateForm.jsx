@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const image_hosting_key = "a9b9160b05e3d4e68e60f154f621c349";
@@ -18,9 +18,9 @@ const MaterialsUpdateForm = () => {
   } = useQuery({
     queryKey: ["update", _id],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server-vrnk.vercel.app/material/update/${_id}`
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4000/material/update/${_id}`).then((res) =>
+        res.json()
+      ),
   });
 
   const onSubmit = async (data) => {
@@ -52,7 +52,7 @@ const MaterialsUpdateForm = () => {
       };
 
       const updateResponse = await fetch(
-        `https://stydy-sphere-server-vrnk.vercel.app/material/${_id}`,
+        `http://localhost:4000/material/${_id}`,
         {
           method: "PATCH",
           headers: {
@@ -82,49 +82,71 @@ const MaterialsUpdateForm = () => {
     }
   };
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <p className="text-center text-white">Loading...</p>;
 
-  if (isError) return <p>An error has occurred: {error.message}</p>;
+  if (isError)
+    return (
+      <p className="text-center text-white">
+        An error has occurred: {error.message}
+      </p>
+    );
 
   return (
     <div>
-      <h2 className="text-cyan-700 py-2 text-center text-3xl">
-        Update Your Materials
-      </h2>
-      <div className="lg:w-3/5 bg-teal-700 mt-4 mx-auto p-8">
-        <div className="text-white">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="mb-4">
-              <label className="block text-lg mb-2">Title</label>
+      <div className="max-w-4xl mx-auto p-8 bg-white rounded-2xl shadow-lg">
+        <h2 className="text-4xl text-center font-semibold text-teal-600 mb-8">
+          Update Your Material
+        </h2>
+        <p className="text-center text-gray-700 mb-6 text-lg">
+          Modify the details and upload a new photo or link to the material.
+        </p>
+        <div className="bg-gray-100 p-8 rounded-lg shadow-lg">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div>
+              <label className="block text-xl font-medium text-gray-800 mb-2">
+                Material Title
+              </label>
               <input
-                placeholder="Type here"
+                placeholder="Enter material title"
                 defaultValue={materials.title}
-                className="py-3 border rounded-xl w-96 bg-black glass pl-4"
+                className="w-full py-3 px-4 rounded-xl border border-teal-400 bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
                 {...register("title", { required: "Title is required" })}
               />
             </div>
 
-            <div className="mb-4">
-              <label className="block text-lg mb-2">Google Drive Link</label>
+            <div>
+              <label className="block text-xl font-medium text-gray-800 mb-2">
+                Google Drive Link
+              </label>
               <input
                 type="text"
                 defaultValue={materials.driveLink}
-                placeholder="Type here"
-                className="py-3 border rounded-xl w-96 bg-black glass pl-4"
+                placeholder="Enter the Google Drive link"
+                className="w-full py-3 px-4 rounded-xl border border-teal-400 bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
                 {...register("driveLink", {
                   required: "Drive link is required",
                 })}
               />
             </div>
 
-            <div className="mb-4">
-              <label className="block text-lg mb-2">Update Your Photo</label>
-              <input type="file" accept="image/*" {...register("image")} />
+            <div>
+              <label className="block text-xl font-medium text-gray-800 mb-2">
+                Update Material Image
+              </label>
+              <input
+                type="file"
+                accept="image/*"
+                className="w-full py-3 px-4 rounded-xl border border-teal-400 bg-white focus:outline-none focus:ring-2 focus:ring-teal-500"
+                {...register("image")}
+              />
             </div>
 
-            <div className="mt-4">
-              <button className="p-2 w-full text-xl rounded-md px-6 bg-orange-400 text-white">
-                Update
+            <div className="mt-6">
+              <button
+                type="submit"
+                className="w-full py-3 bg-teal-600 hover:bg-teal-700 text-white font-semibold rounded-xl transition duration-200 shadow-md"
+              >
+                Update Material
               </button>
             </div>
           </form>

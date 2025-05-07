@@ -5,12 +5,9 @@ const Session = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["PendingApproved"],
     queryFn: () =>
-      fetch(
-        "https://stydy-sphere-server-vrnk.vercel.app/session/PendingApproved",
-        {
-          credentials: "include",
-        }
-      ).then((res) => res.json()),
+      fetch("http://localhost:4000/session/PendingApproved", {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isPending) return "Loading...";
@@ -22,6 +19,10 @@ const Session = () => {
       <h2 className="text-cyan-700 py-2 text-center text-3xl">
         All study session created by tutor
       </h2>
+      <p className="text-center text-gray-600 mb-4">
+        Here you can view, approve, or manage sessions submitted by tutors. Only
+        admins are authorized to perform these actions.
+      </p>
       {data.length > 0 ? (
         <>
           {" "}

@@ -10,9 +10,9 @@ const CreateSession = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["register", email],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server-vrnk.vercel.app/register/${email}`
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4000/register/${email}`).then((res) =>
+        res.json()
+      ),
   });
 
   if (isPending) return "Loading...";
@@ -45,7 +45,7 @@ const CreateSession = () => {
       name: user.displayName,
     };
 
-    fetch("https://stydy-sphere-server-vrnk.vercel.app/session", {
+    fetch("http://localhost:4000/session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,6 +69,11 @@ const CreateSession = () => {
       <h2 className="text-cyan-700 py-4 text-center text-3xl">
         Create your session here
       </h2>
+      <p className="text-center text-gray-600 mb-6">
+        Fill in the details below to create a new session for your students.
+        Make sure to provide all necessary information, including start and end
+        dates, fees, and session description.
+      </p>
       <form onSubmit={handleSubmit} className="pb-6">
         {[
           { label: "Session Title", name: "title", type: "text" },

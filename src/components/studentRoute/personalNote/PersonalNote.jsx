@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider";
-
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -9,93 +8,108 @@ const PersonalNote = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
 
-  const { isLoading, error, data, refetch } = useQuery({
+  const {
+    isLoading,
+    error,
+    data = [],
+    refetch,
+  } = useQuery({
     queryKey: ["storeData", email],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server-vrnk.vercel.app/stored/email/${email}`,
-        {
-          credentials: "include",
-        }
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4000/stored/email/${email}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
-  if (isLoading) return "Loading...";
+  if (isLoading) return <p className="text-center py-8">Loading...</p>;
 
-  if (error) return "An error has occurred: " + error.message;
+  if (error)
+    return (
+      <p className="text-center text-red-500 py-4">
+        An error has occurred: {error.message}
+      </p>
+    );
 
   const handleDelete = (_id) => {
     Swal.fire({
       title: "Are you sure?",
-      text: "You won't be able to revert this!",
+      text: "This note will be permanently deleted.",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#10b981",
+      cancelButtonColor: "#ef4444",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://stydy-sphere-server-vrnk.vercel.app/stored/${_id}`, {
+        fetch(`http://localhost:4000/stored/${_id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
           .then(() => {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
+            Swal.fire("Deleted!", "Your note has been deleted.", "success");
             refetch();
           })
-          .catch((error) => {
-            console.error("Error deleting note:", error);
+          .catch(() => {
             Swal.fire("Error", "Failed to delete the note.", "error");
           });
       }
     });
   };
 
+  if (data.length === 0) {
+    Swal.fire({
+      title: "No Notes Found",
+      text: "You haven't created any notes yet!",
+      icon: "info",
+      confirmButtonText: "Create Now",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/";
+      }
+    });
+    return null;
+  }
+
   return (
-    <div className=" max-w-full min-h-screen">
-      <h2 className="text-cyan-700 py-2 text-center text-3xl">
-        Personal Note That You Stored
-      </h2>
-      {data.length === 0 ? (
-        Swal.fire({
-          title: "No data found",
-          text: "You have ho any created note! ",
-          icon: "question",
-          confirmButtonText: "Go to Home",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = "/";
-          }
-        })
-      ) : (
-        <div className="px-4">
-          {data.map((note) => (
-            <div className="p-2 bg-slate-700 rounded-t-lg" key={note._id}>
-              <h2 className="text-lg sm:text-xl md:text-2xl text-white">
-                Title: {note.title}
-              </h2>
-              <p className="text-white text-sm mb-2">{note.note}</p>
-              <div className="flex flex-col sm:flex-row gap-4 mb-4">
-                <Link to={`/update/${note._id}`}>
-                  <button className="btn  bg-green-700 text-white w-full sm:w-auto hover:text-black">
-                    Update
-                  </button>
-                </Link>
-                <button
-                  onClick={() => handleDelete(note._id)}
-                  className="btn bg-red-800 text-white w-full sm:w-auto hover:text-black"
-                >
-                  Delete
+    <div className="max-w-5xl mx-auto px-4 py-10">
+      <div className="text-center mb-8">
+        <h2 className="text-cyan-700 text-4xl font-semibold mb-2">
+          Your Stored Personal Notes
+        </h2>
+        <p className="text-gray-600 text-sm md:text-base max-w-xl mx-auto">
+          Here you can view, update, or delete the notes you’ve saved. Keep
+          track of your thoughts and important information all in one place.
+        </p>
+      </div>
+
+      <div className="grid gap-6">
+        {data.map((note) => (
+          <div
+            key={note._id}
+            className="bg-white shadow-md rounded-xl border border-gray-200 p-6"
+          >
+            <h3 className="text-xl font-bold text-gray-800 mb-2">
+              {note.title}
+            </h3>
+            <p className="text-gray-600 mb-4 whitespace-pre-wrap">
+              {note.note}
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Link to={`/update/${note._id}`}>
+                <button className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
+                  Update
                 </button>
-              </div>
+              </Link>
+              <button
+                onClick={() => handleDelete(note._id)}
+                className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+              >
+                Delete
+              </button>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

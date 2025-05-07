@@ -10,7 +10,7 @@ const ViewMaterials = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["material", email],
     queryFn: () =>
-      fetch(`https://stydy-sphere-server-vrnk.vercel.app/material/${email}`, {
+      fetch(`http://localhost:4000/material/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
@@ -23,6 +23,10 @@ const ViewMaterials = () => {
       <h2 className="text-cyan-700 py-2 text-center text-3xl">
         You can update or delete this materials
       </h2>
+      <p className="text-center text-gray-600 mb-6">
+        Feel free to make changes to your materials or remove them as needed.
+        Simply choose the action you wish to take.
+      </p>
       {data.length === 0 ? (
         Swal.fire({
           title: "No data found",

@@ -1,15 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
-
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
 import Swal from "sweetalert2";
+
 const image_hosting_key = "a9b9160b05e3d4e68e60f154f621c349";
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const UpdateForm = () => {
   const { register, handleSubmit, reset } = useForm();
-
   const { _id } = useParams();
+
   const {
     isPending,
     error,
@@ -17,14 +17,18 @@ const UpdateForm = () => {
   } = useQuery({
     queryKey: ["Approved", _id],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server-vrnk.vercel.app/session/Approved/${_id}`
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4000/session/Approved/${_id}`).then((res) =>
+        res.json()
+      ),
   });
 
-  if (isPending) return "Loading...";
-
-  if (error) return "An error has occurred: " + error.message;
+  if (isPending) return <p className="text-center text-white">Loading...</p>;
+  if (error)
+    return (
+      <p className="text-center text-white">
+        An error occurred: {error.message}
+      </p>
+    );
 
   const onSubmit = async (data) => {
     const formData = new FormData();
@@ -47,7 +51,7 @@ const UpdateForm = () => {
         imageUrl: imageURL,
       };
 
-      fetch("https://stydy-sphere-server-vrnk.vercel.app/material", {
+      fetch("http://localhost:4000/material", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,9 +61,10 @@ const UpdateForm = () => {
         .then((res) => res.json())
         .then(() => {
           Swal.fire({
-            title: "Upload successfully",
+            title: "Upload successful",
             icon: "success",
             draggable: true,
+            confirmButtonText: "OK",
           });
           reset();
         })
@@ -75,56 +80,59 @@ const UpdateForm = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-teal-500 font-bold py-4 text-center text-3xl">
-        Add Material to Your Session
-      </h2>
+    <div className="py-8">
+      <div className="max-w-3xl mx-auto py-8 px-6 rounded-lg shadow-lg bg-gray-700 text-white">
+        <h2 className="text-center text-4xl font-bold text-teal-400 mb-6">
+          Add Material to Your Session
+        </h2>
+        <p className="text-center text-lg text-gray-300 mb-8">
+          Fill in the details below to add material to your session. You can
+          upload preview images and provide a Google Drive link for easy access.
+        </p>
 
-      <div className="min-h-[60vh] bg-gradient-to-br from-[#2c2a4a]/70 to-[#1f1d3a]/80 mx-auto p-8 rounded-2xl shadow-2xl max-w-2xl">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="space-y-6 text-white"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div>
-            <label className="block text-base font-semibold mb-2">Title</label>
+            <label className="block text-lg font-medium">
+              Title of Material
+            </label>
             <input
               placeholder="Enter session title"
               defaultValue={sessionData.title}
-              className="w-full px-4 py-3 bg-[#1a1a2e] border border-teal-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder-gray-400"
+              className="w-full px-4 py-3 bg-gray-700 border border-teal-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
               {...register("title", { required: true })}
             />
           </div>
 
           <div>
-            <label className="block text-base font-semibold mb-2">
+            <label className="block text-lg font-medium">
               Google Drive Link
             </label>
             <input
               type="text"
-              placeholder="Paste link here"
-              className="w-full px-4 py-3 bg-[#1a1a2e] border border-teal-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-400 placeholder-gray-400"
+              placeholder="Paste the link to your material here"
+              className="w-full px-4 py-3 bg-gray-700 border border-teal-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
               {...register("driveLink", { required: true })}
             />
           </div>
 
           <div>
-            <label className="block text-base font-semibold mb-2">
+            <label className="block text-lg font-medium">
               Upload a Preview Image
             </label>
             <input
               type="file"
               name="image"
               accept="image/*"
-              className="file-input file-input-bordered w-full max-w-xs bg-gray-900 text-white border border-teal-600"
+              className="file-input file-input-bordered w-full bg-gray-700 text-white border border-teal-600 rounded-lg focus:outline-none"
               {...register("image", { required: true })}
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-teal-600 hover:bg-teal-700 active:bg-teal-800 transition duration-200 text-white font-semibold py-3 rounded-xl shadow-lg"
+            className="w-full py-3 bg-teal-600 hover:bg-teal-700 rounded-lg text-white font-semibold transition duration-200 shadow-md"
           >
-            Upload Materials
+            Upload Material
           </button>
         </form>
       </div>

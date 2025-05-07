@@ -10,12 +10,9 @@ const ViewBooked = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["sessionData", email],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server-vrnk.vercel.app/bookedSession/${email}`,
-        {
-          credentials: "include",
-        }
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4000/bookedSession/${email}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
   if (isLoading) return "Loading...";
   if (error) return "An error has occurred: " + error.message;
@@ -25,6 +22,9 @@ const ViewBooked = () => {
       <h2 className="text-cyan-700 py-2 text-center text-3xl">
         Your booked session
       </h2>
+      <p className="text-center text-gray-600 mb-4">
+        Here you can see all the sessions you have successfully booked.
+      </p>
       {data.length == 0 ? (
         Swal.fire({
           title: "No data found",

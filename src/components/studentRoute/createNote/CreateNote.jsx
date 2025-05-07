@@ -8,12 +8,21 @@ const CreateNote = () => {
   const handleNote = (e) => {
     e.preventDefault();
     const form = e.target;
-    const title = form.title.value;
+    const title = form.title.value.trim();
     const email = user?.email;
-    const note = form.note.value;
+    const note = form.note.value.trim();
+
+    if (!title || !note) {
+      return Swal.fire({
+        title: "Missing Info",
+        text: "Please fill in both title and note fields.",
+        icon: "warning",
+      });
+    }
+
     const notes = { title, email, note };
 
-    fetch("https://stydy-sphere-server-vrnk.vercel.app/stored", {
+    fetch("http://localhost:4000/stored", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -24,45 +33,71 @@ const CreateNote = () => {
       .then(() => {
         Swal.fire({
           title: "Good job!",
-          text: "Added Your Note",
+          text: "Your note has been saved successfully.",
           icon: "success",
         });
       })
       .catch((error) => {
-        console.log(error.message);
+        console.error(error.message);
+        Swal.fire({
+          title: "Error!",
+          text: "Failed to save your note.",
+          icon: "error",
+        });
       });
+
     form.reset();
   };
 
   return (
-    <div>
-      <h2 className="text-cyan-700 py-2 text-center text-3xl">
+    <div className="max-w-3xl mx-auto p-6 space-y-6">
+      <h2 className="text-cyan-700 text-center text-4xl font-semibold">
         Create Your Personal Note
       </h2>
-      <div>
-        <form onSubmit={handleNote}>
-          <div className="mt-4">
-            <label className="input input-bordered flex items-center gap-2 lg:w-3/5 mx-auto">
-              Title
-              <input type="text" name="title" className="grow" />
-            </label>
+      <p className="text-center text-gray-600">
+        Keep track of your thoughts, reminders, or study highlights.
+      </p>
 
-            <div className="lg:w-3/5 mx-auto mt-4">
-              <textarea
-                placeholder="Note"
-                name="note"
-                className="textarea textarea-bordered textarea-lg w-full"
-              ></textarea>
-            </div>
+      <form onSubmit={handleNote} className="bg-white rounded-xl shadow-md p-6 space-y-6">
+    
+        <div>
+          <label htmlFor="title" className="block text-lg font-medium text-gray-700 mb-2">
+            Note Title
+          </label>
+          <input
+            type="text"
+            name="title"
+            id="title"
+            placeholder="Enter a title for your note"
+            className="w-full border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            required
+          />
+        </div>
 
-            <div className="text-center">
-              <button className="btn bg-black text-white mt-4 w-full lg:w-3/5 text-lg">
-                Store
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
+        
+        <div>
+          <label htmlFor="note" className="block text-lg font-medium text-gray-700 mb-2">
+            Your Note
+          </label>
+          <textarea
+            name="note"
+            id="note"
+            placeholder="Write your note here..."
+            className="w-full h-40 border border-gray-300 rounded-md px-4 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            required
+          ></textarea>
+        </div>
+
+    
+        <div className="text-center">
+          <button
+            type="submit"
+            className="bg-cyan-600 hover:bg-cyan-700 text-white text-lg px-6 py-2 rounded-md transition duration-300 w-full lg:w-1/2"
+          >
+            Store Note
+          </button>
+        </div>
+      </form>
     </div>
   );
 };

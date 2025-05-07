@@ -7,47 +7,62 @@ import Swal from "sweetalert2";
 const AllStudyMaterials = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
-  const { isPending, error, data } = useQuery({
+
+  const {
+    isPending,
+    error,
+    data = [],
+  } = useQuery({
     queryKey: ["bookedSession", email],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server-vrnk.vercel.app/bookedSession/${email}`,
-        {
-          credentials: "include",
-        }
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4000/bookedSession/${email}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
-  if (isPending) return "Loading...";
+  if (isPending) {
+    return <p className="text-center py-8">Loading your study materials...</p>;
+  }
 
-  if (error) return "An error has occurred: " + error.message;
+  if (error) {
+    return (
+      <p className="text-center text-red-600 py-4">
+        An error occurred: {error.message}
+      </p>
+    );
+  }
+
+  if (data.length === 0) {
+    Swal.fire({
+      title: "No Materials Found",
+      text: "Your booked sessions haven't added any study materials yet.",
+      icon: "info",
+      confirmButtonText: "Go to Home",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        window.location.href = "/";
+      }
+    });
+    return null;
+  }
 
   return (
-    <div>
-      <h2 className="text-cyan-700 py-2 text-center text-3xl">Your session</h2>
-      {data.length === 0 ? (
-        Swal.fire({
-          title: "No data found",
-          text: "Your booked session have no added any materials yet ",
-          icon: "question",
-          confirmButtonText: "Go to Home",
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = "/";
-          }
-        })
-      ) : (
-        <>
-          <div>
-            {data.map((materials) => (
-              <BookedMaterials
-                key={materials._id}
-                materials={materials}
-              ></BookedMaterials>
-            ))}
-          </div>
-        </>
-      )}
+    <div className="max-w-6xl mx-auto px-4 py-10">
+      <div className="text-center mb-8">
+        <h2 className="text-cyan-700 text-4xl font-semibold mb-2">
+          Your Study Materials
+        </h2>
+        <p className="text-gray-600 max-w-xl mx-auto text-sm md:text-base">
+          Below you'll find the study materials provided for each session you've
+          booked. Make sure to review them regularly to stay prepared.
+        </p>
+      </div>
+
+      <div className="grid gap-6">
+        {data.map((materials) => (
+          <BookedMaterials key={materials._id} materials={materials} />
+        ))}
+      </div>
     </div>
   );
 };

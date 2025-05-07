@@ -13,7 +13,7 @@ const Sessions = ({ session, refetch }) => {
       return;
     }
 
-    fetch(`https://stydy-sphere-server-vrnk.vercel.app/session/${_id}`, {
+    fetch(`http://localhost:4000/session/${_id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -39,7 +39,7 @@ const Sessions = ({ session, refetch }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://stydy-sphere-server-vrnk.vercel.app/session/${_id}`, {
+        fetch(`http://localhost:4000/session/${_id}`, {
           method: "DELETE",
         });
 

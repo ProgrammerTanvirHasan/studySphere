@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
-import { Link, useParams } from "react-router";
+import { useParams } from "react-router";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../../AuthProvider";
 
@@ -11,14 +11,15 @@ const BookDetails = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["bookedSession", title],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server-vrnk.vercel.app/bookedSession/title/${title}`
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4000/bookedSession/title/${title}`).then((res) =>
+        res.json()
+      ),
   });
 
-  if (isPending) return "Loading...";
+  if (isPending) return <p className="text-center text-lg">Loading...</p>;
+  if (error)
+    return <p className="text-center text-red-600">Error: {error.message}</p>;
 
-  if (error) return "An error has occurred: " + error.message;
   const { data: sessions, emails } = data || { data: [], emails: [] };
 
   const handleSubmit = (e) => {
@@ -30,18 +31,16 @@ const BookDetails = () => {
     const email = user?.email;
     const reviews = { review, rating, reviewID, email };
 
-    fetch(`https://stydy-sphere-server-vrnk.vercel.app/reviews`, {
+    fetch(`http://localhost:4000/reviews`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reviews),
     })
       .then((res) => res.json())
       .then(() => {
         Swal.fire({
           title: "Done!",
-          text: "send reviews successfully",
+          text: "Review submitted successfully",
           icon: "success",
           confirmButtonText: "OK",
         });
@@ -51,84 +50,91 @@ const BookDetails = () => {
   };
 
   return (
-    <>
-      <h2 className="text-cyan-700 py-2 text-center text-3xl">
-        Booked Details
+    <div className="max-w-4xl mx-auto p-6 space-y-8">
+      <h2 className="text-cyan-700 text-center text-4xl font-semibold">
+        Session Details
       </h2>
-      <div className="card bg-base-800  shadow-2xl border border-orange-400 w-2/3 mx-auto mt-4 p-4 ">
-        <h2 className="text-xl py-2">{sessions.title}</h2>
-        <p className="font-semibold">Tutor :{sessions.Tutor}</p>
-        <p>{sessions.tutorEmail}</p>
-        <div className="py-2">
-          <p>Fee :{sessions.amount} taka</p>
-          <p>
-            {sessions.duration} <span className="text-lg">min</span>{" "}
-          </p>
-        </div>
-        <p className="font-bold text-green-700 mb-2">{sessions.status}</p>
-        <p className="mb-2">{sessions.textarea}</p>
-        <p>RegEndDate :{sessions.registrationEnd}</p>
-        <p>ClassStartDate :{sessions.classStart}</p>
+      <p className="text-center text-gray-600">
+        Below are the details of your booked session and a form to leave a
+        review.
+      </p>
+
+      <div className="bg-white rounded-xl shadow-md p-6 border border-orange-300 space-y-3">
+        <h3 className="text-2xl font-bold text-gray-800">{sessions.title}</h3>
+        <p className="text-gray-600">
+          Tutor: <span className="font-semibold">{sessions.Tutor}</span>
+        </p>
+        <p className="text-gray-600">Email: {sessions.tutorEmail}</p>
+        <p className="text-gray-600">
+          Fee: <span className="font-medium">{sessions.amount} Taka</span>
+        </p>
+        <p className="text-gray-600">Duration: {sessions.duration} min</p>
+        <p className="text-green-700 font-semibold">{sessions.status}</p>
+        <p className="text-gray-700">{sessions.textarea}</p>
+        <p className="text-gray-600">
+          Registration End: {sessions.registrationEnd}
+        </p>
+        <p className="text-gray-600">Class Starts: {sessions.classStart}</p>
         {sessions.transactionId ? (
-          <>
-            {" "}
-            <p>TransitionID : {sessions.transactionId}</p>{" "}
-          </>
+          <p className="text-gray-600">
+            Transaction ID: {sessions.transactionId}
+          </p>
         ) : (
-          <>
-            {" "}
-            <p>Registration : Free</p>{" "}
-          </>
+          <p className="text-gray-600">Registration: Free</p>
         )}
       </div>
 
       <form
         onSubmit={handleSubmit}
-        className="p-6 bg-gray-100 rounded-lg shadow-2xl"
+        className="bg-gray-100 rounded-xl shadow-md p-6 space-y-6"
       >
-        <div className="flex justify-end mt-8 gap-8">
+        <h3 className="text-xl font-semibold text-gray-800">Leave a Review</h3>
+        <div className="flex flex-col lg:flex-row gap-6">
           <textarea
-            placeholder="Review"
             name="review"
-            className="textarea textarea-bordered border-slate-950 textarea-lg w-full max-w-xs"
+            placeholder="Write your review..."
+            className="textarea textarea-bordered w-full h-32 p-3 border border-gray-400 rounded-md resize-none focus:ring-2 focus:ring-blue-400"
           ></textarea>
 
-          <div className="flex flex-col items-center space-y-4">
-            <label htmlFor="rating" className="text-lg font-medium">
-              Enter your rating:
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="rating"
+              className="text-lg font-medium text-gray-700"
+            >
+              Rating (1-5)
             </label>
             <input
               type="number"
+              name="rating"
               id="rating"
               min="1"
               max="5"
-              name="rating"
-              className="w-20 p-2 border border-slate-950 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="p-2 border border-gray-400 rounded-md w-20 text-center"
+              required
             />
           </div>
         </div>
-        <div className="flex justify-end mt-6 mr-8">
+        <div className="text-right">
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-green-600 active:scale-95 focus:ring-2 focus:ring-green-300 transition duration-300"
+            className="px-6 py-2 bg-cyan-600 text-white rounded-lg hover:bg-cyan-700 transition duration-300"
           >
             Submit Review
           </button>
         </div>
-        <div className="emails-list mt-6">
-          <h3 className="text-lg font-bold text-center">
-            Student Who booked this session:
-          </h3>
-          <ul className="list-disc pl-6">
-            {emails.map((email, index) => (
-              <li key={index} className="text-sm text-gray-700">
-                {email}
-              </li>
-            ))}
-          </ul>
-        </div>
       </form>
-    </>
+
+      <div className="bg-white p-4 rounded-xl shadow-md">
+        <h3 className="text-lg font-semibold text-center text-gray-800 mb-2">
+          Students Who Booked This Session
+        </h3>
+        <ul className="list-disc pl-6 text-gray-700 space-y-1">
+          {emails.map((email, index) => (
+            <li key={index}>{email}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 };
 

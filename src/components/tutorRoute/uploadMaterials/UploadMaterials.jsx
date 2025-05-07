@@ -10,7 +10,7 @@ const UploadMaterials = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["session", "Approved", email],
     queryFn: () =>
-      fetch(`https://stydy-sphere-server-vrnk.vercel.app/session/${email}`, {
+      fetch(`http://localhost:4000/session/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
@@ -24,6 +24,10 @@ const UploadMaterials = () => {
       <h2 className="text-cyan-700 py-2 text-center text-3xl">
         All Approved materials
       </h2>
+      <p className="text-center text-gray-600 mb-6">
+        Here you'll find all the materials that have been approved. You can
+        review and manage them as needed.
+      </p>
       {data.length === 0 ? (
         Swal.fire({
           title: "No data found",
