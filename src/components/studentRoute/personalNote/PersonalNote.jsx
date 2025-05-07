@@ -74,23 +74,20 @@ const PersonalNote = () => {
       ) : (
         <div className="px-4">
           {data.map((note) => (
-            <div
-              className=" border-b-4 border-orange-300  p-6 mb-4 bg-slate-700 "
-              key={note._id}
-            >
+            <div className="p-2 bg-slate-700 rounded-t-lg" key={note._id}>
               <h2 className="text-lg sm:text-xl md:text-2xl text-white">
                 Title: {note.title}
               </h2>
               <p className="text-white text-sm mb-2">{note.note}</p>
               <div className="flex flex-col sm:flex-row gap-4 mb-4">
                 <Link to={`/update/${note._id}`}>
-                  <button className="btn bg-green-700 text-white w-full sm:w-auto">
+                  <button className="btn  bg-green-700 text-white w-full sm:w-auto hover:text-black">
                     Update
                   </button>
                 </Link>
                 <button
                   onClick={() => handleDelete(note._id)}
-                  className="btn bg-red-800 text-white w-full sm:w-auto"
+                  className="btn bg-red-800 text-white w-full sm:w-auto hover:text-black"
                 >
                   Delete
                 </button>

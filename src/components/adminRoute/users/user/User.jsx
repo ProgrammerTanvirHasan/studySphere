@@ -38,7 +38,7 @@ const User = ({ users, refetch }) => {
   };
 
   return (
-    <div className="bg-white border my-8 border-b-teal-300 shadow-md rounded-xl p-5 text-gray-800 space-y-4">
+    <div className="bg-white border border-b-teal-300 shadow-md rounded-xl p-5 text-gray-800 space-y-4">
       <div className="text-xl font-semibold">
         {name}
         <span className="text-sm font-medium text-gray-500 ml-2">({role})</span>

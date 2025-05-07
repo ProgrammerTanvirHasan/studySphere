@@ -20,7 +20,7 @@ const Materials = () => {
       </h2>
       {data.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 lg:grid-cols-2 ml-8">
+          <div className=" grid lg:grid-cols-2 gap-4 p-4">
             {data.map((items) => (
               <Material
                 key={items._id}

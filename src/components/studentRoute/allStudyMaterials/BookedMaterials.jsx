@@ -12,7 +12,7 @@ const BookedMaterials = ({ materials }) => {
         <p>Tutor Email : {tutorEmail}</p>
         <div>
           <Link to={`/showMaterials/${studySessionID}`}>
-            <button className="bg-orange-800 text-white px-4 rounded-xl">
+            <button className="bg-orange-800 text-white px-4 py-1 rounded-xl">
               Show materials
             </button>
           </Link>

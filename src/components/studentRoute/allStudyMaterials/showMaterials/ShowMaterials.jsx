@@ -20,11 +20,11 @@ const ShowMaterials = () => {
 
   return (
     <div>
-      <h2 className="text-cyan-700 py-2 text-center text-3xl">
+      <h2 className="text-cyan-700 py-2  text-center text-3xl">
         Show Materials
       </h2>
-      <div className="flex justify-center">
-        <div className="lg:pt-8 w-full lg:w-1/2  shadow-2xl rounded-md">
+      <div className="flex justify-center ">
+        <div className="lg:pt-8 w-full lg:w-1/2  p-2  shadow-2xl rounded-md">
           <img
             className="min-w-full h-64"
             src={data.imageUrl}
@@ -48,7 +48,6 @@ const ShowMaterials = () => {
           </div>
           <h2 className="card-title ">{data.title}</h2>
           <p>{data.tutorEmail}</p>
-         
         </div>
       </div>
     </div>

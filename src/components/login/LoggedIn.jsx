@@ -10,7 +10,6 @@ const LoggedIn = () => {
   const { signUser, setUser, googleSignIn, githubSignIn } =
     useContext(AuthContext);
   const location = useLocation();
-
   const navigate = useNavigate();
   const googleProvider = new GoogleAuthProvider();
   const githubProvider = new GithubAuthProvider();
@@ -25,15 +24,14 @@ const LoggedIn = () => {
     signUser(email, password)
       .then((result) => {
         setUser(result.user);
-       
         navigate(location?.state ? location?.state : "/");
       })
       .catch((error) => {
         console.error("Login Error:", error.message);
         Swal.fire({
-          title: "Error !",
-          text: "Something went wrong !.please try again",
-          icon: "question",
+          title: "Error!",
+          text: "Something went wrong! Please try again.",
+          icon: "error",
         });
       });
   };
@@ -43,8 +41,6 @@ const LoggedIn = () => {
       .then((result) => {
         setUser(result.user);
         navigate(location?.state ? location?.state : "/");
-
-       
       })
       .catch((error) => {
         console.error("Google Sign-In Error:", error.message);
@@ -63,96 +59,89 @@ const LoggedIn = () => {
   };
 
   return (
-    <div>
-      <div>
-        <img
-          className="flex absolute min-h-screen lg:max-w-[1200px] p-2 border-4 rounded-xl border-orange-400"
-          src="https://i.ibb.co/B3Np0WX/cyber-security-concept-626203-897.jpg"
-          alt=""
-        />
+    <div className="">
+      <div className="bg-white p-8 rounded-2xl shadow-xl container mx-auto w-full">
+        <h2 className="text-3xl font-bold mb-2 text-center text-slate-800">
+          Welcome Back
+        </h2>
+        <p className="text-sm text-gray-600 text-center mb-6">
+          Log in to continue your journey with StudySphere.
+        </p>
 
-        <div className="relative">
-          <div className="hero min-h-screen">
-            <div className="hero-content flex-col lg:flex-row-reverse">
-              <div className="text-center lg:text-left">
-                <p className="p-4 text-black bg-white px-2 rounded-b-xl rounded-l-xl">
-                  If not registered? First registration please!{" "}
-                  <Link to={"/register"}>
-                    <span className="font-bold text-orange-400 border border-b-orange-400">
-                      Register
-                    </span>
-                  </Link>
-                </p>
-              </div>
-              <div className="card bg-gradient-to-r from-slate-500 to-slate-950 w-full max-w-sm shrink-0 shadow-2xl">
-                <form onSubmit={handleLogin} className="card-body">
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Email</span>
-                    </label>
-                    <input
-                      type="email"
-                      placeholder="email"
-                      name="email"
-                      className="input input-bordered text-black"
-                      required
-                    />
-                  </div>
+        <form onSubmit={handleLogin} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
+            <input
+              type="email"
+              name="email"
+              placeholder="Enter your email"
+              className="input input-bordered w-full text-black"
+              required
+            />
+          </div>
 
-                  <div className="form-control">
-                    <label className="label">
-                      <span className="label-text">Password</span>
-                    </label>
-
-                    <div className="flex">
-                      <input
-                        type={showPassword ? "text" : "password"}
-                        placeholder="password"
-                        name="password"
-                        className="input input-bordered text-black min-w-full"
-                        required
-                      />
-                      <p
-                        onClick={() => setShowPassword(!showPassword)}
-                        className="mt-4 text-xl text-black relative -ml-8"
-                      >
-                        {showPassword ? (
-                          <FaRegEyeSlash></FaRegEyeSlash>
-                        ) : (
-                          <MdOutlineRemoveRedEye></MdOutlineRemoveRedEye>
-                        )}
-                      </p>
-                    </div>
-                  </div>
-
-                  
-                  <div className="form-control mt-6">
-                    <button className="btn bg-gradient-to-r from-slate-400 text-lg to-slate-950 text-orange-300">
-                      Login
-                    </button>
-                  </div>
-                  <div className="flex justify-around">
-                    <button
-                      type="button"
-                      onClick={handleGoogle}
-                      className="text-orange-300"
-                    >
-                      GOOGLE LOGIN
-                    </button>
-                    <button
-                      type="button"
-                      onClick={handleGithub}
-                      className="text-orange-300"
-                    >
-                      GITHUB LOGIN
-                    </button>
-                  </div>
-                  
-                </form>
-              </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter your password"
+                className="input input-bordered w-full text-black pr-10"
+                required
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-3 text-xl cursor-pointer text-gray-600"
+              >
+                {showPassword ? <FaRegEyeSlash /> : <MdOutlineRemoveRedEye />}
+              </span>
             </div>
           </div>
-        </div>
+
+          <button
+            type="submit"
+            className="btn w-full bg-gradient-to-r from-slate-400 to-slate-950 text-orange-300 text-lg"
+          >
+            Login
+          </button>
+
+          <div className="flex items-center justify-between mt-4">
+            <button
+              type="button"
+              onClick={handleGoogle}
+              className="w-[48%] bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg transition"
+            >
+              Google
+            </button>
+            <button
+              type="button"
+              onClick={handleGithub}
+              className="w-[48%] bg-gray-800 hover:bg-gray-900 text-white py-2 rounded-lg transition"
+            >
+              GitHub
+            </button>
+          </div>
+
+          <p className="text-center text-sm text-gray-600 mt-4">
+            Don't have an account?{" "}
+            <Link to="/register" className="text-indigo-600 hover:underline">
+              Register here
+            </Link>
+          </p>
+          <div className="text-center mt-4">
+            <button
+              onClick={() => navigate("/")}
+              className="text-sm text-blue-600 hover:underline"
+            >
+              ← Go Back to Home
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

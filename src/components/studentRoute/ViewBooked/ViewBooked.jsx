@@ -38,7 +38,7 @@ const ViewBooked = () => {
         })
       ) : (
         <>
-          <div className="grid lg:grid-cols-2 gap-4 py-4">
+          <div className="grid lg:grid-cols-2 gap-2 p-2">
             {data.map((booked) => (
               <BookedEmail key={booked._id} booked={booked}></BookedEmail>
             ))}
