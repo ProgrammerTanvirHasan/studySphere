@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider";
 import { RiMenu2Line } from "react-icons/ri";
 import Swal from "sweetalert2";
@@ -68,13 +68,6 @@ const Navbar = () => {
               >
                 Log Out
               </button>
-              <div className="flex items-center space-x-2">
-                <img
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-                  className="w-10 h-10 rounded-full ring ring-white"
-                  alt="User Avatar"
-                />
-              </div>
             </>
           ) : (
             <NavLink to="/login">

@@ -23,8 +23,7 @@ import Payment from "./components/studySession/payment/Payment.jsx";
 import BookDetails from "./components/studentRoute/bookDetails/BookDetails.jsx";
 import PersonalNote from "./components/studentRoute/personalNote/PersonalNote.jsx";
 import Update from "./components/studentRoute/personalNote/update/Update.jsx";
-import Announcement from "./components/dashboard/Announcement/Announcement.jsx";
-import Notice from "./components/Navbar/notice/Notice.jsx";
+
 import UpdateForm from "./components/tutorRoute/uploadMaterials/UpdateForm.jsx";
 import MaterialsUpdateForm from "./components/tutorRoute/viewMaterials/MaterialsUpdateForm.jsx";
 import ShowMaterials from "./components/studentRoute/allStudyMaterials/showMaterials/ShowMaterials.jsx";
@@ -45,19 +44,14 @@ createRoot(document.getElementById("root")).render(
         <Routes>
           <Route path="/login" element={<LoggedIn />} />
           <Route path="/register" element={<Register />} />
-
           <Route element={<MainLayout />}>
             <Route path="/" element={<App />} />
-
             <Route path="/payment" element={<Payment />} />
             <Route path="/navSession" element={<NavSession />} />
             <Route path="/navTutor" element={<NavTutor />} />
             <Route path="/learningMaterials" element={<LearningMaterials />} />
-
             <Route path="/bookedDetails/:title" element={<BookDetails />} />
             <Route path="/update/:_id" element={<Update />} />
-            <Route path="/announcement" element={<Announcement />} />
-            <Route path="/notice" element={<Notice />} />
             <Route path="/upload/:_id" element={<UpdateForm />} />
             <Route
               path="/showMaterials/:studySessionID"
@@ -67,7 +61,6 @@ createRoot(document.getElementById("root")).render(
               path="/handleUpdate/:_id"
               element={<MaterialsUpdateForm />}
             />
-
             <Route element={<PrivateRoute />}>
               <Route path="/details/:_id" element={<SessionDetails />} />
               <Route path="/dashboard" element={<Dashboard />}>
