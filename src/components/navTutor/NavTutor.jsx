@@ -5,7 +5,7 @@ const NavTutor = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["register"],
     queryFn: () =>
-      fetch("http://localhost:27017/register/register", {
+      fetch("https://stydy-sphere-server.vercel.app/register/register", {
         credentials: "include",
       }).then((res) => res.json()),
   });

@@ -10,7 +10,7 @@ const StudySession = () => {
     queryKey: ["sessionData", currentPage, itemPerPage],
     queryFn: () =>
       fetch(
-        `http://localhost:27017/session/Approved?page=${currentPage}&limit=${itemPerPage}`,
+        `https://stydy-sphere-server.vercel.app/session/Approved?page=${currentPage}&limit=${itemPerPage}`,
         {
           credentials: "include",
         }

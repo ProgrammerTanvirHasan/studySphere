@@ -9,7 +9,7 @@ const AllSession = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["session", email],
     queryFn: () =>
-      fetch(`http://localhost:27017/session/email/${email}`, {
+      fetch(`https://stydy-sphere-server.vercel.app/session/email/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });

@@ -16,7 +16,7 @@ const PersonalNote = () => {
   } = useQuery({
     queryKey: ["storeData", email],
     queryFn: () =>
-      fetch(`http://localhost:27017/stored/email/${email}`, {
+      fetch(`https://stydy-sphere-server.vercel.app/stored/email/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
@@ -50,7 +50,7 @@ const PersonalNote = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         fetch(
-          `http://localhost:27017/stored/${_id}`,
+          `https://stydy-sphere-server.vercel.app/stored/${_id}`,
           {
             credentials: "include",
           },
@@ -71,17 +71,15 @@ const PersonalNote = () => {
   };
 
   if (data.length === 0) {
-    Swal.fire({
-      title: "No Notes Found",
-      text: "You haven't created any notes yet!",
-      icon: "info",
-      confirmButtonText: "Ok",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location.href = "/";
-      }
-    });
-    return null;
+    return (
+      <div className="flex flex-col items-center justify-center mt-12">
+        <p className="text-red-600 text-center">
+          You do not have any note.
+          <br />
+          <span className="text-sm">(only can show your personal note)</span>
+        </p>
+      </div>
+    );
   }
 
   return (

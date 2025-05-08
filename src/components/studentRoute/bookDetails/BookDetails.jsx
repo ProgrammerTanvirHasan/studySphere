@@ -11,9 +11,12 @@ const BookDetails = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["bookedSession", title],
     queryFn: () =>
-      fetch(`http://localhost:27017/bookedSession/title/${title}`, {
-        credentials: "include",
-      }).then((res) => res.json()),
+      fetch(
+        `https://stydy-sphere-server.vercel.app/bookedSession/title/${title}`,
+        {
+          credentials: "include",
+        }
+      ).then((res) => res.json()),
   });
 
   if (isPending) return <p className="text-center text-lg">Loading...</p>;
@@ -31,7 +34,7 @@ const BookDetails = () => {
     const email = user?.email;
     const reviews = { review, rating, reviewID, email };
 
-    fetch(`http://localhost:27017/reviews`, {
+    fetch(`https://stydy-sphere-server.vercel.app/reviews`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

@@ -16,7 +16,7 @@ const Material = ({ items, refetch }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:27017/material/${_id}`, {
+        fetch(`https://stydy-sphere-server.vercel.app/material/${_id}`, {
           method: "DELETE",
           credentials: "include",
         }).then((response) => {

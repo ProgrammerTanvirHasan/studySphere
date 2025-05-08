@@ -27,7 +27,7 @@ const Register = () => {
         return updateProfile(auth.currentUser, { displayName: name });
       })
       .then(() => {
-        fetch("http://localhost:27017/register", {
+        fetch("https://stydy-sphere-server.vercel.app/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",

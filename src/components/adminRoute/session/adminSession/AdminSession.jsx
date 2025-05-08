@@ -5,14 +5,17 @@ const AdminSession = ({ session, refetch, index }) => {
 
   const updateSession = async (data) => {
     try {
-      const res = await fetch(`http://localhost:27017/session/${_id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify(data),
-      });
+      const res = await fetch(
+        `https://stydy-sphere-server.vercel.app/session/${_id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify(data),
+        }
+      );
       const result = await res.json();
       return result;
     } catch (error) {

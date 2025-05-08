@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider";
 import BookedMaterials from "./BookedMaterials";
-import Swal from "sweetalert2";
 
 const AllStudyMaterials = () => {
   const { user } = useContext(AuthContext);
@@ -15,7 +14,7 @@ const AllStudyMaterials = () => {
   } = useQuery({
     queryKey: ["bookedSession", email],
     queryFn: () =>
-      fetch(`http://localhost:27017/bookedSession/${email}`, {
+      fetch(`https://stydy-sphere-server.vercel.app/bookedSession/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
@@ -40,17 +39,15 @@ const AllStudyMaterials = () => {
   }
 
   if (data.length === 0) {
-    Swal.fire({
-      title: "No Materials Found",
-      text: "Your booked sessions haven't added any study materials yet.",
-      icon: "info",
-      confirmButtonText: "Go to Home",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        window.location.href = "/";
-      }
-    });
-    return null;
+    return (
+      <div className="flex flex-col items-center justify-center mt-12">
+        <p className="text-red-600 text-center">
+          You do not have any booked materials.
+          <br />
+          <span className="text-sm">(only booked materials here)</span>
+        </p>
+      </div>
+    );
   }
 
   return (

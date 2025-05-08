@@ -5,7 +5,7 @@ const Materials = () => {
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["material"],
     queryFn: () =>
-      fetch("http://localhost:27017/material", {
+      fetch("https://stydy-sphere-server.vercel.app/material", {
         credentials: "include",
       }).then((res) => res.json()),
   });

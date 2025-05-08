@@ -5,7 +5,7 @@ const NavSession = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["sessionData"],
     queryFn: () =>
-      fetch("http://localhost:27017/session", {
+      fetch("https://stydy-sphere-server.vercel.app/session", {
         credentials: "include",
       }).then((res) => res.json()),
   });

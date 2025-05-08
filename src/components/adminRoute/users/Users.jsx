@@ -5,7 +5,7 @@ const Users = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["register"],
     queryFn: () =>
-      fetch(`http://localhost:27017/register`, {
+      fetch(`https://stydy-sphere-server.vercel.app/register`, {
         credentials: "include",
       })
         .then((res) => res.json())

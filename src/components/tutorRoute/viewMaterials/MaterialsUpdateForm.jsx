@@ -18,9 +18,9 @@ const MaterialsUpdateForm = () => {
   } = useQuery({
     queryKey: ["update", _id],
     queryFn: () =>
-      fetch(`http://localhost:27017/material/update/${_id}`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `https://stydy-sphere-server.vercel.app/material/update/${_id}`
+      ).then((res) => res.json()),
   });
 
   const onSubmit = async (data) => {
@@ -52,7 +52,7 @@ const MaterialsUpdateForm = () => {
       };
 
       const updateResponse = await fetch(
-        `http://localhost:27017/material/${_id}`,
+        `https://stydy-sphere-server.vercel.app/material/${_id}`,
         {
           method: "PATCH",
           headers: {
