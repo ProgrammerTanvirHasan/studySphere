@@ -8,9 +8,9 @@ const ShowMaterials = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["material", studySessionID],
     queryFn: () =>
-      fetch(`http://localhost:27017/material/material/${studySessionID}`).then(
-        (res) => res.json()
-      ),
+      fetch(`http://localhost:27017/material/material/${studySessionID}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isPending)

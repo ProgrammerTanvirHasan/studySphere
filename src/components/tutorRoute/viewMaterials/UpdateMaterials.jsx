@@ -17,6 +17,7 @@ const UpdateMaterials = ({ materials, refetch }) => {
       if (result.isConfirmed) {
         fetch(`http://localhost:27017/material/${_id}`, {
           method: "DELETE",
+          credentials: "include",
         }).then(() => {
           Swal.fire({
             title: "Deleted!",

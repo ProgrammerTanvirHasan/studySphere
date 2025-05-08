@@ -10,9 +10,9 @@ const CreateSession = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["register", email],
     queryFn: () =>
-      fetch(`http://localhost:27017/register/${email}`).then((res) =>
-        res.json()
-      ),
+      fetch(`http://localhost:27017/register/${email}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isPending)

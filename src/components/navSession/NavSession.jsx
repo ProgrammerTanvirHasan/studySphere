@@ -5,7 +5,9 @@ const NavSession = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["sessionData"],
     queryFn: () =>
-      fetch("http://localhost:27017/session").then((res) => res.json()),
+      fetch("http://localhost:27017/session", {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isLoading)

@@ -8,7 +8,9 @@ const Update = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["stored", _id],
     queryFn: () =>
-      fetch(`http://localhost:27017/stored/${_id}`).then((res) => res.json()),
+      fetch(`http://localhost:27017/stored/${_id}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isLoading) return <p className="text-center py-8">Loading...</p>;

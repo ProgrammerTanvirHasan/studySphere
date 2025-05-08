@@ -33,6 +33,7 @@ const CheckOutForm = () => {
     fetch(`http://localhost:27017/create-payment-intent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
+      credentials: "include",
       body: JSON.stringify({ amount }),
     })
       .then((res) => res.json())
@@ -122,6 +123,7 @@ const CheckOutForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(bookingData),
       })
         .then((response) => response.json())

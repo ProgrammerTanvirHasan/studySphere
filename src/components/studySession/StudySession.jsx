@@ -10,7 +10,10 @@ const StudySession = () => {
     queryKey: ["sessionData", currentPage, itemPerPage],
     queryFn: () =>
       fetch(
-        `http://localhost:27017/session/Approved?page=${currentPage}&limit=${itemPerPage}`
+        `http://localhost:27017/session/Approved?page=${currentPage}&limit=${itemPerPage}`,
+        {
+          credentials: "include",
+        }
       ).then((res) => res.json()),
   });
 

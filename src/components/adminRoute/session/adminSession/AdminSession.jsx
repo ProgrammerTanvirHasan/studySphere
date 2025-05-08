@@ -10,6 +10,7 @@ const AdminSession = ({ session, refetch, index }) => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(data),
       });
       const result = await res.json();

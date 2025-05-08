@@ -18,6 +18,7 @@ const Sessions = ({ session, refetch }) => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({ status: "Pending" }),
     })
       .then((res) => res.json())
@@ -41,6 +42,7 @@ const Sessions = ({ session, refetch }) => {
       if (result.isConfirmed) {
         fetch(`http://localhost:27017/session/${_id}`, {
           method: "DELETE",
+          credentials: "include",
         });
 
         Swal.fire("Deleted!", "Session has been removed.", "success");

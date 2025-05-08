@@ -20,6 +20,7 @@ const User = ({ users, refetch }) => {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: "include",
           body: JSON.stringify({ role: "admin" }),
         })
           .then((res) => res.json())

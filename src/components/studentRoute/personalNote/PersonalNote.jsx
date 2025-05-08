@@ -49,9 +49,15 @@ const PersonalNote = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:27017/stored/${_id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `http://localhost:27017/stored/${_id}`,
+          {
+            credentials: "include",
+          },
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then(() => {
             Swal.fire("Deleted!", "Your note has been deleted.", "success");

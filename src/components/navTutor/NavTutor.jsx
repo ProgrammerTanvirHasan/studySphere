@@ -5,9 +5,9 @@ const NavTutor = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["register"],
     queryFn: () =>
-      fetch("http://localhost:27017/register/register").then((res) =>
-        res.json()
-      ),
+      fetch("http://localhost:27017/register/register", {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isLoading)

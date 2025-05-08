@@ -20,23 +20,23 @@ const SessionDetails = () => {
       {
         queryKey: ["sessionData", _id],
         queryFn: () =>
-          fetch(`http://localhost:27017/session/Approved/${_id}`).then((res) =>
-            res.json()
-          ),
+          fetch(`http://localhost:27017/session/Approved/${_id}`, {
+            credentials: "include",
+          }).then((res) => res.json()),
       },
       {
         queryKey: ["reviewsData", _id],
         queryFn: () =>
-          fetch(`http://localhost:27017/reviews/${_id}`).then((res) =>
-            res.json()
-          ),
+          fetch(`http://localhost:27017/reviews/${_id}`, {
+            credentials: "include",
+          }).then((res) => res.json()),
       },
       {
         queryKey: ["registerData", email],
         queryFn: () =>
-          fetch(`http://localhost:27017/register/${email}`).then((res) =>
-            res.json()
-          ),
+          fetch(`http://localhost:27017/register/${email}`, {
+            credentials: "include",
+          }).then((res) => res.json()),
       },
     ],
   });
@@ -107,6 +107,7 @@ const SessionDetails = () => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(bookingData),
     })
       .then(async (response) => {
