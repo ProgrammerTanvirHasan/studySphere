@@ -27,8 +27,9 @@ const CreateNote = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include",
+
       body: JSON.stringify(notes),
+      credentials: "include",
     })
       .then((res) => res.json())
       .then(() => {

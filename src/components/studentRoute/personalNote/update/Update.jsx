@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 const Update = () => {
   const { _id } = useParams();
 
-  const { isLoading, error, data, refetch } = useQuery({
+  const { isPending, error, data, refetch } = useQuery({
     queryKey: ["stored", _id],
     queryFn: () =>
       fetch(`https://stydy-sphere-server.vercel.app/stored/${_id}`, {
@@ -13,7 +13,7 @@ const Update = () => {
       }).then((res) => res.json()),
   });
 
-  if (isLoading) return <p className="text-center py-8">Loading...</p>;
+  if (isPending) return <p className="text-center py-8">Please wait...</p>;
 
   if (error)
     return <p className="text-center text-red-600">Error: {error.message}</p>;

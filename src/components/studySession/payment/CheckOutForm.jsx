@@ -33,8 +33,8 @@ const CheckOutForm = () => {
     fetch(`https://stydy-sphere-server.vercel.app/create-payment-intent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "include",
       body: JSON.stringify({ amount }),
+      credentials: "include",
     })
       .then((res) => res.json())
       .then((data) => {
@@ -123,8 +123,9 @@ const CheckOutForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
+
         body: JSON.stringify(bookingData),
+        credentials: "include",
       })
         .then((response) => response.json())
 

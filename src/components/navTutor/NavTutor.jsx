@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Mail, User } from "lucide-react";
 
 const NavTutor = () => {
-  const { isLoading, error, data } = useQuery({
+  const { isPending, error, data } = useQuery({
     queryKey: ["register"],
     queryFn: () =>
       fetch("https://stydy-sphere-server.vercel.app/register/register", {
@@ -10,7 +10,7 @@ const NavTutor = () => {
       }).then((res) => res.json()),
   });
 
-  if (isLoading)
+  if (isPending)
     return (
       <div className="text-center">
         <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">

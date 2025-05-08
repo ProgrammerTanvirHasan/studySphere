@@ -110,8 +110,9 @@ const SessionDetails = () => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include",
+
       body: JSON.stringify(bookingData),
+      credentials: "include",
     })
       .then(async (response) => {
         if (!response.ok) {

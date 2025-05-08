@@ -37,8 +37,8 @@ const BookDetails = () => {
     fetch(`https://stydy-sphere-server.vercel.app/reviews`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "include",
       body: JSON.stringify(reviews),
+      credentials: "include",
     })
       .then((res) => res.json())
       .then(() => {

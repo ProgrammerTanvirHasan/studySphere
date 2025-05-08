@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { CalendarDays, Clock, DollarSign, CheckCircle } from "lucide-react";
 
 const NavSession = () => {
-  const { isLoading, error, data } = useQuery({
+  const { isPending, error, data } = useQuery({
     queryKey: ["sessionData"],
     queryFn: () =>
       fetch("https://stydy-sphere-server.vercel.app/session", {
@@ -10,7 +10,7 @@ const NavSession = () => {
       }).then((res) => res.json()),
   });
 
-  if (isLoading)
+  if (isPending)
     return (
       <div className="text-center">
         <div className="text-center">

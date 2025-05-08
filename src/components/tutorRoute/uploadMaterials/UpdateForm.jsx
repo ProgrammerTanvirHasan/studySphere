@@ -17,9 +17,9 @@ const UpdateForm = () => {
   } = useQuery({
     queryKey: ["Approved", _id],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server.vercel.app/session/Approved/${_id}`
-      ).then((res) => res.json()),
+      fetch(`https://stydy-sphere-server.vercel.app/session/Approved/${_id}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isPending) return <p className="text-center text-white">Loading...</p>;
@@ -56,8 +56,8 @@ const UpdateForm = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify(updatedData),
+        credentials: "include",
       })
         .then((res) => res.json())
         .then(() => {

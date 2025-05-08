@@ -11,16 +11,16 @@ const MaterialsUpdateForm = () => {
   const { _id } = useParams();
 
   const {
-    isLoading,
+    isPending,
     isError,
     error,
     data: materials,
   } = useQuery({
     queryKey: ["update", _id],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server.vercel.app/material/update/${_id}`
-      ).then((res) => res.json()),
+      fetch(`https://stydy-sphere-server.vercel.app/material/update/${_id}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   const onSubmit = async (data) => {
@@ -58,8 +58,9 @@ const MaterialsUpdateForm = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: "include",
+
           body: JSON.stringify(updatedData),
+          credentials: "include",
         }
       );
 
@@ -83,7 +84,8 @@ const MaterialsUpdateForm = () => {
     }
   };
 
-  if (isLoading) return <p className="text-center text-white">Loading...</p>;
+  if (isPending)
+    return <p className="text-center text-white">Please wait...</p>;
 
   if (isError)
     return (

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import User from "./user/User";
 
 const Users = () => {
-  const { isLoading, error, data, refetch } = useQuery({
+  const { isPending, error, data, refetch } = useQuery({
     queryKey: ["register"],
     queryFn: () =>
       fetch(`https://stydy-sphere-server.vercel.app/register`, {
@@ -15,7 +15,7 @@ const Users = () => {
         }),
   });
 
-  if (isLoading)
+  if (isPending)
     return (
       <div className="text-center">
         <div className="text-center">

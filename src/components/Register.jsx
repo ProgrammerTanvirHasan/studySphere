@@ -30,8 +30,9 @@ const Register = () => {
         fetch("https://stydy-sphere-server.vercel.app/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          credentials: "include",
+
           body: JSON.stringify(users),
+          credentials: "include",
         })
           .then((res) => res.json())
           .then(() => {

@@ -18,8 +18,9 @@ const Sessions = ({ session, refetch }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include",
+
       body: JSON.stringify({ status: "Pending" }),
+      credentials: "include",
     })
       .then((res) => res.json())
       .then(() => {

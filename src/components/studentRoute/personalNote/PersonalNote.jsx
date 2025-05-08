@@ -9,7 +9,7 @@ const PersonalNote = () => {
   const email = user?.email;
 
   const {
-    isLoading,
+    isPending,
     error,
     data = [],
     refetch,
@@ -21,7 +21,7 @@ const PersonalNote = () => {
       }).then((res) => res.json()),
   });
 
-  if (isLoading)
+  if (isPending)
     return (
       <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
         <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
@@ -49,15 +49,10 @@ const PersonalNote = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(
-          `https://stydy-sphere-server.vercel.app/stored/${_id}`,
-          {
-            credentials: "include",
-          },
-          {
-            method: "DELETE",
-          }
-        )
+        fetch(`https://stydy-sphere-server.vercel.app/stored/${_id}`, {
+          method: "DELETE",
+          credentials: "include",
+        })
           .then((res) => res.json())
           .then(() => {
             Swal.fire("Deleted!", "Your note has been deleted.", "success");

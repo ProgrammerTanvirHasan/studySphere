@@ -6,7 +6,7 @@ const StudySession = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const itemPerPage = 3;
 
-  const { isLoading, error, data } = useQuery({
+  const { isPending, error, data } = useQuery({
     queryKey: ["sessionData", currentPage, itemPerPage],
     queryFn: () =>
       fetch(
@@ -36,7 +36,7 @@ const StudySession = () => {
         </p>
       </div>
 
-      {isLoading ? (
+      {isPending ? (
         <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
           <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
           <p className="text-lg font-medium animate-pulse">

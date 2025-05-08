@@ -6,14 +6,14 @@ import BookedEmail from "./bookedEmail/BookedEmail";
 const ViewBooked = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email;
-  const { isLoading, error, data } = useQuery({
+  const { isPending, error, data } = useQuery({
     queryKey: ["sessionData", email],
     queryFn: () =>
       fetch(`https://stydy-sphere-server.vercel.app/bookedSession/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
-  if (isLoading)
+  if (isPending)
     return (
       <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
         <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
