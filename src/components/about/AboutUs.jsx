@@ -2,7 +2,7 @@ import { RiDoubleQuotesR } from "react-icons/ri";
 
 const AboutUs = () => {
   return (
-    <div className="relative min-h-[100vh] bg-gray-50 py-8">
+    <div className="relative bg-gray-50 py-8">
       <div className="bg-[#354895]/90 min-h-[500px] w-[95%] rounded-xl mx-auto relative px-4 py-8">
         <div className="flex flex-col lg:flex-row justify-between gap-8 max-w-6xl mx-auto">
           <div className="text-white lg:w-1/2 space-y-4">

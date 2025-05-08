@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider";
 import BookedEmail from "./bookedEmail/BookedEmail";
 
-
 const ViewBooked = () => {
   const { user } = useContext(AuthContext);
   const email = user?.email;

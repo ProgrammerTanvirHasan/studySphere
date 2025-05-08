@@ -34,13 +34,12 @@ const Navbar = () => {
   return (
     <nav
       className=" bg-[#0d1c3f]/80
-
-
- 
  shadow-md text-white"
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-        <div className="text-2xl font-bold ">StudySphere</div>
+        <NavLink to={"/"} className="text-2xl font-bold ">
+          StudySphere
+        </NavLink>
 
         <ul className="hidden lg:flex items-center space-x-8 font-medium text-lg">
           {links.map((link) => (
