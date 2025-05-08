@@ -13,7 +13,15 @@ const ViewBooked = () => {
         credentials: "include",
       }).then((res) => res.json()),
   });
-  if (isLoading) return "Loading...";
+  if (isLoading)
+    return (
+      <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
+        <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
+        <p className="text-lg font-medium animate-pulse">
+          Your booked session coming...
+        </p>
+      </div>
+    );
   if (error) return "An error has occurred: " + error.message;
 
   return (
@@ -51,10 +59,12 @@ const ViewBooked = () => {
         </div>
       ) : (
         <>
-          <div className="grid lg:grid-cols-2 gap-2 p-2">
-            {data.map((booked) => (
-              <BookedEmail key={booked._id} booked={booked}></BookedEmail>
-            ))}
+          <div className="conatiner mx-auto">
+            <div className="grid lg:grid-cols-2 gap-2 p-2 container mx-auto">
+              {data.map((booked) => (
+                <BookedEmail key={booked._id} booked={booked}></BookedEmail>
+              ))}
+            </div>
           </div>
         </>
       )}

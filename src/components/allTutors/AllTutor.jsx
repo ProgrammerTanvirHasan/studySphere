@@ -49,6 +49,24 @@ const tutors = [
     image: "https://i.ibb.co.com/4wR24RG1/image.png",
     bio: "Focuses on speaking and academic writing.",
   },
+  {
+    id: "6",
+    name: "Tanvir",
+    subject: "Javascript",
+    experience: "2 years",
+    rating: 4.5,
+    image: "https://i.ibb.co.com/Kpz5S4SM/image.png",
+    bio: "Focuses on speaking and academic writing.",
+  },
+  {
+    id: "7",
+    name: "Jhankar mahbub",
+    subject: "Java",
+    experience: "2 years",
+    rating: 4.5,
+    image: "https://i.ibb.co.com/4wR24RG1/image.png",
+    bio: "https://i.ibb.co.com/Txqc6Thm/image.png",
+  },
 ];
 
 const AllTutor = () => {
@@ -61,13 +79,13 @@ const AllTutor = () => {
           succeed in your academic journey.
         </p>
       </div>
-      <Marquee speed={80} gradient={false}>
-        <div className="p-6 grid grid-cols-2 lg:grid-cols-5 gap-2">
+      <Marquee speed={80} gradient={false} pauseOnHover>
+        <div className="flex w-auto">
           {tutors.map((tutor) => (
             <Link
               to={`/tutors/${tutor.id}`}
               key={tutor.id}
-              className="bg-white rounded-xl shadow-md p-4 hover:shadow-xl hover:scale-105 transition"
+              className="bg-white rounded-xl shadow-md p-4 hover:shadow-xl   transition"
             >
               <img
                 src={tutor.image}

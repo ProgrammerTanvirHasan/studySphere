@@ -57,7 +57,7 @@ const Sessions = ({ session, refetch }) => {
 
   return (
     <div className="p-4">
-      <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-200 relative max-w-3xl mx-auto">
+      <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-200 relative  mx-auto">
         <button
           onClick={() => handleDelete(_id)}
           className="absolute top-4 right-4 text-red-500 hover:text-red-700 text-lg font-bold"

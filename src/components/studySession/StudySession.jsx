@@ -21,12 +21,12 @@ const StudySession = () => {
   const pages = [...Array(numberOfPage).keys()];
 
   return (
-    <div className="py-6">
+    <div className="py-6 px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-orange-600 mb-2">
+        <h2 className="text-2xl sm:text-3xl font-bold text-orange-600 mb-2">
           📚 Study Sessions
         </h2>
-        <p className="text-gray-600 max-w-xl mx-auto">
+        <p className="text-gray-600 max-w-xl mx-auto text-sm sm:text-base">
           Explore upcoming study sessions led by top mentors and fellow
           learners. Stay consistent, stay motivated, and never study alone
           again.
@@ -44,18 +44,20 @@ const StudySession = () => {
         <>
           {sessions.length > 0 ? (
             <>
-              <div className="grid lg:grid-cols-3 gap-6 px-4">
-                {sessions.map((session) => (
-                  <SessionCard key={session._id} session={session} />
-                ))}
+              <div className="container mx-auto ">
+                <div className=" grid grid-cols-1  sm:grid-cols-2  lg:grid-cols-3 gap-4">
+                  {sessions.map((session) => (
+                    <SessionCard key={session._id} session={session} />
+                  ))}
+                </div>
               </div>
 
-              <div className="text-center mt-8">
+              <div className="text-center mt-8 flex flex-wrap justify-center gap-2">
                 {pages.map((page) => (
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`px-4 py-2 rounded-md mx-1 text-white font-semibold transition-all duration-300 ${
+                    className={`px-4 py-2 rounded-md text-white   font-semibold transition-all duration-300 ${
                       page === currentPage
                         ? "bg-orange-800 scale-105"
                         : "bg-orange-500 hover:bg-orange-600"

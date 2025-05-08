@@ -1,34 +1,23 @@
-import { Link } from "react-router";
-
 const BookedEmail = ({ booked }) => {
   const { textarea, transactionId, title } = booked;
+
   return (
-    <div>
-      <div className="card bg-base-800 w-full   shadow-2xl border border-orange-400 h-72">
-        <div className="card-body">
-          <h2 className="card-title"> {title}</h2>
-          <p>{textarea}</p>
+    <div className="flex justify-center items-center p-4">
+      <div className="bg-white w-full  shadow-2xl rounded-xl border ">
+        <div className="p-6 space-y-4">
+          <h2 className="text-2xl font-semibold text-orange-500">{title}</h2>
+          <p className="text-gray-700">{textarea}</p>
 
           {transactionId ? (
-            <>
-              <p>TransactionId:{transactionId}</p>
-            </>
+            <p className="text-green-600">
+              <span className="font-medium">Transaction ID:</span>{" "}
+              {transactionId}
+            </p>
           ) : (
-            <>
-              {" "}
-              <p>
-                RegistrationFee: <span className="font-bold">Free</span>{" "}
-              </p>{" "}
-            </>
+            <p className="text-blue-600">
+              <span className="font-medium">Registration Fee:</span> Free
+            </p>
           )}
-
-          <div className="card-actions justify-end">
-            <Link to={`/bookedDetails/${title}`}>
-              <button className="btn bg-orange-400 opacity-80 text-white ">
-                View detail
-              </button>
-            </Link>
-          </div>
         </div>
       </div>
     </div>

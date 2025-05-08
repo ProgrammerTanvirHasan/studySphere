@@ -14,7 +14,13 @@ const ViewMaterials = () => {
       }).then((res) => res.json()),
   });
 
-  if (isPending) return "Loading...";
+  if (isPending)
+    return (
+      <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
+        <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
+        <p className="text-lg font-medium animate-pulse">Please wait...</p>
+      </div>
+    );
   if (error) return "An error has occurred: " + error.message;
 
   if (data.length === 0) {
@@ -57,7 +63,7 @@ const ViewMaterials = () => {
         Feel free to make changes to your materials or remove them as needed.
         Simply choose the action you wish to take.
       </p>
-      <div className="grid lg:grid-cols-2 lg:ml-10 gap-4">
+      <div className="grid lg:grid-cols-2 container mx-auto gap-4">
         {data.map((materials) => (
           <UpdateMaterials
             key={materials._id}

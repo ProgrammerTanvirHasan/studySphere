@@ -1,7 +1,6 @@
 import { useQueries } from "@tanstack/react-query";
 import moment from "moment";
-import Navbar from "../../Navbar/Navbar";
-import Footer from "../../footer/Footer";
+
 import { useNavigate, useParams } from "react-router";
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider";
@@ -62,8 +61,11 @@ const SessionDetails = () => {
 
   if (sessionLoading || reviewsLoading || registerLoading)
     return (
-      <div className="text-center py-20 text-lg text-gray-700">
-        Loading session details...
+      <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
+        <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
+        <p className="text-lg font-medium animate-pulse">
+          Loading Study Sessions...
+        </p>
       </div>
     );
 

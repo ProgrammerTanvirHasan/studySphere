@@ -13,7 +13,7 @@ const Author = () => {
   };
 
   return (
-    <section className="bg-gradient-to-br from-orange-50 to-white py-16">
+    <section className="bg-gradient-to-br from-orange-50 mt-8 to-white py-16">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto bg-white shadow-xl rounded-xl p-8 md:p-10">
           <div className="text-center mb-8">

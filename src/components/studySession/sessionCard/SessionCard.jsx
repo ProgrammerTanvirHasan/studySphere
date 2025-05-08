@@ -7,7 +7,7 @@ const SessionCard = ({ session }) => {
 
   return (
     <div>
-      <div className="card bg-base-800 w-full lg:w-96  shadow-2xl border border-orange-400 h-72">
+      <div className="card bg-base-800 w-full hover:scale-105 transition  shadow-2xl border border-orange-400 h-72">
         <div className="card-body">
           <h2 className="card-title">{title}</h2>
           <p>{textarea}</p>

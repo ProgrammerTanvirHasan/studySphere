@@ -21,7 +21,15 @@ const PersonalNote = () => {
       }).then((res) => res.json()),
   });
 
-  if (isLoading) return <p className="text-center py-8">Loading...</p>;
+  if (isLoading)
+    return (
+      <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
+        <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
+        <p className="text-lg font-medium animate-pulse">
+          Loading your note...
+        </p>
+      </div>
+    );
 
   if (error)
     return (
@@ -71,7 +79,7 @@ const PersonalNote = () => {
   }
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-10">
+    <div className=" mx-auto px-4 py-10">
       <div className="text-center mb-8">
         <h2 className="text-cyan-700 text-4xl font-semibold mb-2">
           Your Stored Personal Notes

@@ -31,7 +31,7 @@ const UpdateMaterials = ({ materials, refetch }) => {
 
   return (
     <div className="bg-white shadow-lg p-4 hover:scale-105 transition">
-      <img className="h-72 w-full lg:w-96 " src={imageUrl} alt={title} />
+      <img className="h-72 w-full  " src={imageUrl} alt={title} />
       <h2 className="card-title">{title}</h2>
       <div className="mt-2 ">
         <Link to={`/handleUpdate/${_id}`}>
