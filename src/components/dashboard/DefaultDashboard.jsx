@@ -1,3 +1,7 @@
+import BarChartComponent from "../PieChartComponen/PieChartComponen";
+
+import SubjectTeacherPieChart from "../StudentTeacherChart/StudentTeacherChart";
+
 const DefaultDashboard = () => {
   return (
     <div className="p-8 space-y-4">
@@ -31,6 +35,9 @@ const DefaultDashboard = () => {
         Use the navigation menu on the left to get started. If you're unsure
         what to do next, check the announcements or contact support for help.
       </p>
+
+      <SubjectTeacherPieChart></SubjectTeacherPieChart>
+      <BarChartComponent></BarChartComponent>
     </div>
   );
 };
