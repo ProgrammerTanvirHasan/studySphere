@@ -17,7 +17,7 @@ const UpdateForm = () => {
   } = useQuery({
     queryKey: ["Approved", _id],
     queryFn: () =>
-      fetch(`https://stydy-sphere-server.vercel.app/session/Approved/${_id}`, {
+      fetch(`https://stydysphereserver.onrender.com/session/Approved/${_id}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
@@ -51,7 +51,7 @@ const UpdateForm = () => {
         imageUrl: imageURL,
       };
 
-      fetch("https://stydy-sphere-server.vercel.app/material", {
+      fetch("https://stydysphereserver.onrender.com/material", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

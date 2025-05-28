@@ -1,16 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
+import { useDispatch, useSelector } from "react-redux";
 import Material from "./Material";
+import { useContext, useEffect } from "react";
+import { fetchMaterials } from "../../../features/materials";
+import { AuthContext } from "../../../AuthProvider";
 
 const Materials = () => {
-  const { isPending, error, data, refetch } = useQuery({
-    queryKey: ["material"],
-    queryFn: () =>
-      fetch("https://stydy-sphere-server.vercel.app/material", {
-        credentials: "include",
-      }).then((res) => res.json()),
-  });
+  const user = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const { items, loading, error } = useSelector((state) => state.materials);
 
-  if (isPending)
+  useEffect(() => {
+    dispatch(fetchMaterials());
+  }, [dispatch, user]);
+
+  if (loading)
     return (
       <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
         <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
@@ -27,10 +30,11 @@ const Materials = () => {
         View and manage all the materials uploaded by tutors. Admins have access
         to approve and oversee these materials.
       </p>
-      {data.length > 0 ? (
+
+      {items.length > 0 ? (
         <div className="grid lg:grid-cols-2 gap-4 p-4 container mx-auto">
-          {data.map((items) => (
-            <Material key={items._id} items={items} refetch={refetch} />
+          {items.map((item) => (
+            <Material key={item._id} item={item} />
           ))}
         </div>
       ) : (

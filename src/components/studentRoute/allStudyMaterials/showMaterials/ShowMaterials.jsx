@@ -9,7 +9,7 @@ const ShowMaterials = () => {
     queryKey: ["material", studySessionID],
     queryFn: () =>
       fetch(
-        `https://stydy-sphere-server.vercel.app/material/material/${studySessionID}`,
+        `https://stydysphereserver.onrender.com/material/material/${studySessionID}`,
         {
           credentials: "include",
         }

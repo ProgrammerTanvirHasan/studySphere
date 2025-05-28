@@ -1,16 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
 import { CalendarDays, Clock, DollarSign, CheckCircle } from "lucide-react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../features/products";
 
 const NavSession = () => {
-  const { isPending, error, data } = useQuery({
-    queryKey: ["sessionData"],
-    queryFn: () =>
-      fetch("https://stydy-sphere-server.vercel.app/session", {
-        credentials: "include",
-      }).then((res) => res.json()),
-  });
+  const dispatch = useDispatch();
+  const { items, loading, error } = useSelector((state) => state.products);
 
-  if (isPending)
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  if (loading)
     return (
       <div className="text-center">
         <div className="text-center">
@@ -41,7 +42,7 @@ const NavSession = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {data.map((session) => (
+        {items.map((session) => (
           <div
             key={session._id}
             className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition transform hover:-translate-y-1 border border-gray-100"

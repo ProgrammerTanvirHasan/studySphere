@@ -34,56 +34,63 @@ import DefaultDashboard from "./components/dashboard/DefaultDashboard.jsx";
 import NavSession from "./components/navSession/NavSession.jsx";
 import NavTutor from "./components/navTutor/NavTutor.jsx";
 import LearningMaterials from "./components/learningMaterials/LearningMaterials.jsx";
+import { Provider } from "react-redux";
+import { store } from "./store.js";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <QueryClientProvider client={queryClient}>
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoggedIn />} />
-          <Route path="/register" element={<Register />} />
-          <Route element={<MainLayout />}>
-            <Route path="/" element={<App />} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/navSession" element={<NavSession />} />
-            <Route path="/navTutor" element={<NavTutor />} />
-            <Route path="/learningMaterials" element={<LearningMaterials />} />
-            <Route path="/bookedDetails/:title" element={<BookDetails />} />
-            <Route path="/update/:_id" element={<Update />} />
-            <Route path="/upload/:_id" element={<UpdateForm />} />
-            <Route
-              path="/showMaterials/:studySessionID"
-              element={<ShowMaterials />}
-            />
-            <Route
-              path="/handleUpdate/:_id"
-              element={<MaterialsUpdateForm />}
-            />
-            <Route element={<PrivateRoute />}>
-              <Route path="/details/:_id" element={<SessionDetails />} />
-              <Route path="/dashboard" element={<Dashboard />}>
-                <Route index element={<DefaultDashboard />} />
-                <Route path="users" element={<Users />} />
-                <Route path="session" element={<Session />} />
-                <Route path="createSession" element={<CreateSession />} />
-                <Route path="allSession" element={<AllSession />} />
-                <Route path="uploadMaterials" element={<UploadMaterials />} />
-                <Route path="viewMaterials" element={<ViewMaterials />} />
-                <Route path="materials" element={<Materials />} />
-                <Route path="ViewBooked" element={<ViewBooked />} />
-                <Route path="createNote" element={<CreateNote />} />
-                <Route path="personalNote" element={<PersonalNote />} />
-                <Route
-                  path="allStudyMaterials"
-                  element={<AllStudyMaterials />}
-                />
+    <Provider store={store}>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoggedIn />} />
+            <Route path="/register" element={<Register />} />
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<App />} />
+              <Route path="/payment" element={<Payment />} />
+              <Route path="/navSession" element={<NavSession />} />
+              <Route path="/navTutor" element={<NavTutor />} />
+              <Route
+                path="/learningMaterials"
+                element={<LearningMaterials />}
+              />
+              <Route path="/bookedDetails/:title" element={<BookDetails />} />
+              <Route path="/update/:_id" element={<Update />} />
+              <Route path="/upload/:_id" element={<UpdateForm />} />
+              <Route
+                path="/showMaterials/:studySessionID"
+                element={<ShowMaterials />}
+              />
+              <Route
+                path="/handleUpdate/:_id"
+                element={<MaterialsUpdateForm />}
+              />
+              <Route element={<PrivateRoute />}>
+                <Route path="/details/:_id" element={<SessionDetails />} />
+                <Route path="/dashboard" element={<Dashboard />}>
+                  <Route index element={<DefaultDashboard />} />
+                  <Route path="users" element={<Users />} />
+                  <Route path="session" element={<Session />} />
+                  <Route path="createSession" element={<CreateSession />} />
+                  <Route path="allSession" element={<AllSession />} />
+                  <Route path="uploadMaterials" element={<UploadMaterials />} />
+                  <Route path="viewMaterials" element={<ViewMaterials />} />
+                  <Route path="materials" element={<Materials />} />
+                  <Route path="ViewBooked" element={<ViewBooked />} />
+                  <Route path="createNote" element={<CreateNote />} />
+                  <Route path="personalNote" element={<PersonalNote />} />
+                  <Route
+                    path="allStudyMaterials"
+                    element={<AllStudyMaterials />}
+                  />
+                </Route>
               </Route>
             </Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </Provider>
   </QueryClientProvider>
 );

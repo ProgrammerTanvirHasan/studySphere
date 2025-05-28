@@ -14,7 +14,7 @@ const AllStudyMaterials = () => {
   } = useQuery({
     queryKey: ["bookedSession", email],
     queryFn: () =>
-      fetch(`https://stydy-sphere-server.vercel.app/bookedSession/${email}`, {
+      fetch(`https://stydysphereserver.onrender.com/bookedSession/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });

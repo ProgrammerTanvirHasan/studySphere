@@ -9,7 +9,7 @@ const ViewBooked = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["sessionData", email],
     queryFn: () =>
-      fetch(`https://stydy-sphere-server.vercel.app/bookedSession/${email}`, {
+      fetch(`https://stydysphereserver.onrender.com/bookedSession/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });

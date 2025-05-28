@@ -10,7 +10,7 @@ const CreateSession = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["register", email],
     queryFn: () =>
-      fetch(`https://stydy-sphere-server.vercel.app/register/${email}`, {
+      fetch(`https://stydysphereserver.onrender.com/register/${email}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
@@ -51,7 +51,7 @@ const CreateSession = () => {
       name: user.displayName,
     };
 
-    fetch("https://stydy-sphere-server.vercel.app/session", {
+    fetch("https://stydysphereserver.onrender.com/session", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

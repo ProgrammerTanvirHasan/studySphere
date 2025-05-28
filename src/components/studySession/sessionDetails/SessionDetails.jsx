@@ -21,7 +21,7 @@ const SessionDetails = () => {
         queryKey: ["sessionData", _id],
         queryFn: () =>
           fetch(
-            `https://stydy-sphere-server.vercel.app/session/Approved/${_id}`,
+            `https://stydysphereserver.onrender.com/session/Approved/${_id}`,
             {
               credentials: "include",
             }
@@ -30,14 +30,14 @@ const SessionDetails = () => {
       {
         queryKey: ["reviewsData", _id],
         queryFn: () =>
-          fetch(`https://stydy-sphere-server.vercel.app/reviews/${_id}`, {
+          fetch(`https://stydysphereserver.onrender.com/reviews/${_id}`, {
             credentials: "include",
           }).then((res) => res.json()),
       },
       {
         queryKey: ["registerData", email],
         queryFn: () =>
-          fetch(`https://stydy-sphere-server.vercel.app/register/${email}`, {
+          fetch(`https://stydysphereserver.onrender.com/register/${email}`, {
             credentials: "include",
           }).then((res) => res.json()),
       },
@@ -105,7 +105,7 @@ const SessionDetails = () => {
       Tutor: sessionData.name,
     };
 
-    fetch(`https://stydy-sphere-server.vercel.app/bookedSession`, {
+    fetch(`https://stydysphereserver.onrender.com/bookedSession`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,16 +1,20 @@
-import { useQuery } from "@tanstack/react-query";
 import AdminSession from "./adminSession/AdminSession";
+import { useDispatch, useSelector } from "react-redux";
+import { useContext, useEffect } from "react";
+
+import { AuthContext } from "../../../AuthProvider";
+import { fetchSession } from "../../../features/session";
 
 const Session = () => {
-  const { isPending, error, data, refetch } = useQuery({
-    queryKey: ["PendingApproved"],
-    queryFn: () =>
-      fetch("https://stydy-sphere-server.vercel.app/session/PendingApproved", {
-        credentials: "include",
-      }).then((res) => res.json()),
-  });
+  const user = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const { AllSession, loading, error } = useSelector((state) => state.sessions);
 
-  if (isPending)
+  useEffect(() => {
+    dispatch(fetchSession());
+  }, [dispatch, user]);
+
+  if (loading)
     return (
       <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
         <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
@@ -18,7 +22,12 @@ const Session = () => {
       </div>
     );
 
-  if (error) return "An error has occurred: " + error.message;
+  if (error)
+    return (
+      <div className="text-red-600 text-center mt-10">
+        An error has occurred: {error.message || "Unknown error"}
+      </div>
+    );
 
   return (
     <div>
@@ -30,15 +39,10 @@ const Session = () => {
         admins are authorized to perform these actions.
       </p>
 
-      {data.length > 0 ? (
+      {AllSession.length > 0 ? (
         <div className="py-4">
-          {data.map((session, index) => (
-            <AdminSession
-              key={session._id}
-              session={session}
-              refetch={refetch}
-              index={index}
-            />
+          {AllSession.map((session, index) => (
+            <AdminSession key={session._id} session={session} index={index} />
           ))}
         </div>
       ) : (

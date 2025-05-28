@@ -30,7 +30,7 @@ const CheckOutForm = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`https://stydy-sphere-server.vercel.app/create-payment-intent`, {
+    fetch(`https://stydysphereserver.onrender.com/create-payment-intent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount }),
@@ -118,7 +118,7 @@ const CheckOutForm = () => {
         amount,
       };
 
-      fetch("https://stydy-sphere-server.vercel.app/bookedSession", {
+      fetch("https://stydysphereserver.onrender.com/bookedSession", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

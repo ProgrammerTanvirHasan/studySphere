@@ -12,7 +12,7 @@ const BookDetails = () => {
     queryKey: ["bookedSession", title],
     queryFn: () =>
       fetch(
-        `https://stydy-sphere-server.vercel.app/bookedSession/title/${title}`,
+        `https://stydysphereserver.onrender.com/bookedSession/title/${title}`,
         {
           credentials: "include",
         }
@@ -34,7 +34,7 @@ const BookDetails = () => {
     const email = user?.email;
     const reviews = { review, rating, reviewID, email };
 
-    fetch(`https://stydy-sphere-server.vercel.app/reviews`, {
+    fetch(`https://stydysphereserver.onrender.com/reviews`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(reviews),

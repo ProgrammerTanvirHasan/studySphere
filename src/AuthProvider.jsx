@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
       if (user) {
         axios
           .post(
-            `https://stydy-sphere-server.vercel.app/jwt`,
+            `https://stydysphereserver.onrender.com/jwt`,
             { email: user.email },
             {
               withCredentials: true,
@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
           .then(() => {});
       } else {
         axios
-          .post(`https://stydy-sphere-server.vercel.app/logOut`, null, {
+          .post(`https://stydysphereserver.onrender.com/logOut`, null, {
             withCredentials: true,
           })
           .then(() => {});

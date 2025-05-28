@@ -1,9 +1,11 @@
 import { FiMail } from "react-icons/fi";
+import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
+import { fetchProducts } from "../../../../features/dashboardUsers";
 
-const User = ({ users, refetch }) => {
+const User = ({ users }) => {
   const { name, email, role, _id } = users;
-
+  const dispatch = useDispatch();
   const handleRole = (_id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -15,7 +17,7 @@ const User = ({ users, refetch }) => {
       confirmButtonText: "Yes, approve it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://stydy-sphere-server.vercel.app/register/${_id}`, {
+        fetch(`https://stydysphereserver.onrender.com/register/${_id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
@@ -32,7 +34,7 @@ const User = ({ users, refetch }) => {
                 text: `The role has been updated to admin.`,
                 icon: "success",
               });
-              refetch();
+              dispatch(fetchProducts());
             }
           });
       }

@@ -1,16 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
+
 import { Mail, User } from "lucide-react";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../../features/tutor";
 
 const NavTutor = () => {
-  const { isPending, error, data } = useQuery({
-    queryKey: ["register"],
-    queryFn: () =>
-      fetch("https://stydy-sphere-server.vercel.app/register/register", {
-        credentials: "include",
-      }).then((res) => res.json()),
-  });
+  const dispatch = useDispatch();
+  const { items, loading, error } = useSelector((state) => state.tutors);
 
-  if (isPending)
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
+
+  if (loading)
     return (
       <div className="text-center">
         <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
@@ -39,7 +41,7 @@ const NavTutor = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-        {data.map((tutor) => (
+        {items.map((tutor) => (
           <div
             key={tutor._id}
             className="bg-gray-50 border border-gray-100 p-6 rounded-xl shadow-sm hover:shadow-xl transition"

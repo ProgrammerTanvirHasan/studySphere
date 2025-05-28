@@ -1,35 +1,38 @@
-import { useQuery } from "@tanstack/react-query";
 import User from "./user/User";
+import { useDispatch, useSelector } from "react-redux";
+import { useContext, useEffect } from "react";
+import { fetchProducts } from "../../../features/dashboardUsers";
+import { AuthContext } from "../../../AuthProvider";
 
 const Users = () => {
-  const { isPending, error, data, refetch } = useQuery({
-    queryKey: ["register"],
-    queryFn: () =>
-      fetch(`https://stydy-sphere-server.vercel.app/register`, {
-        credentials: "include",
-      })
-        .then((res) => res.json())
-        .catch((err) => {
-          console.error("Error fetching data:", err);
-          return [];
-        }),
-  });
+  const user = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const { items, loading, error } = useSelector(
+    (state) => state.dashboardUsers
+  );
 
-  if (isPending)
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch, user]);
+
+  if (loading)
     return (
       <div className="text-center">
-        <div className="text-center">
-          <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
-            <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
-            <p className="text-lg font-medium animate-pulse">
-              Finding all user...
-            </p>
-          </div>
+        <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
+          <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
+          <p className="text-lg font-medium animate-pulse">
+            Finding all user...
+          </p>
         </div>
       </div>
     );
 
-  if (error) return "An error has occurred: " + error.message;
+  if (error)
+    return (
+      <div className="text-red-600 text-center mt-10">
+        An error has occurred: {error.message || "Unknown error"}
+      </div>
+    );
 
   return (
     <div>
@@ -41,10 +44,10 @@ const Users = () => {
         permission to view and manage this data.
       </p>
 
-      {data.length > 0 ? (
+      {items.length > 0 ? (
         <div className="grid lg:grid-cols-3 gap-4 mt-8">
-          {data?.map((users) => (
-            <User key={users._id} users={users} refetch={refetch}></User>
+          {items?.map((users) => (
+            <User key={users._id} users={users}></User>
           ))}
         </div>
       ) : (

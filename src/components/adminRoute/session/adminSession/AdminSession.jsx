@@ -1,33 +1,11 @@
+import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
+import { fetchupdateSession } from "../../../../features/updateSession";
+import { fetchSession } from "../../../../features/session";
 
-const AdminSession = ({ session, refetch, index }) => {
+const AdminSession = ({ session }) => {
+  const dispatch = useDispatch();
   const { title, status, textarea, _id } = session;
-
-  const updateSession = async (data) => {
-    try {
-      const res = await fetch(
-        `https://stydy-sphere-server.vercel.app/session/${_id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify(data),
-          credentials: "include",
-        }
-      );
-      const result = await res.json();
-      return result;
-    } catch (error) {
-      console.error("Error updating session:", error);
-      Swal.fire(
-        "Error",
-        "An error occurred while updating the session.",
-        "error"
-      );
-    }
-  };
 
   const handleDelete = (_id) => {
     Swal.fire({
@@ -53,18 +31,23 @@ const AdminSession = ({ session, refetch, index }) => {
           if (feedbackResult.isConfirmed) {
             const feedback = feedbackResult.value;
 
-            updateSession({ reason, feedback, status: "Rejected" }).then(
-              (data) => {
-                if (data?.modifiedCount > 0) {
+            dispatch(
+              fetchupdateSession({
+                _id,
+                updateData: { reason, feedback, status: "Rejected" },
+              })
+            )
+              .unwrap()
+              .then((data) => {
+                if (data?.result?.modifiedCount > 0) {
                   Swal.fire({
                     title: "Success!",
                     text: "The session has been rejected.",
                     icon: "success",
                   });
-                  refetch();
+                  dispatch(fetchSession());
                 }
-              }
-            );
+              });
           }
         });
       }
@@ -102,29 +85,49 @@ const AdminSession = ({ session, refetch, index }) => {
             if (amountResult.isConfirmed) {
               const amount = parseInt(amountResult.value, 10) || 0;
 
-              updateSession({ status: "Approved", amount }).then((data) => {
-                if (data?.modifiedCount > 0) {
-                  Swal.fire({
-                    title: "Success!",
-                    text: "The session has been approved with a fee.",
-                    icon: "success",
-                  });
-                  refetch();
-                }
-              });
+              dispatch(
+                fetchupdateSession({
+                  _id,
+                  updateData: { status: "Approved", amount },
+                })
+              )
+                .unwrap()
+                .then((data) => {
+                  if (data?.result?.modifiedCount > 0) {
+                    Swal.fire(
+                      "Success!",
+                      "The session has been approved with a fee.",
+                      "success"
+                    );
+                    dispatch(fetchSession());
+                  }
+                })
+                .catch(() => {
+                  Swal.fire("Error", "Failed to approve the session.", "error");
+                });
             }
           });
         } else {
-          updateSession({ status: "Approved", amount: 0 }).then((data) => {
-            if (data?.modifiedCount > 0) {
-              Swal.fire({
-                title: "Success!",
-                text: "The session has been approved as Free.",
-                icon: "success",
-              });
-              refetch();
-            }
-          });
+          dispatch(
+            fetchupdateSession({
+              _id,
+              updateData: { status: "Approved", amount: 0 },
+            })
+          )
+            .unwrap()
+            .then((data) => {
+              if (data?.result?.modifiedCount > 0) {
+                Swal.fire(
+                  "Success!",
+                  "The session has been approved as Free.",
+                  "success"
+                );
+                dispatch(fetchSession());
+              }
+            })
+            .catch(() => {
+              Swal.fire("Error", "Failed to approve the session.", "error");
+            });
         }
       }
     });

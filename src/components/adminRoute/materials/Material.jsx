@@ -1,9 +1,12 @@
 import { FaGoogleDrive } from "react-icons/fa";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router";
 import Swal from "sweetalert2";
+import { deleteMaterial, fetchMaterials } from "../../../features/materials";
 
-const Material = ({ items, refetch }) => {
-  const { title, studySessionId, tutorEmail, driveLink, imageUrl, _id } = items;
+const Material = ({ item }) => {
+  const dispatch = useDispatch();
+  const { title, studySessionId, tutorEmail, driveLink, imageUrl, _id } = item;
 
   const handleDelete = (_id) => {
     Swal.fire({
@@ -16,24 +19,11 @@ const Material = ({ items, refetch }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://stydy-sphere-server.vercel.app/material/${_id}`, {
-          method: "DELETE",
-          credentials: "include",
-        }).then((response) => {
-          if (response.ok) {
-            Swal.fire({
-              title: "Deleted!",
-              text: "Your file has been deleted.",
-              icon: "success",
-            });
-            refetch();
-          } else {
-            Swal.fire({
-              title: "Error!",
-              text: "Failed to delete the file.",
-              icon: "error",
-            });
-          }
+        dispatch(deleteMaterial(_id)).then(() => {
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
+        });
+        dispatch(fetchMaterials()).catch(() => {
+          Swal.fire("Error!", "Failed to delete the file.", "error");
         });
       }
     });
