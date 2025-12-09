@@ -8,12 +8,9 @@ const ShowMaterials = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["material", studySessionID],
     queryFn: () =>
-      fetch(
-        `https://stydysphereserver.onrender.com/material/material/${studySessionID}`,
-        {
-          credentials: "include",
-        }
-      ).then((res) => res.json()),
+      fetch(`http://localhost:4001/material/material/${studySessionID}`, {
+        credentials: "include",
+      }).then((res) => res.json()),
   });
 
   if (isPending)

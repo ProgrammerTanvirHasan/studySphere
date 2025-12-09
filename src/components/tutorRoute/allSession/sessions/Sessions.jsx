@@ -13,7 +13,7 @@ const Sessions = ({ session, refetch }) => {
       return;
     }
 
-    fetch(`https://stydysphereserver.onrender.com/session/${_id}`, {
+    fetch(`http://localhost:4001/session/${_id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +41,7 @@ const Sessions = ({ session, refetch }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://stydysphereserver.onrender.com/session/${_id}`, {
+        fetch(`http://localhost:4001/session/${_id}`, {
           method: "DELETE",
           credentials: "include",
         });

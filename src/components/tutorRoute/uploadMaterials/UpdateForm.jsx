@@ -17,7 +17,7 @@ const UpdateForm = () => {
   } = useQuery({
     queryKey: ["Approved", _id],
     queryFn: () =>
-      fetch(`https://stydysphereserver.onrender.com/session/Approved/${_id}`, {
+      fetch(`http://localhost:4001/session/Approved/${_id}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
@@ -51,7 +51,7 @@ const UpdateForm = () => {
         imageUrl: imageURL,
       };
 
-      fetch("https://stydysphereserver.onrender.com/material", {
+      fetch("http://localhost:4001/material", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

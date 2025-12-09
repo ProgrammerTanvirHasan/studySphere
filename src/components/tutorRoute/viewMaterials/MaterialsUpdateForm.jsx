@@ -18,7 +18,7 @@ const MaterialsUpdateForm = () => {
   } = useQuery({
     queryKey: ["update", _id],
     queryFn: () =>
-      fetch(`https://stydysphereserver.onrender.com/material/update/${_id}`, {
+      fetch(`http://localhost:4001/material/update/${_id}`, {
         credentials: "include",
       }).then((res) => res.json()),
   });
@@ -52,7 +52,7 @@ const MaterialsUpdateForm = () => {
       };
 
       const updateResponse = await fetch(
-        `https://stydysphereserver.onrender.com/material/${_id}`,
+        `http://localhost:4001/material/${_id}`,
         {
           method: "PATCH",
           headers: {

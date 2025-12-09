@@ -1,54 +1,61 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../../AuthProvider";
-import Swal from "sweetalert2";
+import { showSuccess, showError, showWarning } from "../../../utils/toast";
+import { apiEndpoint } from "../../../config/api";
 
 const CreateNote = () => {
   const { user } = useContext(AuthContext);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const handleNote = (e) => {
+  const handleNote = async (e) => {
     e.preventDefault();
     const form = e.target;
     const title = form.title.value.trim();
-    const email = user?.email;
+    const email = user?.email?.toLowerCase().trim();
     const note = form.note.value.trim();
 
     if (!title || !note) {
-      return Swal.fire({
-        title: "Missing Info",
-        text: "Please fill in both title and note fields.",
-        icon: "warning",
-      });
+      showWarning(
+        "Please fill in both title and note fields.",
+        "Missing Information"
+      );
+      return;
     }
 
+    if (!email) {
+      showError(
+        "You must be logged in to create notes.",
+        "Authentication Required"
+      );
+      return;
+    }
+
+    setIsSaving(true);
     const notes = { title, email, note };
 
-    fetch("https://stydysphereserver.onrender.com/stored", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify(notes),
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then(() => {
-        Swal.fire({
-          title: "Good job!",
-          text: "Your note has been saved successfully.",
-          icon: "success",
-        });
-      })
-      .catch((error) => {
-        console.error(error.message);
-        Swal.fire({
-          title: "Error!",
-          text: "Failed to save your note.",
-          icon: "error",
-        });
+    try {
+      const response = await fetch(apiEndpoint("stored"), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(notes),
+        credentials: "include",
       });
 
-    form.reset();
+      if (!response.ok) {
+        throw new Error(`Failed to save note: ${response.statusText}`);
+      }
+
+      await response.json();
+      showSuccess("Your note has been saved successfully!", "Note Saved! ✨");
+      form.reset();
+    } catch (error) {
+      console.error("Error saving note:", error);
+      showError("Failed to save your note. Please try again.", "Save Failed");
+    } finally {
+      setIsSaving(false);
+    }
   };
 
   return (
@@ -100,9 +107,19 @@ const CreateNote = () => {
         <div className="text-center">
           <button
             type="submit"
-            className="bg-cyan-600 hover:bg-cyan-700 text-white text-lg px-6 py-2 rounded-md transition duration-300 w-full lg:w-1/2"
+            disabled={isSaving}
+            className={`bg-cyan-600 hover:bg-cyan-700 text-white text-lg px-6 py-2 rounded-md transition duration-300 w-full lg:w-1/2 ${
+              isSaving ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
-            Store Note
+            {isSaving ? (
+              <span className="flex items-center justify-center gap-2">
+                <span className="loading loading-spinner loading-sm"></span>
+                Saving...
+              </span>
+            ) : (
+              "Store Note"
+            )}
           </button>
         </div>
       </form>

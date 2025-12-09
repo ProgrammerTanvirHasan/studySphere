@@ -3,15 +3,12 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const fetchupdateSession = createAsyncThunk(
   "updateSession/updateSessionSlice",
   async ({ _id, updateData }) => {
-    const res = await fetch(
-      `https://stydysphereserver.onrender.com/session/${_id}`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updateData),
-        credentials: "include",
-      }
-    );
+    const res = await fetch(`http://localhost:4001/session/${_id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updateData),
+      credentials: "include",
+    });
     const result = await res.json();
     return { _id, updateData, result };
   }

@@ -1,8 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../../AuthProvider";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import { apiEndpoint } from "../../../config/api";
+import {
+  showSuccess,
+  showError,
+  showInfo,
+  showConfirm,
+} from "../../../utils/toast";
+import LoadingSpinner from "../../LoadingSpinner";
+import ErrorDisplay from "../../ErrorDisplay";
 
 const PersonalNote = () => {
   const { user } = useContext(AuthContext);
@@ -15,64 +23,110 @@ const PersonalNote = () => {
     refetch,
   } = useQuery({
     queryKey: ["storeData", email],
-    queryFn: () =>
-      fetch(`https://stydysphereserver.onrender.com/stored/email/${email}`, {
-        credentials: "include",
-      }).then((res) => res.json()),
+    enabled: !!email,
+    queryFn: () => {
+      const normalizedEmail = email?.toLowerCase().trim();
+      return fetch(
+        apiEndpoint(`stored/email/${encodeURIComponent(normalizedEmail)}`),
+        {
+          credentials: "include",
+        }
+      ).then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`Failed to fetch notes: ${res.statusText}`);
+        }
+        return res.json();
+      });
+    },
   });
 
-  if (isPending)
-    return (
-      <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
-        <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
-        <p className="text-lg font-medium animate-pulse">
-          Loading your note...
-        </p>
-      </div>
+  useEffect(() => {
+    if (data && !isPending && Array.isArray(data) && data.length === 0) {
+      showInfo(
+        "You don't have any notes yet. Create your first note to get started!",
+        "No Notes Found"
+      );
+    }
+  }, [data, isPending]);
+
+  if (isPending) {
+    return <LoadingSpinner message="Loading your notes..." />;
+  }
+
+  if (error) {
+    return <ErrorDisplay error={error} onRetry={refetch} />;
+  }
+
+  const handleDelete = async (_id) => {
+    const result = await showConfirm(
+      "This note will be permanently deleted. This action cannot be undone.",
+      "Are you sure?"
     );
 
-  if (error)
-    return (
-      <p className="text-center text-red-500 py-4">
-        An error has occurred: {error.message}
-      </p>
-    );
-
-  const handleDelete = (_id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "This note will be permanently deleted.",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#10b981",
-      cancelButtonColor: "#ef4444",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`https://stydysphereserver.onrender.com/stored/${_id}`, {
+    if (result.isConfirmed) {
+      try {
+        const response = await fetch(apiEndpoint(`stored/${_id}`), {
           method: "DELETE",
           credentials: "include",
-        })
-          .then((res) => res.json())
-          .then(() => {
-            Swal.fire("Deleted!", "Your note has been deleted.", "success");
-            refetch();
-          })
-          .catch(() => {
-            Swal.fire("Error", "Failed to delete the note.", "error");
-          });
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to delete note: ${response.statusText}`);
+        }
+
+        await response.json();
+        showSuccess(
+          "Your note has been deleted successfully.",
+          "Note Deleted! ✅"
+        );
+        refetch();
+      } catch (error) {
+        console.error("Error deleting note:", error);
+        showError(
+          "Failed to delete the note. Please try again.",
+          "Delete Failed"
+        );
       }
-    });
+    }
   };
 
-  if (data.length === 0) {
+  const notes = Array.isArray(data) ? data : [];
+
+  if (notes.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center mt-12">
-        <p className="text-red-600 text-center">
-          You do not have any note.
+      <div className="flex flex-col items-center justify-center mt-12 p-8 bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl shadow-lg max-w-md mx-auto">
+        <div className="bg-purple-200 rounded-full p-6 mb-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-20 w-20 text-purple-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
+          </svg>
+        </div>
+        <h3 className="text-2xl text-purple-700 font-bold mb-2">
+          No Notes Yet
+        </h3>
+        <p className="text-gray-600 text-center mb-4">
+          You haven't created any notes yet.
           <br />
-          <span className="text-sm">(only can show your personal note)</span>
+          <span className="text-sm text-gray-500">
+            Create your first note to get started!
+          </span>
         </p>
+        <Link
+          to="/dashboard/createNote"
+          className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-semibold transition duration-300 shadow-md hover:shadow-lg"
+        >
+          Create Your First Note
+        </Link>
       </div>
     );
   }
@@ -90,7 +144,7 @@ const PersonalNote = () => {
       </div>
 
       <div className="grid gap-6">
-        {data.map((note) => (
+        {notes.map((note) => (
           <div
             key={note._id}
             className="bg-white shadow-md rounded-xl border border-gray-200 p-6"

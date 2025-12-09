@@ -1,47 +1,80 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import Swal from "sweetalert2";
+import { apiEndpoint } from "../../../../config/api";
+import { showSuccess, showError } from "../../../../utils/toast";
+import LoadingSpinner from "../../../LoadingSpinner";
+import ErrorDisplay from "../../../ErrorDisplay";
 
 const Update = () => {
   const { _id } = useParams();
+  const [isUpdating, setIsUpdating] = useState(false);
 
   const { isPending, error, data, refetch } = useQuery({
     queryKey: ["stored", _id],
+    enabled: !!_id,
     queryFn: () =>
-      fetch(`https://stydysphereserver.onrender.com/stored/${_id}`, {
+      fetch(apiEndpoint(`stored/${_id}`), {
         credentials: "include",
-      }).then((res) => res.json()),
+      }).then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`Failed to fetch note: ${res.statusText}`);
+        }
+        return res.json();
+      }),
   });
 
-  if (isPending) return <p className="text-center py-8">Please wait...</p>;
+  if (isPending) {
+    return <LoadingSpinner message="Loading note details..." />;
+  }
 
-  if (error)
-    return <p className="text-center text-red-600">Error: {error.message}</p>;
+  if (error) {
+    return <ErrorDisplay error={error} onRetry={refetch} />;
+  }
 
-  const handleUpdate = (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const title = form.title.value;
-    const note = form.note.value;
+    const title = form.title.value.trim();
+    const note = form.note.value.trim();
+
+    if (!title || !note) {
+      showError(
+        "Please fill in both title and note fields.",
+        "Missing Information"
+      );
+      return;
+    }
+
+    setIsUpdating(true);
     const updatedNote = { title, note };
 
-    fetch(`https://stydysphereserver.onrender.com/stored/${_id}`, {
-      method: "PATCH",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updatedNote),
-    })
-      .then((res) => res.json())
-      .then(() => {
-        Swal.fire({
-          title: "Success!",
-          text: "Note updated successfully",
-          icon: "success",
-          confirmButtonText: "OK",
-        });
-        refetch();
+    try {
+      const response = await fetch(apiEndpoint(`stored/${_id}`), {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedNote),
+        credentials: "include",
       });
+
+      if (!response.ok) {
+        throw new Error(`Failed to update note: ${response.statusText}`);
+      }
+
+      await response.json();
+      showSuccess(
+        "Your note has been updated successfully!",
+        "Note Updated! ✨"
+      );
+      refetch();
+    } catch (error) {
+      console.error("Error updating note:", error);
+      showError("Failed to update note. Please try again.", "Update Failed");
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
   return (
@@ -92,9 +125,19 @@ const Update = () => {
           <div className="text-center">
             <button
               type="submit"
-              className="bg-cyan-600 hover:bg-cyan-700 text-white font-semibold px-6 py-2 rounded-lg transition"
+              disabled={isUpdating}
+              className={`bg-cyan-600 hover:bg-cyan-700 text-white font-semibold px-6 py-2 rounded-lg transition ${
+                isUpdating ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              Update Note
+              {isUpdating ? (
+                <span className="flex items-center gap-2">
+                  <span className="loading loading-spinner loading-sm"></span>
+                  Updating...
+                </span>
+              ) : (
+                "Update Note"
+              )}
             </button>
           </div>
         </form>

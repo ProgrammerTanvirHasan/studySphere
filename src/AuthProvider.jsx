@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
       if (user) {
         axios
           .post(
-            `https://stydysphereserver.onrender.com/jwt`,
+            `http://localhost:4001/jwt`,
             { email: user.email },
             {
               withCredentials: true,
@@ -53,7 +53,7 @@ const AuthProvider = ({ children }) => {
           .then(() => {});
       } else {
         axios
-          .post(`https://stydysphereserver.onrender.com/logOut`, null, {
+          .post(`http://localhost:4001/logOut`, null, {
             withCredentials: true,
           })
           .then(() => {});

@@ -10,7 +10,7 @@ const StudySession = () => {
     queryKey: ["sessionData", currentPage, itemPerPage],
     queryFn: () =>
       fetch(
-        `https://stydysphereserver.onrender.com/session/Approved?page=${currentPage}&limit=${itemPerPage}`,
+        `http://localhost:4001/session/Approved?page=${currentPage}&limit=${itemPerPage}`,
         {
           credentials: "include",
         }

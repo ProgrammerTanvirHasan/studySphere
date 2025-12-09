@@ -30,7 +30,7 @@ const CheckOutForm = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`https://stydysphereserver.onrender.com/create-payment-intent`, {
+    fetch(`http://localhost:4001/create-payment-intent`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount }),
@@ -118,7 +118,7 @@ const CheckOutForm = () => {
         amount,
       };
 
-      fetch("https://stydysphereserver.onrender.com/bookedSession", {
+      fetch("http://localhost:4001/bookedSession", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

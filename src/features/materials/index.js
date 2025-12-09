@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export const fetchMaterials = createAsyncThunk(
   "materials/fetchMaterials",
   async () => {
-    const res = await fetch("https://stydysphereserver.onrender.com/material", {
+    const res = await fetch("http://localhost:4001/material", {
       credentials: "include",
     });
     return await res.json();
@@ -13,13 +13,10 @@ export const fetchMaterials = createAsyncThunk(
 export const deleteMaterial = createAsyncThunk(
   "materials/deleteMaterial",
   async (id) => {
-    const res = await fetch(
-      `https://stydysphereserver.onrender.com/material/${id}`,
-      {
-        method: "DELETE",
-        credentials: "include",
-      }
-    );
+    const res = await fetch(`http://localhost:4001/material/${id}`, {
+      method: "DELETE",
+      credentials: "include",
+    });
     const result = await res.json();
     return { id, result };
   }

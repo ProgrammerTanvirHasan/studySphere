@@ -20,24 +20,21 @@ const SessionDetails = () => {
       {
         queryKey: ["sessionData", _id],
         queryFn: () =>
-          fetch(
-            `https://stydysphereserver.onrender.com/session/Approved/${_id}`,
-            {
-              credentials: "include",
-            }
-          ).then((res) => res.json()),
+          fetch(`http://localhost:4001/session/Approved/${_id}`, {
+            credentials: "include",
+          }).then((res) => res.json()),
       },
       {
         queryKey: ["reviewsData", _id],
         queryFn: () =>
-          fetch(`https://stydysphereserver.onrender.com/reviews/${_id}`, {
+          fetch(`http://localhost:4001/reviews/${_id}`, {
             credentials: "include",
           }).then((res) => res.json()),
       },
       {
         queryKey: ["registerData", email],
         queryFn: () =>
-          fetch(`https://stydysphereserver.onrender.com/register/${email}`, {
+          fetch(`http://localhost:4001/register/${email}`, {
             credentials: "include",
           }).then((res) => res.json()),
       },
@@ -105,7 +102,7 @@ const SessionDetails = () => {
       Tutor: sessionData.name,
     };
 
-    fetch(`https://stydysphereserver.onrender.com/bookedSession`, {
+    fetch(`http://localhost:4001/bookedSession`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

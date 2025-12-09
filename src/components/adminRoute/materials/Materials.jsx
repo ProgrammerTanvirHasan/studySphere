@@ -3,6 +3,9 @@ import Material from "./Material";
 import { useContext, useEffect } from "react";
 import { fetchMaterials } from "../../../features/materials";
 import { AuthContext } from "../../../AuthProvider";
+import { showWarning } from "../../../utils/toast";
+import LoadingSpinner from "../../LoadingSpinner";
+import ErrorDisplay from "../../ErrorDisplay";
 
 const Materials = () => {
   const user = useContext(AuthContext);
@@ -13,15 +16,24 @@ const Materials = () => {
     dispatch(fetchMaterials());
   }, [dispatch, user]);
 
-  if (loading)
-    return (
-      <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
-        <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
-        <p className="text-lg font-medium animate-pulse">Please wait...</p>
-      </div>
-    );
+  useEffect(() => {
+    if (items && !loading && items.length === 0) {
+      showWarning(
+        "No materials found. Tutors need to upload materials first.",
+        "No Materials Available"
+      );
+    }
+  }, [items, loading]);
 
-  if (error) return "An error has occurred: " + error.message;
+  if (loading) {
+    return <LoadingSpinner message="Loading all materials..." />;
+  }
+
+  if (error) {
+    return (
+      <ErrorDisplay error={error} onRetry={() => dispatch(fetchMaterials())} />
+    );
+  }
 
   return (
     <div>
@@ -38,29 +50,31 @@ const Materials = () => {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center mt-12">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-16 w-16 text-red-500 mb-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 3a9 9 0 100 18 9 9 0 000-18z"
-            />
-          </svg>
-          <h3 className="text-2xl text-red-600 font-semibold mb-2">
-            Access Denied
+        <div className="flex flex-col items-center justify-center mt-12 p-8 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-lg max-w-md mx-auto">
+          <div className="bg-gray-200 rounded-full p-6 mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-20 w-20 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+          </div>
+          <h3 className="text-2xl text-gray-700 font-bold mb-2">
+            No Materials Found
           </h3>
-          <p className="text-gray-600 text-center">
-            You do not have permission to view these materials.
+          <p className="text-gray-600 text-center mb-4">
+            There are no materials uploaded yet.
             <br />
-            <span className="text-sm">
-              (Only admins can access this section)
+            <span className="text-sm text-gray-500">
+              Tutors need to upload materials first.
             </span>
           </p>
         </div>

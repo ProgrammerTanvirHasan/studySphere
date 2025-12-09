@@ -1,6 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../../../AuthProvider";
+import { apiEndpoint } from "../../../config/api";
+import { showInfo } from "../../../utils/toast";
+import LoadingSpinner from "../../LoadingSpinner";
+import ErrorDisplay from "../../ErrorDisplay";
 import BookedMaterials from "./BookedMaterials";
 
 const AllStudyMaterials = () => {
@@ -11,40 +15,73 @@ const AllStudyMaterials = () => {
     isPending,
     error,
     data = [],
+    refetch,
   } = useQuery({
     queryKey: ["bookedSession", email],
-    queryFn: () =>
-      fetch(`https://stydysphereserver.onrender.com/bookedSession/${email}`, {
-        credentials: "include",
-      }).then((res) => res.json()),
+    enabled: !!email,
+    queryFn: () => {
+      const normalizedEmail = email?.toLowerCase().trim();
+      return fetch(
+        apiEndpoint(`bookedSession/${encodeURIComponent(normalizedEmail)}`),
+        {
+          credentials: "include",
+        }
+      ).then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`Failed to fetch booked sessions: ${res.statusText}`);
+        }
+        return res.json();
+      });
+    },
   });
 
+  useEffect(() => {
+    if (data && !isPending && Array.isArray(data) && data.length === 0) {
+      showInfo(
+        "You haven't booked any sessions yet. Book a session to access study materials!",
+        "No Study Materials"
+      );
+    }
+  }, [data, isPending]);
+
   if (isPending) {
-    return (
-      <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
-        <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
-        <p className="text-lg font-medium animate-pulse">
-          Study Materials loading...
-        </p>
-      </div>
-    );
+    return <LoadingSpinner message="Loading your study materials..." />;
   }
 
   if (error) {
-    return (
-      <p className="text-center text-red-600 py-4">
-        An error occurred: {error.message}
-      </p>
-    );
+    return <ErrorDisplay error={error} onRetry={refetch} />;
   }
 
-  if (data.length === 0) {
+  const bookedSessions = Array.isArray(data) ? data : [];
+
+  if (bookedSessions.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center mt-12">
-        <p className="text-red-600 text-center">
-          You do not have any booked materials.
+      <div className="flex flex-col items-center justify-center mt-12 p-8 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl shadow-lg max-w-md mx-auto">
+        <div className="bg-blue-200 rounded-full p-6 mb-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-20 w-20 text-blue-400"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+            />
+          </svg>
+        </div>
+        <h3 className="text-2xl text-blue-700 font-bold mb-2">
+          No Study Materials
+        </h3>
+        <p className="text-gray-600 text-center mb-4">
+          You haven't booked any sessions yet.
           <br />
-          <span className="text-sm">(only booked materials here)</span>
+          <span className="text-sm text-gray-500">
+            Book a session to access study materials!
+          </span>
         </p>
       </div>
     );
@@ -63,8 +100,8 @@ const AllStudyMaterials = () => {
       </div>
 
       <div className="grid gap-6">
-        {data.map((materials) => (
-          <BookedMaterials key={materials._id} materials={materials} />
+        {bookedSessions.map((session) => (
+          <BookedMaterials key={session._id} materials={session} />
         ))}
       </div>
     </div>

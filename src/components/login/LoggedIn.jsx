@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../AuthProvider";
 import { GoogleAuthProvider } from "firebase/auth";
-import Swal from "sweetalert2";
+import { showError, showSuccess } from "../../utils/toast";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 
@@ -13,37 +13,73 @@ const LoggedIn = () => {
   const googleProvider = new GoogleAuthProvider();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const form = e.target;
-    const email = form.email.value;
+    const email = form.email.value.trim().toLowerCase();
     const password = form.password.value;
 
-    signUser(email, password)
-      .then((result) => {
-        setUser(result.user);
-        navigate(location?.state ? location?.state : "/");
-      })
-      .catch((error) => {
-        console.error("Login Error:", error.message);
-        Swal.fire({
-          title: "Error!",
-          text: "Something went wrong! Please try again.",
-          icon: "error",
-        });
-      });
+    if (!email || !password) {
+      showError(
+        "Please fill in both email and password fields.",
+        "Missing Information"
+      );
+      return;
+    }
+
+    setIsLoggingIn(true);
+
+    try {
+      const result = await signUser(email, password);
+      setUser(result.user);
+      showSuccess("Welcome back! Redirecting...", "Login Successful! 🎉");
+      setTimeout(() => {
+        const fromPath = location?.state?.from || location?.state;
+        const destination =
+          fromPath && fromPath !== "/login" ? fromPath : "/dashboard";
+        navigate(destination, { replace: true });
+      }, 1000);
+    } catch (error) {
+      console.error("Login Error:", error.message);
+      let errorMessage = "Something went wrong! Please try again.";
+
+      if (error.message.includes("user-not-found")) {
+        errorMessage =
+          "No account found with this email. Please register first.";
+      } else if (error.message.includes("wrong-password")) {
+        errorMessage = "Incorrect password. Please try again.";
+      } else if (error.message.includes("invalid-email")) {
+        errorMessage = "Invalid email address. Please check and try again.";
+      } else if (error.message.includes("too-many-requests")) {
+        errorMessage = "Too many failed attempts. Please try again later.";
+      }
+
+      showError(errorMessage, "Login Failed");
+    } finally {
+      setIsLoggingIn(false);
+    }
   };
 
-  const handleGoogle = () => {
-    googleSignIn(googleProvider)
-      .then((result) => {
-        setUser(result.user);
-        navigate(location?.state ? location?.state : "/");
-      })
-      .catch((error) => {
-        console.error("Google Sign-In Error:", error.message);
-      });
+  const handleGoogle = async () => {
+    setIsLoggingIn(true);
+    try {
+      const result = await googleSignIn(googleProvider);
+      setUser(result.user);
+      showSuccess("Welcome! Redirecting...", "Google Sign-In Successful! 🎉");
+      setTimeout(() => {
+        const fromPath = location?.state?.from || location?.state;
+        const destination =
+          fromPath && fromPath !== "/login" ? fromPath : "/dashboard";
+        navigate(destination, { replace: true });
+      }, 1000);
+    } catch (error) {
+      console.error("Google Sign-In Error:", error.message);
+      showError("Google sign-in failed. Please try again.", "Sign-In Failed");
+    } finally {
+      setIsLoggingIn(false);
+    }
   };
 
   return (
@@ -93,18 +129,31 @@ const LoggedIn = () => {
 
           <button
             type="submit"
-            className="btn w-full bg-gradient-to-r from-slate-400 to-slate-950 text-orange-300 text-lg"
+            disabled={isLoggingIn}
+            className={`btn w-full bg-gradient-to-r from-slate-400 to-slate-950 text-orange-300 text-lg ${
+              isLoggingIn ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           >
-            Login
+            {isLoggingIn ? (
+              <span className="flex items-center gap-2">
+                <span className="loading loading-spinner loading-sm"></span>
+                Logging in...
+              </span>
+            ) : (
+              "Login"
+            )}
           </button>
 
           <div className="flex items-center justify-between mt-4">
             <button
               type="button"
               onClick={handleGoogle}
-              className="w-full bg-green-600 hover:bg-red-700 text-white py-2 rounded-lg transition"
+              disabled={isLoggingIn}
+              className={`w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition ${
+                isLoggingIn ? "opacity-50 cursor-not-allowed" : ""
+              }`}
             >
-              Google
+              {isLoggingIn ? "Please wait..." : "Sign in with Google"}
             </button>
           </div>
 

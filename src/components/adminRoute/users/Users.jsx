@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { useContext, useEffect } from "react";
 import { fetchProducts } from "../../../features/dashboardUsers";
 import { AuthContext } from "../../../AuthProvider";
+import { showWarning } from "../../../utils/toast";
+import LoadingSpinner from "../../LoadingSpinner";
+import ErrorDisplay from "../../ErrorDisplay";
 
 const Users = () => {
   const user = useContext(AuthContext);
@@ -15,24 +18,24 @@ const Users = () => {
     dispatch(fetchProducts());
   }, [dispatch, user]);
 
-  if (loading)
-    return (
-      <div className="text-center">
-        <div className="min-h-[40vh] flex flex-col items-center justify-center text-orange-500 space-y-4">
-          <div className="w-12 h-12 border-4 border-orange-300 border-t-orange-600 rounded-full animate-spin"></div>
-          <p className="text-lg font-medium animate-pulse">
-            Finding all user...
-          </p>
-        </div>
-      </div>
-    );
+  useEffect(() => {
+    if (items && !loading && items.length === 0) {
+      showWarning(
+        "No users found in the system. This might indicate a database connection issue.",
+        "No Users Found"
+      );
+    }
+  }, [items, loading]);
 
-  if (error)
+  if (loading) {
+    return <LoadingSpinner message="Loading all users..." />;
+  }
+
+  if (error) {
     return (
-      <div className="text-red-600 text-center mt-10">
-        An error has occurred: {error.message || "Unknown error"}
-      </div>
+      <ErrorDisplay error={error} onRetry={() => dispatch(fetchProducts())} />
     );
+  }
 
   return (
     <div>
@@ -51,28 +54,32 @@ const Users = () => {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center mt-12">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-16 w-16 text-red-500 mb-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 9v2m0 4h.01M4.93 4.93l14.14 14.14M12 3a9 9 0 100 18 9 9 0 000-18z"
-            />
-          </svg>
-          <h3 className="text-2xl text-red-600 font-semibold mb-2">
-            Access Denied
+        <div className="flex flex-col items-center justify-center mt-12 p-8 bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl shadow-lg max-w-md mx-auto">
+          <div className="bg-gray-200 rounded-full p-6 mb-4">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-20 w-20 text-gray-400"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              />
+            </svg>
+          </div>
+          <h3 className="text-2xl text-gray-700 font-bold mb-2">
+            No Users Found
           </h3>
-          <p className="text-gray-600 text-center">
-            You do not have permission to view this page.
+          <p className="text-gray-600 text-center mb-4">
+            There are no users registered in the system yet.
             <br />
-            <span className="text-sm">(Admin access required)</span>
+            <span className="text-sm text-gray-500">
+              Users will appear here once they register.
+            </span>
           </p>
         </div>
       )}
