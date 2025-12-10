@@ -1,7 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchProducts = createAsyncThunk("products/fetch", async () => {
-  const res = await fetch("http://localhost:4001/register/register");
+  const res = await fetch(
+    "https://stydy-sphere-server.vercel.app/register/register"
+  );
   return await res.json();
 });
 

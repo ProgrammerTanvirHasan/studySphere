@@ -17,7 +17,7 @@ const User = ({ users }) => {
       confirmButtonText: "Yes, approve it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:4001/register/${_id}`, {
+        fetch(`https://stydy-sphere-server.vercel.app/register/${_id}`, {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",

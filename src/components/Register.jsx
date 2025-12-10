@@ -5,7 +5,7 @@ import { getAuth, updateProfile } from "firebase/auth";
 import app from "../firebase.confiq";
 import { showSuccess, showError, showErrorModal } from "../utils/toast";
 import { apiEndpoint } from "../config/api";
-import LoadingSpinner from "./LoadingSpinner";
+
 import { FaRegEyeSlash } from "react-icons/fa";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 

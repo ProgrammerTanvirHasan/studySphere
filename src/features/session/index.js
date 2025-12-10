@@ -1,9 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export const fetchSession = createAsyncThunk("sessions/fetch", async () => {
-  const res = await fetch("http://localhost:4001/session/PendingApproved", {
-    credentials: "include",
-  });
+  const res = await fetch(
+    "https://stydy-sphere-server.vercel.app/session/PendingApproved",
+    {
+      credentials: "include",
+    }
+  );
   return await res.json();
 });
 
