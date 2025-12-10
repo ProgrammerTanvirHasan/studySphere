@@ -1,7 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+
 import Swal from "sweetalert2";
+import { apiEndpoint } from "../../../config/api";
 
 const image_hosting_key = "a9b9160b05e3d4e68e60f154f621c349";
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -18,9 +20,13 @@ const MaterialsUpdateForm = () => {
   } = useQuery({
     queryKey: ["update", _id],
     queryFn: () =>
-      fetch(`https://stydy-sphere-server.vercel.app/material/update/${_id}`, {
+      fetch(apiEndpoint(`material/update/${_id}`), {
         credentials: "include",
-      }).then((res) => res.json()),
+      }).then(async (res) => {
+        if (!res.ok)
+          throw new Error(`Failed to fetch material: ${res.statusText}`);
+        return res.json();
+      }),
   });
 
   const onSubmit = async (data) => {
@@ -51,18 +57,15 @@ const MaterialsUpdateForm = () => {
         imageUrl: imageURL,
       };
 
-      const updateResponse = await fetch(
-        `https://stydy-sphere-server.vercel.app/material/${_id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
+      const updateResponse = await fetch(apiEndpoint(`material/${_id}`), {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
 
-          body: JSON.stringify(updatedData),
-          credentials: "include",
-        }
-      );
+        body: JSON.stringify(updatedData),
+        credentials: "include",
+      });
 
       if (updateResponse.ok) {
         Swal.fire({

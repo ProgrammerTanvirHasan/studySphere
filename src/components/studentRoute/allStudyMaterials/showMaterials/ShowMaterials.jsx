@@ -8,12 +8,13 @@ const ShowMaterials = () => {
   const { isPending, error, data } = useQuery({
     queryKey: ["material", studySessionID],
     queryFn: () =>
-      fetch(
-        `https://stydy-sphere-server.vercel.app/material/material/${studySessionID}`,
-        {
-          credentials: "include",
-        }
-      ).then((res) => res.json()),
+      fetch(apiEndpoint(`material/material/${studySessionID}`), {
+        credentials: "include",
+      }).then(async (res) => {
+        if (!res.ok)
+          throw new Error(`Failed to fetch material: ${res.statusText}`);
+        return res.json();
+      }),
   });
 
   if (isPending)

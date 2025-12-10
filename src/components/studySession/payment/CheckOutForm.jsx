@@ -2,6 +2,7 @@ import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../../../AuthProvider";
+import { apiEndpoint } from "../../../config/api";
 import Swal from "sweetalert2";
 
 const CheckOutForm = () => {
@@ -30,13 +31,18 @@ const CheckOutForm = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`https://stydy-sphere-server.vercel.app/create-payment-intent`, {
+    fetch(apiEndpoint("create-payment-intent"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ amount }),
       credentials: "include",
     })
-      .then((res) => res.json())
+      .then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`Failed to initialize payment: ${res.statusText}`);
+        }
+        return res.json();
+      })
       .then((data) => {
         setClientSecret(data.client_secret);
       })
@@ -118,7 +124,7 @@ const CheckOutForm = () => {
         amount,
       };
 
-      fetch("https://stydy-sphere-server.vercel.app/bookedSession", {
+      fetch(apiEndpoint("bookedSession"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

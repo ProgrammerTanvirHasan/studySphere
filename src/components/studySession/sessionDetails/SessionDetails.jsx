@@ -4,6 +4,7 @@ import moment from "moment";
 import { useNavigate, useParams } from "react-router";
 import { useContext } from "react";
 import { AuthContext } from "../../../AuthProvider";
+import { apiEndpoint } from "../../../config/api";
 import Swal from "sweetalert2";
 import { Rating } from "@smastrom/react-rating";
 import { MdAccessTime } from "react-icons/md";
@@ -20,26 +21,41 @@ const SessionDetails = () => {
       {
         queryKey: ["sessionData", _id],
         queryFn: () =>
-          fetch(
-            `https://stydy-sphere-server.vercel.app/session/Approved/${_id}`,
-            {
-              credentials: "include",
-            }
-          ).then((res) => res.json()),
+          fetch(apiEndpoint(`session/Approved/${_id}`), {
+            credentials: "include",
+          }).then(async (res) => {
+            if (!res.ok)
+              throw new Error(`Failed to fetch session: ${res.statusText}`);
+            return res.json();
+          }),
       },
       {
         queryKey: ["reviewsData", _id],
         queryFn: () =>
-          fetch(`https://stydy-sphere-server.vercel.app/reviews/${_id}`, {
+          fetch(apiEndpoint(`reviews/${_id}`), {
             credentials: "include",
-          }).then((res) => res.json()),
+          }).then(async (res) => {
+            if (!res.ok)
+              throw new Error(`Failed to fetch reviews: ${res.statusText}`);
+            return res.json();
+          }),
       },
       {
         queryKey: ["registerData", email],
-        queryFn: () =>
-          fetch(`https://stydy-sphere-server.vercel.app/register/${email}`, {
-            credentials: "include",
-          }).then((res) => res.json()),
+        enabled: !!email,
+        queryFn: () => {
+          const normalizedEmail = email?.toLowerCase().trim();
+          return fetch(
+            apiEndpoint(`register/${encodeURIComponent(normalizedEmail)}`),
+            {
+              credentials: "include",
+            }
+          ).then(async (res) => {
+            if (!res.ok)
+              throw new Error(`Failed to fetch user: ${res.statusText}`);
+            return res.json();
+          });
+        },
       },
     ],
   });
@@ -105,7 +121,7 @@ const SessionDetails = () => {
       Tutor: sessionData.name,
     };
 
-    fetch(`https://stydy-sphere-server.vercel.app/bookedSession`, {
+    fetch(apiEndpoint("bookedSession"), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

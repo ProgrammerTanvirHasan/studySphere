@@ -1,5 +1,6 @@
 import { FiMail } from "react-icons/fi";
 import { useDispatch } from "react-redux";
+import { apiEndpoint } from "../../../../config/api";
 import Swal from "sweetalert2";
 import { fetchProducts } from "../../../../features/dashboardUsers";
 
@@ -17,7 +18,7 @@ const User = ({ users }) => {
       confirmButtonText: "Yes, approve it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://stydy-sphere-server.vercel.app/register/${_id}`, {
+        fetch(apiEndpoint(`register/${_id}`), {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",

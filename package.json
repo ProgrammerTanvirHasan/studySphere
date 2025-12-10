@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:prod": "VITE_API_URL=https://stydy-sphere-server.vercel.app vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },

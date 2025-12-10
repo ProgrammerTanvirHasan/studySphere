@@ -1,7 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { apiEndpoint } from "../../config/api";
 
 export const fetchProducts = createAsyncThunk("products/fetch", async () => {
-  const res = await fetch("https://stydy-sphere-server.vercel.app/session");
+  const res = await fetch(apiEndpoint("session"));
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch sessions: ${res.statusText}`);
+  }
+
   return await res.json();
 });
 

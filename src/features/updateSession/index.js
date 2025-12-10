@@ -1,17 +1,20 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { apiEndpoint } from "../../config/api";
 
 export const fetchupdateSession = createAsyncThunk(
   "updateSession/updateSessionSlice",
   async ({ _id, updateData }) => {
-    const res = await fetch(
-      `https://stydy-sphere-server.vercel.app/session/${_id}`,
-      {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updateData),
-        credentials: "include",
-      }
-    );
+    const res = await fetch(apiEndpoint(`session/${_id}`), {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updateData),
+      credentials: "include",
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to update session: ${res.statusText}`);
+    }
+
     const result = await res.json();
     return { _id, updateData, result };
   }

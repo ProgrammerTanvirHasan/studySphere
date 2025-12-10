@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import SessionCard from "./sessionCard/SessionCard";
 import { useState } from "react";
+import { apiEndpoint } from "../../config/api";
 
 const StudySession = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -10,11 +11,18 @@ const StudySession = () => {
     queryKey: ["sessionData", currentPage, itemPerPage],
     queryFn: () =>
       fetch(
-        `https://stydy-sphere-server.vercel.app/session/Approved?page=${currentPage}&limit=${itemPerPage}`,
+        apiEndpoint(
+          `session/Approved?page=${currentPage}&limit=${itemPerPage}`
+        ),
         {
           credentials: "include",
         }
-      ).then((res) => res.json()),
+      ).then(async (res) => {
+        if (!res.ok) {
+          throw new Error(`Failed to fetch sessions: ${res.statusText}`);
+        }
+        return res.json();
+      }),
   });
 
   const totalCount = data?.totalCount || 0;

@@ -15,7 +15,7 @@ const UpdateMaterials = ({ materials, refetch }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://stydy-sphere-server.vercel.app/material/${_id}`, {
+        fetch(apiEndpoint(`material/${_id}`), {
           method: "DELETE",
           credentials: "include",
         }).then(() => {

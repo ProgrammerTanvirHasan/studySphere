@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import { apiEndpoint } from "../../../../config/api";
 
 const Sessions = ({ session, refetch }) => {
   const { title, textarea, status, amount, _id, feedback, reason } = session;
@@ -13,7 +14,7 @@ const Sessions = ({ session, refetch }) => {
       return;
     }
 
-    fetch(`https://stydy-sphere-server.vercel.app/session/${_id}`, {
+    fetch(apiEndpoint(`session/${_id}`), {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +42,7 @@ const Sessions = ({ session, refetch }) => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://stydy-sphere-server.vercel.app/session/${_id}`, {
+        fetch(apiEndpoint(`session/${_id}`), {
           method: "DELETE",
           credentials: "include",
         });

@@ -1,9 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { apiEndpoint } from "../../config/api";
 
 export const fetchProducts = createAsyncThunk("products/fetch", async () => {
-  const res = await fetch("https://stydy-sphere-server.vercel.app/register", {
+  const res = await fetch(apiEndpoint("register"), {
     credentials: "include",
   });
+
+  if (!res.ok) {
+    throw new Error(`Failed to fetch users: ${res.statusText}`);
+  }
 
   return await res.json();
 });

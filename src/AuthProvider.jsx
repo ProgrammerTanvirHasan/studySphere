@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import app from "./firebase.confiq";
 import axios from "axios";
+import { apiEndpoint } from "./config/api";
 
 export const AuthContext = createContext(null);
 const auth = getAuth(app);
@@ -40,23 +41,27 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (user) => {
+    const unSubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        axios
-          .post(
-            `https://stydy-sphere-server.vercel.app/jwt`,
-            { email: user.email },
+        try {
+          await axios.post(
+            apiEndpoint("jwt"),
+            { email: user.email?.toLowerCase().trim() },
             {
               withCredentials: true,
             }
-          )
-          .then(() => {});
+          );
+        } catch (error) {
+          console.error("Error setting JWT token:", error);
+        }
       } else {
-        axios
-          .post(`https://stydy-sphere-server.vercel.app/logOut`, null, {
+        try {
+          await axios.post(apiEndpoint("logOut"), null, {
             withCredentials: true,
-          })
-          .then(() => {});
+          });
+        } catch (error) {
+          console.error("Error logging out:", error);
+        }
       }
       setUser(user);
       setLoading(false);

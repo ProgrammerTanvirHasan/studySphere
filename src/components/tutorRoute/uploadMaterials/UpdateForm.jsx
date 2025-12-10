@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router";
+import { apiEndpoint } from "../../../config/api";
 import Swal from "sweetalert2";
 
 const image_hosting_key = "a9b9160b05e3d4e68e60f154f621c349";
@@ -17,9 +18,13 @@ const UpdateForm = () => {
   } = useQuery({
     queryKey: ["Approved", _id],
     queryFn: () =>
-      fetch(`https://stydy-sphere-server.vercel.app/session/Approved/${_id}`, {
+      fetch(apiEndpoint(`session/Approved/${_id}`), {
         credentials: "include",
-      }).then((res) => res.json()),
+      }).then(async (res) => {
+        if (!res.ok)
+          throw new Error(`Failed to fetch session: ${res.statusText}`);
+        return res.json();
+      }),
   });
 
   if (isPending) return <p className="text-center text-white">Loading...</p>;
@@ -51,7 +56,7 @@ const UpdateForm = () => {
         imageUrl: imageURL,
       };
 
-      fetch("https://stydy-sphere-server.vercel.app/material", {
+      fetch(apiEndpoint("material"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
